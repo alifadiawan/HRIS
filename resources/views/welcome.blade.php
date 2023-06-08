@@ -16,7 +16,7 @@
 
                 <!-- payroll summary -->
                 <div class="col-lg-8">
-                    <div class="card">
+                    <div class="card" style="height: 34.5rem">
                         <div class="card-body">
                             <div class="row align-items-center">
                                 <div class="col-10">
@@ -32,11 +32,22 @@
                             </div>
 
                             <!-- card content -->
+                            <div class="row mt-3">
+                                <div class="col">
+                                    <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: #0861fd;"></i>Taxes
+                                </div>
+                                <div class="col">
+                                    <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: orange;"></i>Net Salary
+                                </div>
+                                <div class="col">
+                                    <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: rgb(105, 211, 109);"></i>Gross Salary
+                                </div>
+                            </div>
 
                             <!-- Line Chart -->
                             <div id="reportsChart"></div>
                             <!-- End Line Chart -->
-
+                            
                         </div>
                     </div>
                 </div>
@@ -44,7 +55,7 @@
 
                 <!-- employee's time off -->
                 <div class="col-lg-4">
-                    <div class="d-flex flex-column">
+                    <div class="d-flex flex-column mt-2">
                         <div class="card">
                             <div class="card-body">
 
@@ -164,8 +175,25 @@
                                     <div class="orange"></div>
                                     <div class="ijo"></div>
                                 </div>
+                                <div class="row mt-3">
+                                    <div class="col-5">
+                                        <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: #0861fd;"></i>68%
+                                    </div>
+                                    <div class="col-3">
+                                        <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: orange;"></i>15%
+                                    </div>
+                                    <div class="col-3">
+                                        <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: rgb(105, 211, 109);"></i>17%
+                                    </div>
+                                </div>
+                                <div class="row text-muted" style="font-size: 13px">
+                                    <div class="col-5">Succesfully Paid</div>
+                                    <div class="col-3">Pending</div>
+                                    <div class="col-3">Unpaid</div>
+                                </div>
                             </div>
                         </div>
+
 
                     </div>
                 </div>
@@ -176,7 +204,6 @@
             <div class="row">
                 <div class="col-lg-8">
                     <div class="card text-left">
-                        <img class="card-img-top" src="holder.js/100px180/" alt="">
                         <div class="card-body">
                             <h4 class="card-title">Profit Margin Analysis</h4>
 
@@ -240,6 +267,7 @@
             height: 100%;
             background-color: rgb(105, 211, 109);
             float: left;
+            border-radius: 10px;
         }
     </style>
 
