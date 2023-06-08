@@ -11,7 +11,7 @@
 
     <li class="nav-item">
         <a class="nav-link " href="index.html">
-            <i class="bi bi-grid"></i>
+            <i class="fa-solid fa-border-all fa-lg"></i>
             <span>Dashboard</span>
         </a>
     </li><!-- End Dashboard Nav -->
@@ -20,7 +20,7 @@
 
     <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-            <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
+            <i class="fa-solid fa-wallet fa-lg"></i><span>Payroll</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
             <li>
@@ -43,7 +43,7 @@
 
     <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-            <i class="bi bi-gem"></i><span>Icons</span><i class="bi bi-chevron-down ms-auto"></i>
+            <i class="fa-solid fa-lg fa-square-poll-vertical"></i><span>KPI</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
             <li>
@@ -63,6 +63,12 @@
             </li>
         </ul>
     </li><!-- End Icons Nav -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-login.html">
+            <i class="fa-solid fa-right-from-bracket fa-lg"></i>
+          <span>Log out</span>
+        </a>
+      </li>
 
     
 
