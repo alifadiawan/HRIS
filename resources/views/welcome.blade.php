@@ -6,7 +6,7 @@
 
         <!-- page title -->
         <div class="page-title">
-            <h4 class="fw-bold">Hi Robert, How are you ? 👋</h4>
+            <h4 class="fw-bold">Hi @if(auth()->user()->hasProfile()) {{auth()->user()->member->nama}} @else {{auth()->user()->username}} @endif, How are you ? 👋</h4>
             <p class="text-muted">See a summary of your employee's progress</p>
         </div>
 

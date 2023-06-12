@@ -17,20 +17,37 @@
                     {{-- <p class="text-center small">Welcome Back 👋</p> --}}
                     <h5 class="card-title text-left pb-3 fs-4">Sign in to your account</h5>
                 </div>
-                <form class="row g-3 needs-validation" novalidate>
+                @if(count($errors)>0)
+                  <div class="alert alert-danger">
+                    <ul style="list-style-type: disc;">
+                      @foreach($errors->all() as $item)
+                        <li>
+                          {{$item}}
+                        </li>
+                      @endforeach
+                    </ul>
+                  </div>
+                @endif
+                @if(session('salah'))
+                  <div class="alert alert-danger">
+                    {{session('salah')}}
+                  </div>
+                @endif
+                <form class="row g-3 needs-validation" action="sign-in" method="POST">
+                  @csrf
                   <div class="col-12">
                     <h5 for="yourUsername" class="form-label pb-0 fs-6">Your Email</h5>
                     <div class="input-group has-validation">
-                      <span class="input-group-text" id="inputGroupPrepend">@</span>
-                      <input type="text" name="username" class="form-control" id="yourUsername" required>
-                      <div class="invalid-feedback">Please enter your username.</div>
+                      <!-- <span class="input-group-text" id="inputGroupPrepend">@</span> -->
+                      <input type="text" name="email" class="form-control" id="yourEmail" required>
+                      <div class="invalid-feedback">Please enter your Email.</div>
                     </div>
                   </div>
 
                   <div class="col-12">
                     <label for="yourPassword" class="form-label">Password</label>
                     <input type="password" name="password" class="form-control" id="yourPassword" required>
-                    <div class="invalid-feedback">Please enter your password!</div>
+                    <div class="invalid-feedback">Please enter your Password!</div>
                   </div>
 
                   {{-- <div class="col-12">
@@ -43,7 +60,7 @@
                     <button class="btn btn-primary w-100" style="font-family: Nunito;" type="submit">CONTINUE</button>
                   </div>
                   <div class="col-12">
-                    <p class="small mb-0" style="text-align: center"><a href="pages-register.html">Forget Your Password ?</a></p>
+                    <p class="small mb-0" style="text-align: center"><a href="#">Forget Your Password ?</a></p>
                   </div>
                 </form>
 
@@ -51,7 +68,7 @@
             </div>
 
             <div class="button-signup">
-              Don't have an account ? <a href="https://bootstrapmade.com/">Sign Up</a>
+              Don't have an account ? <a href="/sign-up">Sign Up</a>
             </div>
 
           </div>

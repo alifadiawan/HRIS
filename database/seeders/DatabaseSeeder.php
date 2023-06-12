@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class,
             MemberSeeder::class,
-            TaskSeeder::class,
+            // TaskSeeder::class,
 
             BankSeeder::class,
             EwalletSeeder::class,
