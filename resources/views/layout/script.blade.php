@@ -13,6 +13,13 @@
 <!-- Template Main JS File -->
 <script src="{{ asset('assets/js/main.js') }}"></script>
 
+
+<!-- Calender Dashboard -->
+<script src="{{asset('calender/js/jquery.min.js')}}"></script>
+<script src="{{asset('calender/js/popper.js')}}"></script>
+<script src="{{asset('calender/js/bootstrap.min.js')}}"></script>
+<script src="{{asset('calender/js/main.js')}}"></script>
+
 <!-- Logout Modal -->
 <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -34,3 +41,4 @@
         </div>
     </div>
 </div>
+

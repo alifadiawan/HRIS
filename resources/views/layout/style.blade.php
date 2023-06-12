@@ -17,3 +17,6 @@
 
  <!-- Template Main CSS File -->
  <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
+
+ <!-- Dashboard Calender -->
+ <link rel="stylesheet" href="{{asset('calender/css/style.css')}}">
