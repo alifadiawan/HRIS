@@ -16,7 +16,8 @@
 
                 <!-- payroll summary -->
                 <div class="col-lg-8">
-                    <div class="card" style="height: 34.5rem">
+                    <div class="card" style="height: 34.8rem">
+                    {{-- <div class="card"> --}}
                         <div class="card-body">
                             <div class="row align-items-center">
                                 <div class="col-10">
@@ -40,14 +41,15 @@
                                     <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: orange;"></i>Net Salary
                                 </div>
                                 <div class="col">
-                                    <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: rgb(105, 211, 109);"></i>Gross Salary
+                                    <i class="fa-solid fa-square fa-2xl me-2 p-0"
+                                        style="color: rgb(105, 211, 109);"></i>Gross Salary
                                 </div>
                             </div>
 
                             <!-- Line Chart -->
                             <div id="reportsChart"></div>
                             <!-- End Line Chart -->
-                            
+
                         </div>
                     </div>
                 </div>
@@ -145,7 +147,7 @@
                                             </div>
                                         </div>
                                         <hr class="my-2 align-content-center text-muted">
-                                        
+
                                     </div>
                                 </div>
 
@@ -183,7 +185,8 @@
                                         <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: orange;"></i>15%
                                     </div>
                                     <div class="col-3">
-                                        <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: rgb(105, 211, 109);"></i>17%
+                                        <i class="fa-solid fa-square fa-2xl me-2 p-0"
+                                            style="color: rgb(105, 211, 109);"></i>17%
                                     </div>
                                 </div>
                                 <div class="row text-muted" style="font-size: 13px">
@@ -215,24 +218,197 @@
                 <div class="col-lg-4">
                     <div class="card text-left">
                         <img class="card-img-top" src="holder.js/100px180/" alt="">
-                        <div class="card-body">
-                            <h4 class="card-title">Title</h4>
-                            <p class="card-text">Body</p>
+                        {{-- <div class="card-body m-0 p-0">
+                            <div class="content">
+                                <div class="month">
+                                    <ul>
+                                        <li class="prev">&#10094;</li>
+                                        <li class="next">&#10095;</li>
+                                        <li>
+                                            August<br>
+                                            <span style="font-size:18px">2021</span>
+                                        </li>
+                                    </ul>
+                                </div>
+    
+                                <ul class="weekdays">
+                                    <li>Mo</li>
+                                    <li>Tu</li>
+                                    <li>We</li>
+                                    <li>Th</li>
+                                    <li>Fr</li>
+                                    <li>Sa</li>
+                                    <li>Su</li>
+                                </ul>
+    
+                                <ul class="days">
+                                    <li>1</li>
+                                    <li>2</li>
+                                    <li>3</li>
+                                    <li>4</li>
+                                    <li>5</li>
+                                    <li>6</li>
+                                    <li>7</li>
+                                    <li>8</li>
+                                    <li>9</li>
+                                    <li><span class="active">10</span></li>
+                                    <li>11</li>
+                                    <li>12</li>
+                                    <li>13</li>
+                                    <li>14</li>
+                                    <li>15</li>
+                                    <li>16</li>
+                                    <li>17</li>
+                                    <li>18</li>
+                                    <li>19</li>
+                                    <li>20</li>
+                                    <li>21</li>
+                                    <li>22</li>
+                                    <li>23</li>
+                                    <li>24</li>
+                                    <li>25</li>
+                                    <li>26</li>
+                                    <li>27</li>
+                                    <li>28</li>
+                                    <li>29</li>
+                                    <li>30</li>
+                                    <li>31</li>
+                                </ul>
+                            </div>
+                        </div> --}}
+                        <div class="card-body m-0 p-0">
+                            <div class="content mt-3">
+                                <div class="calendar calendar-first" id="calendar_first">
+                                <div class="calendar_header">
+                                    <button class="switch-month switch-left"> <i class="fa fa-chevron-left"></i></button>
+                                     <h2></h2>
+                                    <button class="switch-month switch-right"> <i class="fa fa-chevron-right"></i></button>
+                                </div>
+                                <div class="calendar_weekdays"></div>
+                                <div class="calendar_content"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
+
     </section>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        body {
+            font-family: Verdana, sans-serif;
+        }
+
+        .month {
+            padding: 70px 25px;
+            width: 100%;
+            background: #1abc9c;
+            text-align: center;
+        }
+
+        .month ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        .month ul li {
+            color: white;
+            font-size: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .month .prev {
+            float: left;
+            padding-top: 10px;
+        }
+
+        .month .next {
+            float: right;
+            padding-top: 10px;
+        }
+
+        .weekdays {
+            margin: 0;
+            padding: 10px 0;
+            background-color: #ddd;
+        }
+
+        .weekdays li {
+            display: inline-block;
+            width: 13.6%;
+            color: #666;
+            text-align: center;
+        }
+
+        .days {
+            padding: 10px 0;
+            background: #eee;
+            margin: 0;
+        }
+
+        .days li {
+            list-style-type: none;
+            display: inline-block;
+            width: 13.6%;
+            text-align: center;
+            margin-bottom: 5px;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .days li .active {
+            padding: 5px;
+            background: #1abc9c;
+            color: white !important
+        }
+
+        /* Add media queries for smaller screens */
+        @media screen and (max-width:720px) {
+
+            .weekdays li,
+            .days li {
+                width: 13.1%;
+            }
+        }
+
+        @media screen and (max-width: 420px) {
+
+            .weekdays li,
+            .days li {
+                width: 12.5%;
+            }
+
+            .days li .active {
+                padding: 2px;
+            }
+        }
+
+        @media screen and (max-width: 290px) {
+
+            .weekdays li,
+            .days li {
+                width: 12.2%;
+            }
+        }
+
         /* Time off */
         .time-off {
             /* max-height: 16.7rem;  */
-            max-height: 14rem; 
-            overflow-y: scroll; 
-            overflow-x:hidden;
+            max-height: 14rem;
+            overflow-y: scroll;
+            overflow-x: hidden;
         }
 
 

@@ -12,3 +12,9 @@
 
 <!-- Template Main JS File -->
 <script src="{{ asset('assets/js/main.js') }}"></script>
+
+<!-- Calender Dashboard -->
+<script src="{{asset('calender/js/jquery.min.js')}}"></script>
+<script src="{{asset('calender/js/popper.js')}}"></script>
+<script src="{{asset('calender/js/bootstrap.min.js')}}"></script>
+<script src="{{asset('calender/js/main.js')}}"></script>
