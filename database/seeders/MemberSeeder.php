@@ -22,12 +22,22 @@ class MemberSeeder extends Seeder
                 'nik'=>'12312913',
                 'alamat'=>'eakeakeak',
                 'jk'=>'laki',
-                'tgl_lahir'=>carbon::parse('18-11-2005'),
+                'tgl_lahir'=>Carbon::parse('18-11-2005'),
+                // 'foto'=>'',
+                'user_id'=>1,
+            ],
+            [
+                'nama'=>'steven',
+                'no_hp'=>'089657280708',
+                'nik'=>'12312914',
+                'alamat'=>'hayoo dimana',
+                'jk'=>'laki',
+                'tgl_lahir'=>Carbon::parse('18-11-2005'),
                 // 'foto'=>'',
                 'user_id'=>1,
             ],
         ];
 
-        member::inseret($member);
+        Member::insert($member);
     }
 }
