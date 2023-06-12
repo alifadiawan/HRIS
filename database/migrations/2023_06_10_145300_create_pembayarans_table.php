@@ -17,17 +17,15 @@ return new class extends Migration
             $table->text('note_admin');
             $table->string('status');
             $table->unsignedBigInteger('transaksi_id');
-            $table->foreign('transaksi_id')->references('id')->on('transaksis')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
-            $table->unsignedBigInteger('bank_id');
+            $table->foreign('transaksi_id')->references('id')->on('transaksis');
+            $table->unsignedBigInteger('bank_id')->nullable();
             $table->foreign('bank_id')->references('id')->on('banks')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
-            $table->unsignedBigInteger('ewallet_id');
+                ->onUpdate('Cascade')
+                ->onDelete('Cascade');
+            $table->unsignedBigInteger('ewallet_id')->nullable();
             $table->foreign('ewallet_id')->references('id')->on('ewallets')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
+                ->onUpdate('Cascade')
+                ->onDelete('Cascade');
             $table->timestamps();
         });
     }

@@ -19,11 +19,11 @@ return new class extends Migration
             $table->string('alamat');
             $table->string('jk');
             $table->date('tgl_lahir');
-            $table->string('foto');
+            $table->string('foto')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->timestamps();
         });
     }

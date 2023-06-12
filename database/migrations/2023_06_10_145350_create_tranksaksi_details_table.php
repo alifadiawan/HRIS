@@ -17,12 +17,12 @@ return new class extends Migration
             $table->string('subtotal');
             $table->unsignedBigInteger('transaksi_id');
             $table->foreign('transaksi_id')->references('id')->on('transaksis')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
-                  $table->unsignedBigInteger('pembayaran_id');
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->unsignedBigInteger('pembayaran_id');
             $table->foreign('pembayaran_id')->references('id')->on('pembayarans')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->timestamps();
         });
     }
