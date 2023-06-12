@@ -53,4 +53,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(Task::class);
     }
+
+    public function member()
+    {
+        return $this->hasOne(Member::class);
+    }
+
+    public function hasIncompleteProfile()
+    {
+        return !$this->member;
+    }
+
+    public function hasProfile()
+    {
+        return $this->member !== null;
+    }
 }

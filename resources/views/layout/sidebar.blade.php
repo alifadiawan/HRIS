@@ -6,7 +6,7 @@
             <span class="d-none d-lg-block">HRIS.co</span>
         </a>
     </div>
-    
+    <x-notify::notify />
     <li class="nav-heading">Pages</li>
 
     <li class="nav-item">
@@ -64,11 +64,11 @@
         </ul>
     </li><!-- End Icons Nav -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-login.html">
+        <a class="nav-link collapsed" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
             <i class="fa-solid fa-right-from-bracket fa-lg"></i>
-          <span>Log out</span>
+            <span>Log out</span>
         </a>
-      </li>
+    </li>
 
     
 
