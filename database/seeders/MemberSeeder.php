@@ -34,7 +34,27 @@ class MemberSeeder extends Seeder
                 'jk'=>'laki',
                 'tgl_lahir'=>Carbon::parse('18-11-2005'),
                 // 'foto'=>'',
-                'user_id'=>1,
+                'user_id'=>2,
+            ],
+            [
+                'nama'=>'employee1',
+                'no_hp'=>'089657280708',
+                'nik'=>'12312914',
+                'alamat'=>'hayoo dimana',
+                'jk'=>'laki',
+                'tgl_lahir'=>Carbon::parse('18-11-2005'),
+                // 'foto'=>'',
+                'user_id'=>5,
+            ],
+            [
+                'nama'=>'employee2',
+                'no_hp'=>'089657280708',
+                'nik'=>'12312914',
+                'alamat'=>'hayoo dimana',
+                'jk'=>'laki',
+                'tgl_lahir'=>Carbon::parse('18-11-2005'),
+                // 'foto'=>'',
+                'user_id'=>6,
             ],
         ];
 
