@@ -13,8 +13,13 @@ return new class extends Migration
     {
         Schema::create('progress', function (Blueprint $table) {
             $table->id();
-            $table->string('tipe_progress');
-            // $table->string('');
+            $table->unsignedBigInteger('tasks_id');
+            $table->foreign('tasks_id')->references('id')->on('tasks')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
+            $table->string('progress');
+            // $table->string('bukti');
+            $table->string('keterangan');
             $table->timestamps();
         });
     }
