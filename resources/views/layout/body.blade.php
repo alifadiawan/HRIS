@@ -24,9 +24,9 @@
 <body>
 
   <!-- ======= Header ======= -->
-  {{-- <header id="header" class="header fixed-top d-flex align-items-center">
+  <header id="header" class="header fixed-top d-flex align-items-center">
     @include('layout.topbar')
-  </header> --}}
+  </header>
   <!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
@@ -40,11 +40,11 @@
 
 
     <!-- sidebar toggler -->
-    <div class="d-flex flex-row">
+    {{-- <div class="d-flex flex-row">
       <a href="#" class="btn btn-lg p-0">
         <i class="bi bi-list toggle-sidebar-btn"></i>
       </a>
-    </div>
+    </div> --}}
 
 
 
