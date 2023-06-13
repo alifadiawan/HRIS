@@ -40,8 +40,14 @@ class UserSeeder extends Seeder
                 'role_id' =>1,
             ],
             [
-                'username' =>'employee',
-                'email' =>'employee@gmail.com',
+                'username' =>'employee1',
+                'email' =>'employee1@gmail.com',
+                'password' =>bcrypt('123'),
+                'role_id' =>2,
+            ],
+            [
+                'username' =>'employee2',
+                'email' =>'employee2@gmail.com',
                 'password' =>bcrypt('123'),
                 'role_id' =>2,
             ],

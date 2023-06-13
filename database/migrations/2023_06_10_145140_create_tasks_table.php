@@ -1,0 +1,46 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('tasks', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('goal_id');
+            $table->string('goal_name');
+            $table->unsignedBigInteger('owner_id');
+            $table->foreign('owner_id')->references('id')->on('members')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->bigInteger('goal_target');
+            $table->integer('goal_progress')->nullable();
+            $table->unsignedBigInteger('tipe_id');
+            $table->foreign('tipe_id')->references('id')->on('tipe_progress')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->string('grade')->nullable();
+            $table->string('status');
+            $table->string('tanggal_target');
+            $table->unsignedBigInteger('member_id');
+            $table->foreign('member_id')->references('id')->on('members')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('tasks');
+    }
+};
