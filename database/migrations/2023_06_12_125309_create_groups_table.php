@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('groups', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nama_group');
-            $table->unsignedBigInteger('admin_id');
-            $table->foreign('admin_id')->references('id')->on('users')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
-            $table->unsignedBigInteger('member_id');
-            $table->foreign('member_id')->references('id')->on('members')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
+            // $table->unsignedBigInteger('admin_id');
+            // $table->foreign('admin_id')->references('id')->on('users')
+            //     ->onDelete('cascade')
+            //     ->onUpdate('cascade');
+            // $table->unsignedBigInteger('member_id');
+            // $table->foreign('member_id')->references('id')->on('members')
+            //     ->onDelete('cascade')
+            //     ->onUpdate('cascade');
             $table->timestamps();
         });
     }
