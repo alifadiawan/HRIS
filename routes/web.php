@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,12 +34,10 @@ Route::middleware(['web','guest'])->group(function () {
 Route::middleware('auth')->group(function () {
 
     //dashboard
-    Route::resource('/dashboard', DashboardController::class);
+    Route::resource('dashboard', DashboardController::class);
 
     //Goals Team
-    Route::get('/goals', function () {
-        return view('goals');
-    });
+    Route::resource('goals', TaskController::class);
 
     //logout
     Route::post('logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');

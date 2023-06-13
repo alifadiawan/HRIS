@@ -20,7 +20,7 @@ class TipeSeeder extends Seeder
                 'nama_tipe' =>'nominal',
             ],
             [
-                'nama_tipe' =>'presentase',
+                'nama_tipe' =>'persentase',
             ],
             [
                 'nama_tipe' =>'idr',

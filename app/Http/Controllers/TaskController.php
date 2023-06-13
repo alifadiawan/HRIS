@@ -12,7 +12,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        $task = Task::all();
+        return view('kpi.goals', compact('task'));
     }
 
     /**

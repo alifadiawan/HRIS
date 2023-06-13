@@ -14,4 +14,14 @@ class Task extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'owner_id');
+    }
+
+    public function tipe_progress()
+    {
+        return $this->belongsTo(TipeProgress::class, 'tipe_id');
+    }
 }

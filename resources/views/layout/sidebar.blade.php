@@ -6,7 +6,6 @@
             <span class="d-none d-lg-block">HRIS.co</span>
         </a>
     </div>
-    <x-notify::notify />
     <li class="nav-heading">Pages</li>
 
     <li class="nav-item">

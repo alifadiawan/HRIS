@@ -48,21 +48,84 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($task as $t)
                         <tr>
                             <td scope="row"><a href="" class="href"><i
-                                        class="fa-solid fa-chevron-right me-3"></i></a> #0861f</td>
-                            <td class="fw-bold">HR Company bookings target for Q3 <span style="font-weight: normal">
-                                    <p>1 Jul 2023 - 15 Agustus 2023</p>
+                                        class="fa-solid fa-chevron-right me-3"></i></a> {{$t->goal_id}}</td>
+                            <td class="fw-bold">{{$t->goal_name}} <span style="font-weight: normal">
+                                    <p>{{date('d F Y', strtotime($t->created_at))}} - {{date('d F Y', strtotime($t->tanggal_target))}}</p>
                                 </span></td>
-                            <td>Self</td>
-                            <td>0 / Rp 5.000.000.000 <div class="progress">
-                                    <div class="progress-bar bg-secondary" style="width:90%"></div>
+                            <td>{{$t->owner->username}}</td>
+                            @if($t->tipe_progress->nama_tipe == 'idr')
+                            <td>{{$t->goal_progress}} / Rp. {{number_format($t->goal_target)}} <div class="progress">
+                                    @if($t->status == 'todo')
+                                    <div class="progress-bar bg-secondary" style="width:{{$t->goal_progress / $t->goal_target * 100}}%"></div>
+                                    @endif
+                                    @if($t->status == 'doing')
+                                    <div class="progress-bar bg-primary" style="width:{{$t->goal_progress / $t->goal_target * 100}}%"></div>
+                                    @endif
+                                    @if($t->status == 'checking')
+                                    <div class="progress-bar bg-warning" style="width:{{$t->goal_progress / $t->goal_target * 100}}%"></div>
+                                    @endif
+
+                                    @if($t->status == 'done')
+                                    <div class="progress-bar bg-success" style="width:{{$t->goal_progress / $t->goal_target * 100}}%"></div>
+                                    @endif
                                 </div>
                             </td>
-                            <td>Not Updated</td>
+                            @endif
+                            @if($t->tipe_progress->nama_tipe == 'persentase')
+                            <td>{{$t->goal_progress}}% / {{$t->goal_target}}% <div class="progress">
+                                    @if($t->status == 'todo')
+                                    <div class="progress-bar bg-secondary" style="width:{{$t->goal_progress / $t->goal_target * 100}}%"></div>
+                                    @endif
+                                    @if($t->status == 'doing')
+                                    <div class="progress-bar bg-primary" style="width:{{$t->goal_progress / $t->goal_target * 100}}%"></div>
+                                    @endif
+                                    @if($t->status == 'checking')
+                                    <div class="progress-bar bg-warning" style="width:{{$t->goal_progress / $t->goal_target * 100}}%"></div>
+                                    @endif
+
+                                    @if($t->status == 'done')
+                                    <div class="progress-bar bg-success" style="width:{{$t->goal_progress / $t->goal_target * 100}}%"></div>
+                                    @endif
+                                </div>
+                            </td>
+                            @endif
+                            @if($t->tipe_progress->nama_tipe == 'nominal')
+                            <td>{{$t->goal_progress}} / {{number_format($t->goal_target)}} <div class="progress">
+                                    @if($t->status == 'todo')
+                                    <div class="progress-bar bg-secondary" style="width:{{$t->goal_progress / $t->goal_target * 100}}%"></div>
+                                    @endif
+                                    @if($t->status == 'doing')
+                                    <div class="progress-bar bg-primary" style="width:{{$t->goal_progress / $t->goal_target * 100}}%"></div>
+                                    @endif
+                                    @if($t->status == 'checking')
+                                    <div class="progress-bar bg-warning" style="width:{{$t->goal_progress / $t->goal_target * 100}}%"></div>
+                                    @endif
+
+                                    @if($t->status == 'done')
+                                    <div class="progress-bar bg-success" style="width:{{$t->goal_progress / $t->goal_target * 100}}%"></div>
+                                    @endif
+                                </div>
+                            </td>
+                            @endif
+                            @if($t->status == 'todo')
+                            <td class="text-capitalize">{{$t->status}}</td>
+                            @endif
+                            @if($t->status == 'doing')
+                            <td class="text-capitalize text-primary">{{$t->status}}</td>
+                            @endif
+                            @if($t->status == 'checking')
+                            <td class="text-capitalize text-warning">{{$t->status}}</td>
+                            @endif
+                            @if($t->status == 'done')
+                            <td class="text-capitalize text-success">{{$t->status}}</td>
+                            @endif
                             <td><i class="fa-solid fa-ellipsis-vertical"></i></td>
                         </tr>
-                        <tr>
+                        @endforeach
+                        <!-- <tr>
                             <td scope="row"><a href="" class="href"><i
                                         class="fa-solid fa-chevron-right me-3"></i></a> #0861f</td>
                             <td class="fw-bold">HR Company bookings target for Q3 <span style="font-weight: normal">
@@ -103,7 +166,7 @@
                             </td>
                             <td>Not Updated</td>
                             <td><i class="fa-solid fa-ellipsis-vertical"></i></td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
             </div>
