@@ -80,7 +80,7 @@
                                             <div class="col">
                                                 Haffiyan
                                                 <br>
-                                                <div class="status text-muted" style="font-size: 13px">Sick</div>
+                                                <div class="status text-muted" style="font-size: 13px">Ijin</div>
                                             </div>
                                             <div class="col">
                                                 <div class="text-danger text-end">5 - 10 Juni 2021</div>
