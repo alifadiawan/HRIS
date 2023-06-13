@@ -26,12 +26,19 @@ Route::middleware(['web','guest'])->group(function () {
     //register
     Route::get('sign-up', [RegisterController::class, 'index']);
     Route::post('sign-up', [RegisterController::class, 'register'])->name('register');
+
+    
 });
 
 Route::middleware('auth')->group(function () {
 
     //dashboard
     Route::resource('/dashboard', DashboardController::class);
+
+    //Goals Team
+    Route::get('/goals', function () {
+        return view('goals');
+    });
 
     //logout
     Route::post('logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');

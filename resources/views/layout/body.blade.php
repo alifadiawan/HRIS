@@ -24,6 +24,7 @@
 <body>
 
   <!-- ======= Header ======= -->
+  @notifyJs
   <header id="header" class="header fixed-top d-flex align-items-center">
     @include('layout.topbar')
   </header>
@@ -81,7 +82,6 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
 @include('layout.script')
-@notifyJs
 </body>
 
 </html>
