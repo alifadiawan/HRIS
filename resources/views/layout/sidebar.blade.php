@@ -9,7 +9,7 @@
     <li class="nav-heading">Pages</li>
 
     <li class="nav-item">
-        <a class="nav-link " href="index.html">
+        <a class="nav-link " href="/dashboard">
             <i class="fa-solid fa-border-all fa-lg"></i>
             <span>Dashboard</span>
         </a>
