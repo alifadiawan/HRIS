@@ -51,8 +51,8 @@
                 </a>
             </li>
             <li>
-                <a href="/reports">
-                    <i class="bi bi-circle"></i><span>Sales Reports</span>
+                <a href="/group-data">
+                    <i class="bi bi-circle"></i><span>Group Data</span>
                 </a>
             </li>
         </ul>

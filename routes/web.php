@@ -18,6 +18,11 @@ use App\Http\Controllers\TaskController;
 */
 
 
+Route::get('group-data', function () {
+    return view('kpi.groupdata');
+});
+
+
 
 Route::middleware(['web', 'guest'])->group(function () {
     //login
