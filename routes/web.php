@@ -24,7 +24,7 @@ Route::get('group-data', function () {
 
 
 
-Route::middleware(['web','guest'])->group(function () {
+Route::middleware(['web', 'guest'])->group(function () {
     //login
     Route::get('sign-in', [LoginController::class, 'index'])->name('sign-in');
     Route::post('sign-in', [LoginController::class, 'authenticate']);
@@ -32,8 +32,6 @@ Route::middleware(['web','guest'])->group(function () {
     //register
     Route::get('sign-up', [RegisterController::class, 'index']);
     Route::post('sign-up', [RegisterController::class, 'register'])->name('register');
-
-    
 });
 
 Route::middleware('auth')->group(function () {
@@ -43,6 +41,18 @@ Route::middleware('auth')->group(function () {
 
     //Goals Team
     Route::resource('goals', TaskController::class);
+   
+    //Input Item Data 
+    Route::get('/input', function () {
+        return view('kpi.input');
+    });
+
+    //Sales Reports
+    Route::get('/reports', function () {
+        return view('kpi.reports');
+    });
+
+
 
     //logout
     Route::post('logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
