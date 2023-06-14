@@ -54,14 +54,9 @@ class User extends Authenticatable
         return $this->hasMany(Task::class);
     }
 
-    public function task_owner()
-    {
-        return $this->hasMany(Task::class, 'owner_id');
-    }
-
     public function member()
     {
-        return $this->hasOne(Member::class);
+        return $this->hasOne(Member::class, 'user_id');
     }
 
     public function hasIncompleteProfile()

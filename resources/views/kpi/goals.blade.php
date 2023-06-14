@@ -74,7 +74,7 @@
                             <td class="fw-bold">{{$t->goal_name}} <span style="font-weight: normal">
                                     <p>{{date('d F Y', strtotime($t->created_at))}} - {{date('d F Y', strtotime($t->tanggal_target))}}</p>
                                 </span></td>
-                            <td>{{$t->owner->username}}</td>
+                            <td>{{$t->owner->nama}}</td>
                             <td>{{$t->member->nama}}</td>
                             @if($t->tipe_progress->nama_tipe == 'idr')
                             <td>{{$t->goal_progress}} / Rp. {{number_format($t->goal_target)}} <div class="progress">

@@ -58,7 +58,7 @@ class TaskSeeder extends Seeder
             [
                 'goal_id'=>'#3489',
                 'goal_name'=>'HR company bookings target for Q4',
-                'owner_id'=>3,
+                'owner_id'=>2,
                 'goal_target'=>200,
                 'goal_progress'=>200,
                 'tipe_id'=>1,

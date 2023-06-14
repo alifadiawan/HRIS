@@ -22,7 +22,7 @@ class Task extends Model
 
     public function owner()
     {
-        return $this->belongsTo(User::class, 'owner_id');
+        return $this->belongsTo(Member::class, 'owner_id');
     }
 
     public function tipe_progress()
