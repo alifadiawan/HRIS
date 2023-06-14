@@ -50,6 +50,11 @@
                     <i class="bi bi-circle"></i><span>Goals Team</span>
                 </a>
             </li>
+            <li>
+                <a href="/reports">
+                    <i class="bi bi-circle"></i><span>Sales Reports</span>
+                </a>
+            </li>
         </ul>
     </li><!-- End Icons Nav -->
     <li class="nav-item">
