@@ -12,11 +12,16 @@ class Member extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function task()
     {
         return $this->belongsTo(Task::class, 'member_id');
+    }
+
+    public function owner_task()
+    {
+        return $this->belongsTo(Task::class, 'owner_id');
     }
 }
