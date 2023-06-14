@@ -20,14 +20,14 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->bigInteger('goal_target');
-            $table->integer('goal_progress')->nullable();
+            $table->integer('goal_progress')->default(0);
             $table->unsignedBigInteger('tipe_id');
             $table->foreign('tipe_id')->references('id')->on('tipe_progress')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->string('grade')->nullable();
             $table->string('status');
-            $table->string('tanggal_target');
+            $table->date('tanggal_target');
             $table->unsignedBigInteger('member_id');
             $table->foreign('member_id')->references('id')->on('members')
                 ->onDelete('cascade')

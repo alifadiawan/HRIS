@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Models\TipeProgress;
+use App\Models\User;
+use App\Models\Member;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -13,7 +16,14 @@ class TaskController extends Controller
     public function index()
     {
         $task = Task::all();
-        return view('kpi.goals', compact('task'));
+        $member = Member::whereHas('user', function($query) {
+            $query->whereHas('role', function($user) {
+                $user->where('role', '!=', 'admin');
+            });
+        })->get();
+        // return $member;
+        $tipe = TipeProgress::all();
+        return view('kpi.goals', compact('task', 'member', 'tipe'));
     }
 
     /**
@@ -28,8 +38,30 @@ class TaskController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //
+    {   
+        $data = $request->validate([
+            'goal_id' => 'required|numeric|min:1000',
+            'goal_name' => 'required',
+            'goal_target' => 'required|numeric|min:1',
+            'tipe_id' => 'required',
+            'tanggal_target' => 'required',
+            'member_id' => 'required',
+            'status' => 'required',
+        ]);
+
+        $task = new Task();
+        $task->goal_id = '#'.$data['goal_id'];
+        $task->goal_name = $data['goal_name'];
+        $task->owner_id = auth()->user()->id;
+        $task->goal_target = $data['goal_target'];
+        $task->tipe_id = $data['tipe_id'];
+        $task->tanggal_target = $data['tanggal_target'];
+        $task->member_id = $data['member_id'];
+        $task->status = $data['status'];
+        $task->save();
+
+        notify()->success('Tugas Telah Diberikan !', 'Tugas');
+        return redirect('goals');
     }
 
     /**
