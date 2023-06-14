@@ -64,6 +64,11 @@ class User extends Authenticatable
         return $this->hasOne(Member::class);
     }
 
+    public function divisi()
+    {
+        return $this->belongsTo(Divisi::class);
+    }
+
     public function hasIncompleteProfile()
     {
         return !$this->member;

@@ -6,7 +6,11 @@
 
         <!-- page title -->
         <div class="page-title">
-            <h4 class="fw-bold">Hi @if(auth()->user()->hasProfile()) {{auth()->user()->member->nama}} @else {{auth()->user()->username}} @endif, How are you ? 👋</h4>
+            <h4 class="fw-bold">Hi @if (auth()->user()->hasProfile())
+                    {{ auth()->user()->member->nama }}
+                @else
+                    {{ auth()->user()->username }}
+                @endif, How are you ? 👋</h4>
             <p class="text-muted">See a summary of your employee's progress</p>
         </div>
 
@@ -17,7 +21,7 @@
                 <!-- payroll summary -->
                 <div class="col-lg-8">
                     <div class="card" style="height: 34.8rem">
-                    {{-- <div class="card"> --}}
+                        {{-- <div class="card"> --}}
                         <div class="card-body">
                             <div class="row align-items-center">
                                 <div class="col-10">
@@ -279,16 +283,28 @@
                         <div class="card-body m-0 p-0">
                             <div class="content mt-3">
                                 <div class="calendar calendar-first" id="calendar_first">
-                                <div class="calendar_header">
-                                    <button class="switch-month switch-left"> <i class="fa fa-chevron-left"></i></button>
-                                     <h2></h2>
-                                    <button class="switch-month switch-right"> <i class="fa fa-chevron-right"></i></button>
-                                </div>
-                                <div class="calendar_weekdays"></div>
-                                <div class="calendar_content"></div>
+                                    <div class="calendar_header">
+                                        <button class="switch-month switch-left"> <i
+                                                class="fa fa-chevron-left"></i></button>
+                                        <h2></h2>
+                                        <button class="switch-month switch-right"> <i
+                                                class="fa fa-chevron-right"></i></button>
+                                    </div>
+                                    <div class="calendar_weekdays"></div>
+                                    <div class="calendar_content"></div>
                                 </div>
                             </div>
                         </div>
+                        {{-- <b-row>
+                            <b-col md="auto">
+                                <b-calendar v-model="value" @context="onContext" locale="en-US"></b-calendar>
+                            </b-col>
+                            <b-col>
+                                <p>Value: <b>'{{ value }}'</b></p>
+                                <p class="mb-0">Context:</p>
+                                <pre class="small">{{ context }}</pre>
+                            </b-col>
+                        </b-row> --}}
                     </div>
                 </div>
             </div>
@@ -449,6 +465,7 @@
 
 
     <script>
+        // profit margin analysis
         document.addEventListener("DOMContentLoaded", () => {
             new Chart(document.querySelector('#barChart'), {
                 type: 'bar',
@@ -487,10 +504,8 @@
                 }
             });
         });
-    </script>
-    <!-- End Bar CHart -->
 
-    <script>
+        // payroll summarry
         document.addEventListener("DOMContentLoaded", () => {
             new ApexCharts(document.querySelector("#reportsChart"), {
                 series: [{
@@ -545,5 +560,75 @@
                 }
             }).render();
         });
+        
+        // calendar
+        // Mendapatkan elemen-elemen yang diperlukan
+        const calendarHeader = document.querySelector('.calendar_header h2');
+        const calendarWeekdays = document.querySelector('.calendar_weekdays');
+        const calendarContent = document.querySelector('.calendar_content');
+        const switchLeft = document.querySelector('.switch-left');
+        const switchRight = document.querySelector('.switch-right');
+
+        // Daftar nama-nama hari dalam seminggu
+        const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+        // Fungsi untuk mendapatkan nama bulan berdasarkan indeks bulan
+        function getMonthName(monthIndex) {
+            const months = [
+                'January', 'February', 'March', 'April', 'May', 'June', 'July',
+                'August', 'September', 'October', 'November', 'December'
+            ];
+            return months[monthIndex];
+        }
+
+        // Fungsi untuk mengisi konten kalender
+        function populateCalendar(year, month) {
+            calendarHeader.textContent = getMonthName(month) + ' ' + year;
+
+            // Menghapus konten hari-hari sebelumnya
+            calendarWeekdays.innerHTML = '';
+
+            // Mengisi konten nama-nama hari
+            weekdays.forEach(function(weekday) {
+                const dayElement = document.createElement('div');
+                dayElement.textContent = weekday;
+                calendarWeekdays.appendChild(dayElement);
+            });
+
+            // Menghapus konten tanggal-tanggal sebelumnya
+            calendarContent.innerHTML = '';
+
+            // Mendapatkan tanggal awal dan akhir bulan
+            const firstDay = new Date(year, month, 1).getDay();
+            const lastDate = new Date(year, month + 1, 0).getDate();
+
+            // Mengisi konten tanggal-tanggal
+            for (let date = 1; date <= lastDate; date++) {
+                const dayElement = document.createElement('div');
+                dayElement.textContent = date;
+                calendarContent.appendChild(dayElement);
+            }
+        }
+
+        // Mendapatkan tanggal dan tahun saat ini
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
+        const currentMonth = currentDate.getMonth();
+
+        // Mengisi konten kalender dengan bulan dan tahun saat ini
+        populateCalendar(currentYear, currentMonth);
+
+        // Event listener untuk tombol beralih ke bulan sebelumnya
+        switchLeft.addEventListener('click', function() {
+            const previousMonth = currentMonth - 1;
+            populateCalendar(currentYear, previousMonth);
+        });
+
+        // Event listener untuk tombol beralih ke bulan berikutnya
+        switchRight.addEventListener('click', function() {
+            const nextMonth = currentMonth + 1;
+            populateCalendar(currentYear, nextMonth);
+        });
     </script>
+
 @endsection
