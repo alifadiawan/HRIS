@@ -8,10 +8,18 @@
         </div>
         <div class="row">
             <div class="col">
-                <button class="btn btn-info mb-2 text-white" data-bs-toggle="modal" data-bs-target="#exampleModal">Tambah Tugas</button>
+                <button class="btn btn-info mb-2 text-white" data-bs-toggle="modal" data-bs-target="#addTask">Tambah Tugas</button>
             </div>
         </div>
-
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <!-- table -->
         <div class="content ">
             <div class="card">
@@ -49,6 +57,7 @@
                             <th>Goal ID</th>
                             <th>Goal Name</th>
                             <th>Goal Owner</th>
+                            <th>To</th>
                             <th>Goal Progress</th>
                             <th>Status</th>
                             <th></th>
@@ -63,6 +72,7 @@
                                     <p>{{date('d F Y', strtotime($t->created_at))}} - {{date('d F Y', strtotime($t->tanggal_target))}}</p>
                                 </span></td>
                             <td>{{$t->owner->username}}</td>
+                            <td>{{$t->member->nama}}</td>
                             @if($t->tipe_progress->nama_tipe == 'idr')
                             <td>{{$t->goal_progress}} / Rp. {{number_format($t->goal_target)}} <div class="progress">
                                     @if($t->status == 'todo')
@@ -181,7 +191,7 @@
 
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addTask" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="head px-3 pt-3">
@@ -196,54 +206,48 @@
                 </div>
                 <hr class="mb-0">
                 <div class="modal-body">
-                    <form action="">
-                        <div class="form-gorup">
-                            <label for="" class="fw-bold">Nama Tugas</label>
-                            <input type="text" class="form-control" placeholder="nama tugas" name="" id="">
+                    <form action="{{route('goals.store')}}" method="post">
+                        @csrf
+                        <div class="form-group">
+                            <label for="goal_id">Goal ID</label>
+                            <div class="input-group">
+                                <span class="input-group-text" id="inputGroupPrepend">#</span>
+                                <input type="number" name="goal_id" id="goal_id" class="form-control" placeholder="7777" min="1000" required>
+                            </div>
+                        </div>
+                        <div class="form-gorup mt-2">
+                            <label for="goal_name" class="fw-bold">Goal Name</label>
+                            <input type="text" class="form-control" placeholder="nama tugas" name="goal_name" id="goal_name" required>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="goal_target">Goal Target</label>
+                            <input type="number" name="goal_target" id="goal_target" class="form-control" placeholder="0" min="1" required>
                         </div>
                         <div class="form-group mt-2">
                             <label for="" class="fw-bold">Tipe Progress</label>
-                            <select name="" id="" class="form-select">
+                            <select name="tipe_id" id="tipe_id" class="form-select text-uppercase" required>
                                 <option value="">Pilih tipe progress</option>
-                                <option value="">Persentasi</option>
-                                <option value="">Rupiah</option>
-                                <option value="">3</option>
+                                @foreach($tipe as $t)
+                                <option value="{{$t->id}}">{{$t->nama_tipe}}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group mt-2">
-                            <label for="" class="fw-bold">Tenggat</label>
-                            <input type="date" class="form-control" name="" id="">
+                            <label for="tanggal_target" class="fw-bold">Tenggat</label>
+                            <input type="date" class="form-control" name="tanggal_target" id="tanggal_target" min="{{date('Y-m-d')}}" required>
                         </div>
                         <div class="form-group mt-2">
-                            <label for="Employee" class="fw-bold">Employee</label>
-                            <select name="" id="" class="form-select">
-                                <option value="">seekfni</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
-                                <option value="">3</option>
-                                <option value="">4</option>
-                                <option value="">5</option>
-                                <option value="">6</option>
-                                <option value="">7</option>
-                                <option value="">8</option>
-                                <option value="">9</option>
-                                <option value="">10</option>
-                                <option value="">11</option>
-                                <option value="">12</option>
-                                <option value="">13</option>
-                                <option value="">14</option>
-                                <option value="">15</option>
-                                <option value="">9</option>
-                                <option value="">9</option>
-                                <option value="">9</option>
-                                <option value="">9</option>
-                                <option value="">9</option>
-                                <option value="">9</option>
-                                <option value="">9</option>
+                            <label for="member_id" class="fw-bold">Employee</label>
+                            <select name="member_id" id="member_id" class="form-select text-capitalize" required>
+                                <option value="">Choose..</option>
+                                @foreach($member as $m)
+                                <option value="{{$m->id}}">{{$m->nama}}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group mt-4">
-                            <a href="" class="btn btn-primary">Submit</a>
+                            <input type="hidden" class="form-control" name="status" value="todo">
+                            <button type="submit" class="btn btn-primary">Submit</button>
                             <a href="" class="btn" data-bs-dismiss="modal">Cancel</a>
                         </div>
                     </form>

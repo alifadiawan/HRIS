@@ -15,6 +15,11 @@ class Task extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function member()
+    {
+        return $this->belongsTo(Member::class, 'member_id');
+    }
+
     public function owner()
     {
         return $this->belongsTo(User::class, 'owner_id');
