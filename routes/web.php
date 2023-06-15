@@ -20,14 +20,14 @@ use App\Http\Controllers\TaskController;
 
 //redirect ke view login
 Route::get('/', function () {
-   return redirect('sign-in');
+    return redirect('sign-in');
 });
 
 
 
-Route::get('group-data', function () {
-    return view('kpi.groupdata');
-});
+// Route::get('group-data', function () {
+//     return view('kpi.groupdata');
+// });
 Route::get('/score-data', function () {
     return view('kpi.score_data');
 });
@@ -51,7 +51,8 @@ Route::middleware('auth')->group(function () {
 
     //Goals Team
     Route::resource('goals', TaskController::class);
-   
+    Route::get('group-data', [TaskController::class,'group_data'])->name('goals.group');
+
     //Input Item Data 
     Route::get('/input', function () {
         return view('kpi.input');

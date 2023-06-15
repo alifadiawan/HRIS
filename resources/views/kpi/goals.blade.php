@@ -8,10 +8,10 @@
         </div>
         <div class="row">
             <div class="col">
-
-                <button class="btn btn-info mb-2 text-white" data-bs-toggle="modal" data-bs-target="#addTask">Tambah
-                    Tugas</button>
-
+                @if (auth()->user()->role == 'admin')
+                    <button class="btn btn-info mb-2 text-white" data-bs-toggle="modal" data-bs-target="#addTask">Tambah
+                        Tugas</button>
+                @endif
             </div>
         </div>
         @if ($errors->any())
@@ -54,40 +54,48 @@
 
                 <!-- Steven -->
 
-            <div class="card-body">
-                <table class="table mt-3 " style="outline: 2px">
-                    <thead class="table-secondary">
-                        <tr style="text-align: start">
-                            <th>Goal ID</th>
-                            <th>Goal Name</th>
-                            <th>Goal Owner</th>
-                            <th>To</th>
-                            <th>Goal Progress</th>
-                            <th>Status</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($task as $t)
-                        <tr>
-                            <td scope="row"><a href="" class="href"><i
-                                        class="fa-solid fa-chevron-right me-3"></i></a> {{$t->goal_id}}</td>
-                            <td class="fw-bold">{{$t->goal_name}} <span style="font-weight: normal">
-                                    <p>{{date('d F Y', strtotime($t->created_at))}} - {{date('d F Y', strtotime($t->tanggal_target))}}</p>
-                                </span></td>
-                            <td>{{$t->owner->nama}}</td>
-                            <td>{{$t->member->nama}}</td>
-                            @if($t->tipe_progress->nama_tipe == 'idr')
-                            <td>{{$t->goal_progress}} / Rp. {{number_format($t->goal_target)}} <div class="progress">
-                                    @if($t->status == 'todo')
-                                    <div class="progress-bar bg-secondary" style="width:{{$t->goal_progress / $t->goal_target * 100}}%"></div>
-                                    @endif
-                                    @if($t->status == 'doing')
-                                    <div class="progress-bar bg-primary" style="width:{{$t->goal_progress / $t->goal_target * 100}}%"></div>
-                                    @endif
-                                    @if($t->status == 'checking')
-                                    <div class="progress-bar bg-warning" style="width:{{$t->goal_progress / $t->goal_target * 100}}%"></div>
-                                    @endif
+                <div class="card-body">
+                    <table class="table mt-3 " style="outline: 2px">
+                        <thead class="table-secondary">
+                            <tr style="text-align: start">
+                                <th>Goal ID</th>
+                                <th>Goal Name</th>
+                                <th>Goal Owner</th>
+                                <th>To</th>
+                                <th>Goal Progress</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($task as $t)
+                                <tr>
+                                    <td scope="row"><a href="" class="href"><i
+                                                class="fa-solid fa-chevron-right me-3"></i></a> {{ $t->goal_id }}</td>
+                                    <td class="fw-bold">{{ $t->goal_name }} <span style="font-weight: normal">
+                                            <p>{{ date('d F Y', strtotime($t->created_at)) }} -
+                                                {{ date('d F Y', strtotime($t->tanggal_target)) }}</p>
+                                        </span></td>
+                                    <td>{{ $t->owner->nama }}</td>
+                                    <td>{{ $t->member->nama }}</td>
+                                    @if ($t->tipe_progress->nama_tipe == 'idr')
+                                        <td>{{ $t->goal_progress }} / Rp. {{ number_format($t->goal_target) }} <div
+                                                class="progress">
+                                                @if ($t->status == 'todo')
+                                                    <div class="progress-bar bg-secondary"
+                                                        style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
+                                                    </div>
+                                                @endif
+                                                @if ($t->status == 'doing')
+                                                    <div class="progress-bar bg-primary"
+                                                        style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
+                                                    </div>
+                                                @endif
+                                                @if ($t->status == 'checking')
+                                                    <div class="progress-bar bg-warning"
+                                                        style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
+                                                    </div>
+                                                @endif
 
 
                                                 @if ($t->status == 'done')
@@ -169,7 +177,8 @@
                                         </a>
                                         <ul class="dropdown-menu">
                                             <li><a class="dropdown-item" href="#"><i
-                                                        class="fa-solid fa-clipboard-check fa-lg"></i>Mark as done</a></li>
+                                                        class="fa-solid fa-clipboard-check fa-lg"></i>Mark as done</a>
+                                            </li>
                                             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#nilai"><i
                                                         class="fa-solid fa-star fa-lg"></i>Beri
                                                     Nilai</a></li>
@@ -206,47 +215,47 @@
                                 </tr>
                             @endforeach
                             <!-- <tr>
-                                                            <td scope="row"><a href="" class="href"><i
-                                                                        class="fa-solid fa-chevron-right me-3"></i></a> #0861f</td>
-                                                            <td class="fw-bold">HR Company bookings target for Q3 <span style="font-weight: normal">
-                                                                    <p>1 Jul 2023 - 15 Agustus 2023</p>
-                                                                </span></td>
-                                                            <td>Self</td>
-                                                            <td>0 / Rp 5.000.000.000 <div class="progress">
-                                                                    <div class="progress-bar bg-info" style="width:30%"></div>
-                                                                </div>
-                                                            </td>
-                                                            <td class="text-success">Updated</td>
-                                                            <td><i class="fa-solid fa-ellipsis-vertical"></i></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td scope="row"><a href="" class="href"><i
-                                                                        class="fa-solid fa-chevron-right me-3"></i></a> #0861f</td>
-                                                            <td class="fw-bold">HR Company bookings target for Q3 <span style="font-weight: normal">
-                                                                    <p>1 Jul 2023 - 15 Agustus 2023</p>
-                                                                </span></td>
-                                                            <td>Self</td>
-                                                            <td>0 / Rp 5.000.000.000 <div class="progress">
-                                                                    <div class="progress-bar bg-success" style="width:10%"></div>
-                                                                </div>
-                                                            </td>
-                                                            <td>Not Updated</td>
-                                                            <td><i class="fa-solid fa-ellipsis-vertical"></i></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td scope="row"><a href="" class="href"><i
-                                                                        class="fa-solid fa-chevron-right me-3"></i></a> #0861f</td>
-                                                            <td class="fw-bold">HR Company bookings target for Q3 <span style="font-weight: normal">
-                                                                    <p>1 Jul 2023 - 15 Agustus 2023</p>
-                                                                </span></td>
-                                                            <td>Self</td>
-                                                            <td>0 / Rp 5.000.000.000 <div class="progress">
-                                                                    <div class="progress-bar bg-warning" style="width:47%"></div>
-                                                                </div>
-                                                            </td>
-                                                            <td>Not Updated</td>
-                                                            <td><i class="fa-solid fa-ellipsis-vertical"></i></td>
-                                                        </tr> -->
+                                                                                    <td scope="row"><a href="" class="href"><i
+                                                                                                class="fa-solid fa-chevron-right me-3"></i></a> #0861f</td>
+                                                                                    <td class="fw-bold">HR Company bookings target for Q3 <span style="font-weight: normal">
+                                                                                            <p>1 Jul 2023 - 15 Agustus 2023</p>
+                                                                                        </span></td>
+                                                                                    <td>Self</td>
+                                                                                    <td>0 / Rp 5.000.000.000 <div class="progress">
+                                                                                            <div class="progress-bar bg-info" style="width:30%"></div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td class="text-success">Updated</td>
+                                                                                    <td><i class="fa-solid fa-ellipsis-vertical"></i></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td scope="row"><a href="" class="href"><i
+                                                                                                class="fa-solid fa-chevron-right me-3"></i></a> #0861f</td>
+                                                                                    <td class="fw-bold">HR Company bookings target for Q3 <span style="font-weight: normal">
+                                                                                            <p>1 Jul 2023 - 15 Agustus 2023</p>
+                                                                                        </span></td>
+                                                                                    <td>Self</td>
+                                                                                    <td>0 / Rp 5.000.000.000 <div class="progress">
+                                                                                            <div class="progress-bar bg-success" style="width:10%"></div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td>Not Updated</td>
+                                                                                    <td><i class="fa-solid fa-ellipsis-vertical"></i></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td scope="row"><a href="" class="href"><i
+                                                                                                class="fa-solid fa-chevron-right me-3"></i></a> #0861f</td>
+                                                                                    <td class="fw-bold">HR Company bookings target for Q3 <span style="font-weight: normal">
+                                                                                            <p>1 Jul 2023 - 15 Agustus 2023</p>
+                                                                                        </span></td>
+                                                                                    <td>Self</td>
+                                                                                    <td>0 / Rp 5.000.000.000 <div class="progress">
+                                                                                            <div class="progress-bar bg-warning" style="width:47%"></div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td>Not Updated</td>
+                                                                                    <td><i class="fa-solid fa-ellipsis-vertical"></i></td>
+                                                                                </tr> -->
                         </tbody>
                     </table>
                 </div>

@@ -26,6 +26,13 @@ class TaskController extends Controller
         return view('kpi.goals', compact('task', 'member', 'tipe'));
     }
 
+    public function group_data(){
+        // $kpi_mapping = ;
+        // $kpi = ;
+        
+        return view('kpi.groupdata');   
+    }
+
     /**
      * Show the form for creating a new resource.
      */
