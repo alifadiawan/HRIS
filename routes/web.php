@@ -24,6 +24,7 @@ Route::get('/', function () {
     return redirect('sign-in');
 });
 
+
 Route::get('/employee-list', function(){
     return view('employee-list');
 });
@@ -47,6 +48,10 @@ Route::middleware('auth')->group(function () {
 
     //Goals Team
     Route::resource('goals', TaskController::class);
+    Route::get('group-data', [TaskController::class,'group_data'])->name('goals.group');
+    // Route::post('grade', [TaskController::class,'grade'])->name('goals.grade');
+    // Route::post('mark', [TaskController::class,'mark'])->name('goals.mark');
+    Route::post('update_adm', [TaskController::class,'update_adm'])->name('goals.update_adm');
 
     //Input Item Data 
     Route::get('/input', function () {

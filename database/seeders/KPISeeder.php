@@ -14,6 +14,7 @@ class KPISeeder extends Seeder
      */
     public function run(): void
     {
+
         $allKpi = [
             [
                 'group_name' => 'General KPI',

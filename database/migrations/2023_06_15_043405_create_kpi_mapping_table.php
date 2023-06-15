@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('kpi_mapping', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('kpi_id');
-            $table->foreign('kpi_id')->references('id')->on('k_p_i_s')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
             $table->unsignedBigInteger('employee_id');
             $table->foreign('employee_id')->references('id')->on('members')
-                  ->onDelete('cascade')
-                  ->onUpdate('cascade');
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->unsignedBigInteger('kpi_id');
+            $table->foreign('kpi_id')->references('id')->on('k_p_i_s')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->timestamps();
         });
     }
