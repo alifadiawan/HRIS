@@ -21,15 +21,6 @@ return new class extends Migration
             $table->foreign('role_id')->references('id')->on('roles')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-            $table->string('jabatan');
-            $table->unsignedBigInteger('divisi_id');
-            $table->foreign('divisi_id')->references('id')->on('divisis')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-            // $table->unsignedBigInteger('role_id');
-            // $table->foreign('role_id')->references('id')->on('roles')
-            //     ->onDelete('cascade')
-            //     ->onUpdate('cascade');
             $table->rememberToken();
             $table->timestamps();
         });
