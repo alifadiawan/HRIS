@@ -20,7 +20,7 @@ use App\Http\Controllers\TaskController;
 
 //redirect ke view login
 Route::get('/', function () {
-   return redirect('sign-in');
+    return redirect('sign-in');
 });
 
 
@@ -55,7 +55,7 @@ Route::middleware('auth')->group(function () {
 
     //Goals Team
     Route::resource('goals', TaskController::class);
-   
+
     //Input Item Data 
     Route::get('/input', function () {
         return view('kpi.input');
@@ -66,6 +66,10 @@ Route::middleware('auth')->group(function () {
         return view('kpi.reports');
     });
 
+    //Index Employee
+    Route::get('/index-employe', function () {
+        return view('kpi.index');
+    });
 
 
     //logout
