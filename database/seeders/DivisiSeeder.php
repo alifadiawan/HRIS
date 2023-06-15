@@ -21,5 +21,9 @@ class DivisiSeeder extends Seeder
                 'nama_divisi' => 'marketing',
             ],
         ];
+
+
+        Divisi::insert($divisi);
+
     }
 }
