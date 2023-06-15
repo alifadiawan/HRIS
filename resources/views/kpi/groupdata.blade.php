@@ -6,7 +6,7 @@
 
     <section class="group_data">
         <div class="content">
-            <a href="" class="btn btn-info text-white mb-3">Add Data</a>
+            <a href="/score-data" class="btn btn-info text-white mb-3">Add Data</a>
             <div class="card text-left">
                 <div class="card-body">
                     <div class="d-flex flex-row align-items-center my-3">
