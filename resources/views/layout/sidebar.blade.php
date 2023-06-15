@@ -55,6 +55,16 @@
                     <i class="bi bi-circle"></i><span>Group Data</span>
                 </a>
             </li>
+            <li>
+                <a href="/reports">
+                    <i class="bi bi-circle"></i><span>Sales Reports</span>
+                </a>
+            </li>
+            <li>
+                <a href="/index-employe">
+                    <i class="bi bi-circle"></i><span>Data Employee</span>
+                </a>
+            </li>
         </ul>
     </li><!-- End Icons Nav -->
     <li class="nav-item">
