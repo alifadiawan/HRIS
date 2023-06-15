@@ -25,6 +25,7 @@ class MemberSeeder extends Seeder
                 'tgl_lahir'=>Carbon::parse('18-11-2005'),
                 // 'foto'=>'',
                 'user_id'=>1,
+                'divisi_id' => 1,
             ],
             [
                 'nama'=>'steven',
@@ -35,6 +36,7 @@ class MemberSeeder extends Seeder
                 'tgl_lahir'=>Carbon::parse('18-11-2005'),
                 // 'foto'=>'',
                 'user_id'=>2,
+                'divisi_id' => 1,
             ],
             [
                 'nama'=>'employee1',
@@ -45,6 +47,7 @@ class MemberSeeder extends Seeder
                 'tgl_lahir'=>Carbon::parse('18-11-2005'),
                 // 'foto'=>'',
                 'user_id'=>5,
+                'divisi_id' => 1,
             ],
             [
                 'nama'=>'employee2',
@@ -55,6 +58,7 @@ class MemberSeeder extends Seeder
                 'tgl_lahir'=>Carbon::parse('18-11-2005'),
                 // 'foto'=>'',
                 'user_id'=>6,
+                'divisi_id' => 1,
             ],
         ];
 

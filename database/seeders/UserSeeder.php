@@ -20,42 +20,36 @@ class UserSeeder extends Seeder
                 'email' =>'ilhxm@gmail.com',
                 'password' =>bcrypt('123'),
                 'role_id' =>1,
-                'divisi_id' => 1,
             ],
             [
                 'username' =>'alip',
                 'email' =>'alip@gmail.com',
                 'password' =>bcrypt('123'),
                 'role_id' =>1,
-                'divisi_id' => 1,
             ],
             [
                 'username' =>'steven',
                 'email' =>'steven@gmail.com',
                 'password' =>bcrypt('123'),
                 'role_id' =>1,
-                'divisi_id' => 1,
             ],
             [
                 'username' =>'rafli',
                 'email' =>'rafli@gmail.com',
                 'password' =>bcrypt('123'),
                 'role_id' =>1,
-                'divisi_id' => 1,
             ],
             [
                 'username' =>'employee1',
                 'email' =>'employee1@gmail.com',
                 'password' =>bcrypt('123'),
                 'role_id' =>2,
-                'divisi_id' => 2,
             ],
             [
                 'username' =>'employee2',
                 'email' =>'employee2@gmail.com',
                 'password' =>bcrypt('123'),
                 'role_id' =>2,
-                'divisi_id' => 2,
             ],
         ];
 
