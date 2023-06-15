@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KPI;
 use App\Models\Task;
 use App\Models\TipeProgress;
 use App\Models\User;
@@ -16,14 +17,51 @@ class TaskController extends Controller
     public function index()
     {
         $task = Task::all();
-        $member = Member::whereHas('user', function($query) {
-            $query->whereHas('role', function($user) {
+        $member = Member::whereHas('user', function ($query) {
+            $query->whereHas('role', function ($user) {
                 $user->where('role', '!=', 'admin');
             });
         })->get();
         // return $member;
         $tipe = TipeProgress::all();
         return view('kpi.goals', compact('task', 'member', 'tipe'));
+    }
+
+    public function group_data()
+    {
+        // $kpi_mapping = ;
+        $kpi = KPI::all();
+        // return $kpi;
+
+        return view('kpi.groupdata');
+    }
+
+
+    public function update_adm(request $request)
+    {
+        $delete = $request->delete;
+        $mark = $request->mark;
+        $slider_val = $request->slider;
+        $task_id = $request->task_id;
+        $task = task::find($task_id);
+
+        if ($slider_val) {
+            $task->update([
+                'grade' => $slider_val
+            ]);
+        }
+
+        if ($mark) {
+            $task->update([
+                'status' => $mark
+            ]);
+        }
+
+        if ($delete) {
+            $task->delete();
+        }
+        
+        return redirect()->back();
     }
 
     /**
@@ -38,7 +76,7 @@ class TaskController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {   
+    {
         $data = $request->validate([
             'goal_id' => 'required|numeric|min:1000',
             'goal_name' => 'required',
@@ -50,7 +88,7 @@ class TaskController extends Controller
         ]);
 
         $task = new Task();
-        $task->goal_id = '#'.$data['goal_id'];
+        $task->goal_id = '#' . $data['goal_id'];
         $task->goal_name = $data['goal_name'];
         $task->owner_id = auth()->user()->id;
         $task->goal_target = $data['goal_target'];
