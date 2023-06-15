@@ -20,8 +20,13 @@ return new class extends Migration
             $table->string('jk');
             $table->date('tgl_lahir');
             $table->string('foto')->nullable();
+            $table->string('jabatan')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->unsignedBigInteger('divisi_id');
+            $table->foreign('divisi_id')->references('id')->on('divisis')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->timestamps();

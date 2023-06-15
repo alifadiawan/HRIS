@@ -54,48 +54,41 @@
 
                 <!-- Steven -->
 
-                <div class="card-body">
-                    <table class="table mt-3 " style="outline: 2px">
-                        <thead class="table-secondary">
-                            <tr style="text-align: start">
-                                <th>Goal ID</th>
-                                <th>Goal Name</th>
-                                <th>Goal Owner</th>
-                                <th>To</th>
-                                <th>Goal Progress</th>
-                                <th>Status</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($task as $t)
-                                <tr>
-                                    <td scope="row"><a href="" class="href"><i
-                                                class="fa-solid fa-chevron-right me-3"></i></a> {{ $t->goal_id }}</td>
-                                    <td class="fw-bold">{{ $t->goal_name }} <span style="font-weight: normal">
-                                            <p>{{ date('d F Y', strtotime($t->created_at)) }} -
-                                                {{ date('d F Y', strtotime($t->tanggal_target)) }}</p>
-                                        </span></td>
-                                    <td>{{ $t->owner->username }}</td>
-                                    <td>{{ $t->member->nama }}</td>
-                                    @if ($t->tipe_progress->nama_tipe == 'idr')
-                                        <td>{{ $t->goal_progress }} / Rp. {{ number_format($t->goal_target) }} <div
-                                                class="progress">
-                                                @if ($t->status == 'todo')
-                                                    <div class="progress-bar bg-secondary"
-                                                        style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
-                                                    </div>
-                                                @endif
-                                                @if ($t->status == 'doing')
-                                                    <div class="progress-bar bg-primary"
-                                                        style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
-                                                    </div>
-                                                @endif
-                                                @if ($t->status == 'checking')
-                                                    <div class="progress-bar bg-warning"
-                                                        style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
-                                                    </div>
-                                                @endif
+            <div class="card-body">
+                <table class="table mt-3 " style="outline: 2px">
+                    <thead class="table-secondary">
+                        <tr style="text-align: start">
+                            <th>Goal ID</th>
+                            <th>Goal Name</th>
+                            <th>Goal Owner</th>
+                            <th>To</th>
+                            <th>Goal Progress</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($task as $t)
+                        <tr>
+                            <td scope="row"><a href="" class="href"><i
+                                        class="fa-solid fa-chevron-right me-3"></i></a> {{$t->goal_id}}</td>
+                            <td class="fw-bold">{{$t->goal_name}} <span style="font-weight: normal">
+                                    <p>{{date('d F Y', strtotime($t->created_at))}} - {{date('d F Y', strtotime($t->tanggal_target))}}</p>
+                                </span></td>
+                            <td>{{$t->owner->nama}}</td>
+                            <td>{{$t->member->nama}}</td>
+                            @if($t->tipe_progress->nama_tipe == 'idr')
+                            <td>{{$t->goal_progress}} / Rp. {{number_format($t->goal_target)}} <div class="progress">
+                                    @if($t->status == 'todo')
+                                    <div class="progress-bar bg-secondary" style="width:{{$t->goal_progress / $t->goal_target * 100}}%"></div>
+                                    @endif
+                                    @if($t->status == 'doing')
+                                    <div class="progress-bar bg-primary" style="width:{{$t->goal_progress / $t->goal_target * 100}}%"></div>
+                                    @endif
+                                    @if($t->status == 'checking')
+                                    <div class="progress-bar bg-warning" style="width:{{$t->goal_progress / $t->goal_target * 100}}%"></div>
+                                    @endif
+
 
                                                 @if ($t->status == 'done')
                                                     <div class="progress-bar bg-success"
