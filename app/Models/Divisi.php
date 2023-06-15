@@ -10,8 +10,8 @@ class Divisi extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function user()
+    public function member()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(Member::class);
     }
 }

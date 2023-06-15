@@ -17,16 +17,21 @@ class Member extends Model
 
     public function task()
     {
-        return $this->belongsTo(Task::class, 'member_id');
+        return $this->hasMany(Task::class, 'member_id');
     }
 
     public function owner_task()
     {
-        return $this->belongsTo(Task::class, 'owner_id');
+        return $this->hasMany(Task::class, 'owner_id');
+    }
+
+    public function divisi()
+    {
+        return $this->belongsTo(Divisi::class, 'divisi_id');
     }
 
     public function mapping()
     {
-        return $this->belongsToMany(KPI::class, 'kpi_mapping');
+        return $this->belongsToMany(KPI::class, 'kpi_mapping', 'employee_id', 'kpi_id');
     }
 }

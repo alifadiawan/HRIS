@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             TransaksiSeeder::class,
             PembayaranSeeder::class,
             TransaksiDetailSeeder::class,
+            KPISeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();
 

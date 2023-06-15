@@ -13,6 +13,6 @@ class KPI extends Model
 
     public function mapping()
     {
-        return $this->belongsToMany(Member::class, 'kpi_mapping');
+        return $this->belongsToMany(Member::class, 'kpi_mapping', 'kpi_id', 'employee_id');
     }
 }
