@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('k_p_i_s', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('group_name');
-            $table->string('deskripsi');
+            $table->text('deskripsi');
+            $table->text('parameter');
             $table->float('weight');
             $table->float('min_treshold');
             $table->float('max_treshold');

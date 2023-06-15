@@ -6,7 +6,7 @@
 
     <section class="group_data">
         <div class="content">
-            <a href="/score-data" class="btn btn-info text-white mb-3">Add Data</a>
+            <a href="{{route('group-data.create')}}" class="btn btn-info text-white mb-3">Add Data</a>
             <div class="card text-left">
                 <div class="card-body">
                     <div class="d-flex flex-row align-items-center my-3">
@@ -54,15 +54,42 @@
                                             name="" id="">
                                     </td>
                                 </tr>
+                                @foreach($kpis as $kpi)
                                 <tr class="text-center" style="vertical-align: middle; ">
-                                    <td class="fw-bold">General KPI</td>
-                                    <td>- Semua Devisi -</td>
+                                    <td class="fw-bold">{{$kpi->group_name}}</td>
+                                    @php
+                                        $mappingCount = $kpi->mapping->count();
+                                        $memberCount = $member->count();
+                                    @endphp
+                                    @if($mappingCount === $memberCount)
+                                    <td>- Semua Divisi -</td>
                                     <td>- Semua Jabatan -</td>
-                                    <td></td>
+                                    @else
+                                    @php
+                                        $divisiNames = $kpi->mapping->pluck('divisi.nama_divisi')->unique();
+                                        $jabatanNames = $kpi->mapping->pluck('jabatan')->unique();
+                                    @endphp
+                                    <td class="text-capitalize">
+                                        @if ($divisiNames->count() === 1)
+                                            {{ $divisiNames->first() }}
+                                        @else
+                                            - Semua Divisi -
+                                        @endif
+                                    </td>
+                                        
+                                    <td class="text-capitalize">
+                                        @if ($jabatanNames->count() === 1)
+                                            {{ $jabatanNames->first() }}
+                                        @else
+                                            - Semua Jabatan -
+                                        @endif
+                                    </td>
+                                    @endif
+                                    <td>{{$kpi->deskripsi}}</td>
                                     <td>
                                         <div class="form-check form-switch"style="width: 0px">
                                             <input class="form-check-input" type="checkbox" role="switch"
-                                                id="flexSwitchCheckDefault" style="height: 30px; width: 70px">
+                                                id="flexSwitchCheckDefault" style="height: 30px; width: 70px" {{ $kpi->isActive ? 'checked' : '' }}>
                                         </div>
                                     </td>
                                     <td>
@@ -74,7 +101,8 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tr class="text-center" style="vertical-align: middle; ">
+                                @endforeach
+                                <!-- <tr class="text-center" style="vertical-align: middle; ">
                                     <td class="fw-bold">Computer Skill KPI</td>
                                     <td>Information Technology</td>
                                     <td>- Semua Jabatan -</td>
@@ -113,7 +141,7 @@
                                                     class="fa-solid fa-trash me-2"></i>Delete</a>
                                         </div>
                                     </td>
-                                </tr>
+                                </tr> -->
                             </tbody>
                         </table>
                     </div>

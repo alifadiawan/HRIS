@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\KPIController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,14 +24,6 @@ Route::get('/', function () {
     return redirect('sign-in');
 });
 
-
-
-// Route::get('group-data', function () {
-//     return view('kpi.groupdata');
-// });
-Route::get('/score-data', function () {
-    return view('kpi.score_data');
-});
 
 Route::get('/employee-list', function(){
     return view('employee-list');
@@ -75,6 +68,7 @@ Route::middleware('auth')->group(function () {
         return view('kpi.index');
     });
 
+    Route::resource('group-data', KPIController::class);
 
     //logout
     Route::post('logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
