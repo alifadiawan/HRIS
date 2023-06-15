@@ -213,47 +213,47 @@
                                 </tr>
                             @endforeach
                             <!-- <tr>
-                                                        <td scope="row"><a href="" class="href"><i
-                                                                    class="fa-solid fa-chevron-right me-3"></i></a> #0861f</td>
-                                                        <td class="fw-bold">HR Company bookings target for Q3 <span style="font-weight: normal">
-                                                                <p>1 Jul 2023 - 15 Agustus 2023</p>
-                                                            </span></td>
-                                                        <td>Self</td>
-                                                        <td>0 / Rp 5.000.000.000 <div class="progress">
-                                                                <div class="progress-bar bg-info" style="width:30%"></div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="text-success">Updated</td>
-                                                        <td><i class="fa-solid fa-ellipsis-vertical"></i></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td scope="row"><a href="" class="href"><i
-                                                                    class="fa-solid fa-chevron-right me-3"></i></a> #0861f</td>
-                                                        <td class="fw-bold">HR Company bookings target for Q3 <span style="font-weight: normal">
-                                                                <p>1 Jul 2023 - 15 Agustus 2023</p>
-                                                            </span></td>
-                                                        <td>Self</td>
-                                                        <td>0 / Rp 5.000.000.000 <div class="progress">
-                                                                <div class="progress-bar bg-success" style="width:10%"></div>
-                                                            </div>
-                                                        </td>
-                                                        <td>Not Updated</td>
-                                                        <td><i class="fa-solid fa-ellipsis-vertical"></i></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td scope="row"><a href="" class="href"><i
-                                                                    class="fa-solid fa-chevron-right me-3"></i></a> #0861f</td>
-                                                        <td class="fw-bold">HR Company bookings target for Q3 <span style="font-weight: normal">
-                                                                <p>1 Jul 2023 - 15 Agustus 2023</p>
-                                                            </span></td>
-                                                        <td>Self</td>
-                                                        <td>0 / Rp 5.000.000.000 <div class="progress">
-                                                                <div class="progress-bar bg-warning" style="width:47%"></div>
-                                                            </div>
-                                                        </td>
-                                                        <td>Not Updated</td>
-                                                        <td><i class="fa-solid fa-ellipsis-vertical"></i></td>
-                                                    </tr> -->
+                                                            <td scope="row"><a href="" class="href"><i
+                                                                        class="fa-solid fa-chevron-right me-3"></i></a> #0861f</td>
+                                                            <td class="fw-bold">HR Company bookings target for Q3 <span style="font-weight: normal">
+                                                                    <p>1 Jul 2023 - 15 Agustus 2023</p>
+                                                                </span></td>
+                                                            <td>Self</td>
+                                                            <td>0 / Rp 5.000.000.000 <div class="progress">
+                                                                    <div class="progress-bar bg-info" style="width:30%"></div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="text-success">Updated</td>
+                                                            <td><i class="fa-solid fa-ellipsis-vertical"></i></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td scope="row"><a href="" class="href"><i
+                                                                        class="fa-solid fa-chevron-right me-3"></i></a> #0861f</td>
+                                                            <td class="fw-bold">HR Company bookings target for Q3 <span style="font-weight: normal">
+                                                                    <p>1 Jul 2023 - 15 Agustus 2023</p>
+                                                                </span></td>
+                                                            <td>Self</td>
+                                                            <td>0 / Rp 5.000.000.000 <div class="progress">
+                                                                    <div class="progress-bar bg-success" style="width:10%"></div>
+                                                                </div>
+                                                            </td>
+                                                            <td>Not Updated</td>
+                                                            <td><i class="fa-solid fa-ellipsis-vertical"></i></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td scope="row"><a href="" class="href"><i
+                                                                        class="fa-solid fa-chevron-right me-3"></i></a> #0861f</td>
+                                                            <td class="fw-bold">HR Company bookings target for Q3 <span style="font-weight: normal">
+                                                                    <p>1 Jul 2023 - 15 Agustus 2023</p>
+                                                                </span></td>
+                                                            <td>Self</td>
+                                                            <td>0 / Rp 5.000.000.000 <div class="progress">
+                                                                    <div class="progress-bar bg-warning" style="width:47%"></div>
+                                                                </div>
+                                                            </td>
+                                                            <td>Not Updated</td>
+                                                            <td><i class="fa-solid fa-ellipsis-vertical"></i></td>
+                                                        </tr> -->
                         </tbody>
                     </table>
                 </div>
