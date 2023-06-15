@@ -13,9 +13,15 @@
             <i class="fa-solid fa-border-all fa-lg"></i>
             <span>Dashboard</span>
         </a>
-    </li><!-- End Dashboard Nav -->
+    </li>
+    <!-- End Dashboard Nav -->
 
-    
+    <li class="nav-item">
+        <a class="nav-link " href="/employee-list">
+            <i class="fa-solid fa-users"></i>
+            <span>Employee List</span>
+        </a>
+    </li>
 
     <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">

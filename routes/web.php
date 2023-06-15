@@ -32,6 +32,10 @@ Route::get('/score-data', function () {
     return view('kpi.score_data');
 });
 
+Route::get('/employee-list', function(){
+    return view('employee-list');
+});
+
 
 
 Route::middleware(['web', 'guest'])->group(function () {
