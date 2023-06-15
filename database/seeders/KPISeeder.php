@@ -12,6 +12,10 @@ class KPISeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $kpi = [
+            [
+                
+            ],
+        ];
     }
 }

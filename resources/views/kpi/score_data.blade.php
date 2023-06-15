@@ -1,6 +1,6 @@
 @extends('layout.body')
 @section('title', 'KPI Group Data')
-@section('page-title', 'Score Data')
+@section('page-title', 'Create Score Data')
 @section('content')
 
 <section class="score_data">

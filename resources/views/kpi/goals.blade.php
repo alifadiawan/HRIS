@@ -78,6 +78,7 @@
                                         </span></td>
                                     <td>{{ $t->owner->nama }}</td>
                                     <td>{{ $t->member->nama }}</td>
+                                    {{-- <td>{{ $t->goal_id}}</td> --}}
                                     @if ($t->tipe_progress->nama_tipe == 'idr')
                                         <td>{{ $t->goal_progress }} / Rp. {{ number_format($t->goal_target) }} <div
                                                 class="progress">
@@ -176,18 +177,41 @@
                                             <i class="fa-solid fa-ellipsis-vertical"></i>
                                         </a>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#"><i
-                                                        class="fa-solid fa-clipboard-check fa-lg"></i>Mark as done</a>
-                                            </li>
-                                            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#nilai"><i
-                                                        class="fa-solid fa-star fa-lg"></i>Beri
-                                                    Nilai</a></li>
-                                            <li><a class="dropdown-item" data-bs-toggle="modal"
-                                                    data-bs-target="#hapustugas"><i
-                                                        class="fa-solid fa-trash fa-lg"></i>Hapus Tugas</a></li>
+                                            @if (auth()->user()->role->role == 'admin')
+                                                @if ($t->status != 'done')
+                                                    <form action="{{ route('goals.update_adm') }}" method="POST">
+                                                        @csrf
+                                                        <li><button class="dropdown-item" name="mark" value="done"><i
+                                                                    class="fa-solid fa-clipboard-check fa-lg"></i>Mark as
+                                                                done</button>
+                                                            <input type="hidden" value="{{ $t->id }}"
+                                                                name="task_id">
+                                                        </li>
+                                                    </form>
+                                                @endif
+                                                @if ($t->status == 'done')
+                                                    <li><a class="dropdown-item" data-bs-toggle="modal"
+                                                            data-bs-target="#nilai_{{ $t->id }}"><i
+                                                                class="fa-solid fa-star fa-lg"></i>Beri
+                                                            Nilai</a></li>
+                                                @endif
+                                                {{-- <form action="{{ route('goals.update_adm') }}" method="POST">
+                                                    @csrf
+                                                    @method('delete') --}}
+                                                <li><button class="dropdown-item" data-bs-toggle="modal"
+                                                        data-bs-target="#hapustugas"><i
+                                                            class="fa-solid fa-trash fa-lg"></i>Hapus Tugas</button></li>
+                                                {{-- </form> --}}
+                                            @elseif(auth()->user()->role->role == 'employee')
+                                                @if ($t->status != 'done')
+                                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target=""><i
+                                                                class="fa-solid fa-trash fa-lg"></i>
+                                                            Update Progress</a></li>
+                                                @endif
+                                            @endif
                                         </ul>
                                     </td>
-                                    <div class="modal fade" id="nilai" tabindex="-1"
+                                    <div class="modal fade" id="nilai_{{ $t->id }}" tabindex="-1"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
@@ -196,18 +220,23 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
-                                                <div class="modal-body">
-                                                    <input type="range" class="form-range" min="1"
-                                                        max="100"
-                                                        oninput="this.nextElementSibling.value = this.value">
-                                                    <output class="fw-bold text-center">0</output>
-
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                                </div>
+                                                <form action="{{ route('goals.update_adm') }}" method="POST">
+                                                    @csrf
+                                                    <div class="modal-body">
+                                                        <input type="range" class="form-range" min="1"
+                                                            max="100" id="slider_{{ $t->id }}"
+                                                            oninput="updateOutput({{ $t->id }})" name="slider">
+                                                        <output class="fw-bold text-center"
+                                                            id="sliderValue_{{ $t->id }}">0</output>
+                                                    </div>
+                                                    <input type="hidden" name="task_id" value="{{ $t->id }}">
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Save
+                                                            changes</button>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -215,47 +244,47 @@
                                 </tr>
                             @endforeach
                             <!-- <tr>
-                                                                                    <td scope="row"><a href="" class="href"><i
-                                                                                                class="fa-solid fa-chevron-right me-3"></i></a> #0861f</td>
-                                                                                    <td class="fw-bold">HR Company bookings target for Q3 <span style="font-weight: normal">
-                                                                                            <p>1 Jul 2023 - 15 Agustus 2023</p>
-                                                                                        </span></td>
-                                                                                    <td>Self</td>
-                                                                                    <td>0 / Rp 5.000.000.000 <div class="progress">
-                                                                                            <div class="progress-bar bg-info" style="width:30%"></div>
-                                                                                        </div>
-                                                                                    </td>
-                                                                                    <td class="text-success">Updated</td>
-                                                                                    <td><i class="fa-solid fa-ellipsis-vertical"></i></td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td scope="row"><a href="" class="href"><i
-                                                                                                class="fa-solid fa-chevron-right me-3"></i></a> #0861f</td>
-                                                                                    <td class="fw-bold">HR Company bookings target for Q3 <span style="font-weight: normal">
-                                                                                            <p>1 Jul 2023 - 15 Agustus 2023</p>
-                                                                                        </span></td>
-                                                                                    <td>Self</td>
-                                                                                    <td>0 / Rp 5.000.000.000 <div class="progress">
-                                                                                            <div class="progress-bar bg-success" style="width:10%"></div>
-                                                                                        </div>
-                                                                                    </td>
-                                                                                    <td>Not Updated</td>
-                                                                                    <td><i class="fa-solid fa-ellipsis-vertical"></i></td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td scope="row"><a href="" class="href"><i
-                                                                                                class="fa-solid fa-chevron-right me-3"></i></a> #0861f</td>
-                                                                                    <td class="fw-bold">HR Company bookings target for Q3 <span style="font-weight: normal">
-                                                                                            <p>1 Jul 2023 - 15 Agustus 2023</p>
-                                                                                        </span></td>
-                                                                                    <td>Self</td>
-                                                                                    <td>0 / Rp 5.000.000.000 <div class="progress">
-                                                                                            <div class="progress-bar bg-warning" style="width:47%"></div>
-                                                                                        </div>
-                                                                                    </td>
-                                                                                    <td>Not Updated</td>
-                                                                                    <td><i class="fa-solid fa-ellipsis-vertical"></i></td>
-                                                                                </tr> -->
+                                                                                                                                                                        <td scope="row"><a href="" class="href"><i
+                                                                                                                                                                                    class="fa-solid fa-chevron-right me-3"></i></a> #0861f</td>
+                                                                                                                                                                        <td class="fw-bold">HR Company bookings target for Q3 <span style="font-weight: normal">
+                                                                                                                                                                                <p>1 Jul 2023 - 15 Agustus 2023</p>
+                                                                                                                                                                            </span></td>
+                                                                                                                                                                        <td>Self</td>
+                                                                                                                                                                        <td>0 / Rp 5.000.000.000 <div class="progress">
+                                                                                                                                                                                <div class="progress-bar bg-info" style="width:30%"></div>
+                                                                                                                                                                            </div>
+                                                                                                                                                                        </td>
+                                                                                                                                                                        <td class="text-success">Updated</td>
+                                                                                                                                                                        <td><i class="fa-solid fa-ellipsis-vertical"></i></td>
+                                                                                                                                                                    </tr>
+                                                                                                                                                                    <tr>
+                                                                                                                                                                        <td scope="row"><a href="" class="href"><i
+                                                                                                                                                                                    class="fa-solid fa-chevron-right me-3"></i></a> #0861f</td>
+                                                                                                                                                                        <td class="fw-bold">HR Company bookings target for Q3 <span style="font-weight: normal">
+                                                                                                                                                                                <p>1 Jul 2023 - 15 Agustus 2023</p>
+                                                                                                                                                                            </span></td>
+                                                                                                                                                                        <td>Self</td>
+                                                                                                                                                                        <td>0 / Rp 5.000.000.000 <div class="progress">
+                                                                                                                                                                                <div class="progress-bar bg-success" style="width:10%"></div>
+                                                                                                                                                                            </div>
+                                                                                                                                                                        </td>
+                                                                                                                                                                        <td>Not Updated</td>
+                                                                                                                                                                        <td><i class="fa-solid fa-ellipsis-vertical"></i></td>
+                                                                                                                                                                    </tr>
+                                                                                                                                                                    <tr>
+                                                                                                                                                                        <td scope="row"><a href="" class="href"><i
+                                                                                                                                                                                    class="fa-solid fa-chevron-right me-3"></i></a> #0861f</td>
+                                                                                                                                                                        <td class="fw-bold">HR Company bookings target for Q3 <span style="font-weight: normal">
+                                                                                                                                                                                <p>1 Jul 2023 - 15 Agustus 2023</p>
+                                                                                                                                                                            </span></td>
+                                                                                                                                                                        <td>Self</td>
+                                                                                                                                                                        <td>0 / Rp 5.000.000.000 <div class="progress">
+                                                                                                                                                                                <div class="progress-bar bg-warning" style="width:47%"></div>
+                                                                                                                                                                            </div>
+                                                                                                                                                                        </td>
+                                                                                                                                                                        <td>Not Updated</td>
+                                                                                                                                                                        <td><i class="fa-solid fa-ellipsis-vertical"></i></td>
+                                                                                                                                                                    </tr> -->
                         </tbody>
                     </table>
                 </div>
@@ -331,12 +360,23 @@
                         </div>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
 
 
+    <style>
+        table {
+            border: 1px solid;
+        }
+    </style>
 
-                <style>
-                    table {
-                        border: 1px solid;
-                    }
-                </style>
-            @endsection
+    <script>
+        function updateOutput(taskId) {
+            var slider = document.getElementById("slider_" + taskId);
+            var output = document.getElementById("sliderValue_" + taskId);
+
+            output.textContent = slider.value;
+        }
+    </script>
+@endsection
