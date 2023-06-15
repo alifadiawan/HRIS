@@ -51,6 +51,18 @@ class UserSeeder extends Seeder
                 'password' =>bcrypt('123'),
                 'role_id' =>2,
             ],
+            [
+                'username' =>'employee3',
+                'email' =>'employee3@gmail.com',
+                'password' =>bcrypt('123'),
+                'role_id' =>2,
+            ],
+            [
+                'username' =>'employee4',
+                'email' =>'employee4@gmail.com',
+                'password' =>bcrypt('123'),
+                'role_id' =>2,
+            ],
         ];
 
         User::insert($user);

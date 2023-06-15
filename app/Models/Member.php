@@ -24,4 +24,9 @@ class Member extends Model
     {
         return $this->belongsTo(Task::class, 'owner_id');
     }
+
+    public function mapping()
+    {
+        return $this->belongsToMany(KPI::class, 'kpi_mapping');
+    }
 }

@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class KPI extends Model
 {
     use HasFactory;
+    protected $guarded=[];
+
+
+    public function mapping()
+    {
+        return $this->belongsToMany(Member::class, 'kpi_mapping');
+    }
 }
