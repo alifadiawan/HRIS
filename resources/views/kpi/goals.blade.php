@@ -210,7 +210,7 @@
                                                 @if ($t->status != 'done')
                                                     <li><a class="dropdown-item" data-bs-toggle="modal"
                                                             data-bs-target="#progress_{{ $t->id }}"><i
-                                                                class="fa-solid fa-trash fa-lg"></i>
+                                                                class="fa-solid fa-edit fa-lg"></i>
                                                             Update Progress</a></li>
                                                 @endif
                                             @endif
