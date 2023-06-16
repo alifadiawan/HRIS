@@ -15,6 +15,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('group_name');
             $table->text('deskripsi');
+            $table->integer('sort_no');
             $table->text('parameter');
             $table->float('weight');
             $table->float('min_treshold');

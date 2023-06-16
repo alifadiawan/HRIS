@@ -14,7 +14,8 @@ class KPIController extends Controller
      */
     public function index()
     {
-        $kpis = KPI::with('mapping')->get();
+        $kpis = KPI::with('mapping')->orderBy('sort_no', 'asc')->get();
+        // return $kpis;
         $member = Member::whereHas('user', function ($query) {
             $query->whereHas('role', function ($user) {
                 $user->where('role', '!=', 'admin');
@@ -39,7 +40,67 @@ class KPIController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validasi
+        $data = $request->validate([
+            'group_name' => 'required',
+            'sort_no' => 'required|numeric|min:1',
+            'deskripsi' => 'required',
+            'parameter' => 'required',
+            'divisi_id' => 'nullable',
+            'jabatan' => 'nullable',
+            'weight' => 'required|numeric|min:1',
+            'min_treshold' => 'required|numeric|min:1',
+            'max_treshold' => 'required|numeric|min:1',
+            'isActive' => 'required|boolean',
+        ]);
+
+        //update sort number
+        $sort = KPI::where('sort_no' , '>=', $data['sort_no'])->get();
+        // return $sort;
+        foreach($sort as $s){
+            $s->sort_no = $s->sort_no + 1;
+            $s->save();
+        }
+
+        //create new kpi
+        $kpi = new KPI();
+        $kpi->group_name = $data['group_name'];
+        $kpi->deskripsi = $data['deskripsi'];
+        $kpi->parameter = $data['parameter'];
+        $kpi->sort_no = $data['sort_no'];
+        $kpi->weight = $data['weight'];
+        $kpi->min_treshold = $data['min_treshold'];
+        $kpi->max_treshold = $data['max_treshold'];
+        $kpi->isActive = $data['isActive'];
+        $kpi->save();
+
+        if ($data['jabatan'] == null) {
+            $employee = Member::whereHas('user', function ($q) {
+                $q->whereHas('role', function ($u) {
+                    $u->where('role', '!=', 'admin');
+                });
+            })->where('divisi_id', $data['divisi_id'])->get();
+        }
+        elseif ($data['divisi_id'] == null) {
+            $employee = Member::whereHas('user', function ($q) {
+                $q->whereHas('role', function ($u) {
+                    $u->where('role', '!=', 'admin');
+                });
+            })->where('jabatan', $data['jabatan'])->get();
+        }
+        else {
+            $employee = Member::whereHas('user', function ($q) {
+                $q->whereHas('role', function ($u) {
+                    $u->where('role', '!=', 'admin');
+                });
+            })->get();
+        }
+
+        $kpi->mapping()->attach($employee);
+
+        //notif
+        notify()->success('KPI Berhasil Ditambahkan !!', 'KPI');
+        return redirect('/group-data');
     }
 
     /**
