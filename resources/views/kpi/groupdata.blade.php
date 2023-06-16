@@ -23,6 +23,7 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
+                                    <th class="bg-light">NO.</th>
                                     <th class="bg-light">KPI Group Name</th>
                                     <th class="bg-light">FOR DIVISION</th>
                                     <th class="bg-light">FOR POSITION</th>
@@ -33,6 +34,10 @@
                             </thead>
                             <tbody>
                                 <tr>
+                                    <td>
+                                        <input type="text" class="form-control" placeholder="Search KPI No..."
+                                            name="" id="">
+                                    </td>
                                     <td>
                                         <input type="text" class="form-control" placeholder="Search KPI Group..."
                                             name="" id="">
@@ -56,6 +61,7 @@
                                 </tr>
                                 @foreach($kpis as $kpi)
                                 <tr class="text-center" style="vertical-align: middle; ">
+                                    <td class="fw-bold">{{$kpi->sort_no}}</td>
                                     <td class="fw-bold">{{$kpi->group_name}}</td>
                                     @php
                                         $mappingCount = $kpi->mapping->count();

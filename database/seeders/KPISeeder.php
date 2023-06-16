@@ -19,6 +19,7 @@ class KPISeeder extends Seeder
             [
                 'group_name' => 'General KPI',
                 'deskripsi' => 'KPI untuk seluruh karyawan',
+                'sort_no' => 7,
                 'parameter' => 'parameter kpi',
                 'weight' => 12.5,
                 'min_treshold' => 6.5,
@@ -28,6 +29,7 @@ class KPISeeder extends Seeder
             [
                 'group_name' => 'Attitude KPI',
                 'deskripsi' => 'KPI untuk seluruh karyawan',
+                'sort_no' => 8,
                 'parameter' => 'parameter kpi',
                 'weight' => 30,
                 'min_treshold' => 15,
@@ -51,6 +53,7 @@ class KPISeeder extends Seeder
             [
                 'group_name' => 'Programming KPI',
                 'deskripsi' => 'KPI untuk penilaian pemrograman',
+                'sort_no' => 6,
                 'parameter' => 'parameter kpi',
                 'weight' => 12.5,
                 'min_treshold' => 6.5,
@@ -60,6 +63,7 @@ class KPISeeder extends Seeder
             [
                 'group_name' => 'Computer KPI',
                 'deskripsi' => 'KPI untuk penilaian pengoprasian komputer',
+                'sort_no' => 4,
                 'parameter' => 'parameter kpi',
                 'weight' => 30,
                 'min_treshold' => 15,
@@ -85,6 +89,7 @@ class KPISeeder extends Seeder
             [
                 'group_name' => 'Marketing KPI',
                 'deskripsi' => 'KPI untuk penilaian marketing',
+                'sort_no' => 2,
                 'parameter' => 'parameter kpi',
                 'weight' => 12.5,
                 'min_treshold' => 6.5,
@@ -94,6 +99,7 @@ class KPISeeder extends Seeder
             [
                 'group_name' => 'Social Media Post KPI',
                 'deskripsi' => 'KPI untuk penilaian posting konten sosmed',
+                'sort_no' => 5,
                 'parameter' => 'parameter kpi',
                 'weight' => 30,
                 'min_treshold' => 15,
@@ -119,6 +125,7 @@ class KPISeeder extends Seeder
             [
                 'group_name' => 'Monitoring KPI',
                 'deskripsi' => 'KPI untuk seluruh supervisor',
+                'sort_no' => 3,
                 'parameter' => 'parameter kpi',
                 'weight' => 12.5,
                 'min_treshold' => 6.5,
@@ -142,6 +149,7 @@ class KPISeeder extends Seeder
             [
                 'group_name' => 'IT Softskill KPI',
                 'deskripsi' => 'KPI untuk seluruh karyawan IT',
+                'sort_no' => 1,
                 'parameter' => 'parameter kpi',
                 'weight' => 12.5,
                 'min_treshold' => 6.5,
