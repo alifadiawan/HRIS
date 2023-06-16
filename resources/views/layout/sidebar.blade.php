@@ -52,12 +52,12 @@
         </a>
         <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
             <li>
-                <a href="/goals">
+                <a href="{{route('goals.index')}}">
                     <i class="bi bi-circle"></i><span>Goals Team</span>
                 </a>
             </li>
             <li>
-                <a href="/group-data">
+                <a href="{{route('kpi.index')}}">
                     <i class="bi bi-circle"></i><span>Group Data</span>
                 </a>
             </li>
