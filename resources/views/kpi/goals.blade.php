@@ -304,7 +304,7 @@
                                                             <div class="input-group">
                                                                 <input type="number" name="goal_progress"
                                                                     id="goal_progress" class="form-control"
-                                                                    placeholder="previous progress : {{ $t->goal_progress }}" min="{{ $t->goal_progress }}"
+                                                                    placeholder="previous progress : {{ $t->goal_progress }}" min="{{ $t->goal_progress }}" max="{{ $t->goal_target }}"
                                                                     required>
                                                             </div>
                                                         </div>
