@@ -78,17 +78,25 @@ class TaskController extends Controller
     public function progress(Request $request)
     {
         // return $request
-        $task =Task::where('id', $request->task_id)->first();
+        $tid =  $request->task_id;
+        $task = Task::where('id', $tid)->first();
+        $gp = $request->goal_progress;
 
         Progress::create([
             'tasks_id' => $request->task_id,
-            'progress' => $request->goal_progress,
+            'progress' => $gp,
             'keterangan' => $request->keterangan,
         ]);
 
         $task->update([
-            'goal_progress' => $request->goal_progress
+            'goal_progress' => $gp
         ]);
+
+        if ($task->goal_progress == $gp) {
+            $task->update([
+                'status' => 'checking'
+            ]);
+        }
         return redirect()->back();
     }
 
