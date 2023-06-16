@@ -18,12 +18,15 @@ class TipeSeeder extends Seeder
         [
             [
                 'nama_tipe' =>'nominal',
+                'add_ons' => ','
             ],
             [
                 'nama_tipe' =>'persentase',
+                'add_ons' => '%'
             ],
             [
                 'nama_tipe' =>'idr',
+                'add_ons' => 'Rp. '
             ],
         ];
 

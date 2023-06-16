@@ -8,6 +8,7 @@ use App\Models\TipeProgress;
 use App\Models\User;
 use App\Models\Member;
 use Illuminate\Http\Request;
+use App\Models\Progress;
 
 class TaskController extends Controller
 {
@@ -16,7 +17,13 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $task = Task::all();
+        $uid = auth()->user()->id;
+        $mid = member::where('user_id', $uid)->value('id');
+        // return $mid;
+
+        $task = Task::where('member_id', $mid)->get();
+        $task_adm = Task::all();
+        // return $task;
         $member = Member::whereHas('user', function ($query) {
             $query->whereHas('role', function ($user) {
                 $user->where('role', '!=', 'admin');
@@ -24,7 +31,7 @@ class TaskController extends Controller
         })->get();
         // return $member;
         $tipe = TipeProgress::all();
-        return view('kpi.goals', compact('task', 'member', 'tipe'));
+        return view('kpi.goals', compact('task', 'member', 'tipe', 'task_adm', 'mid'));
     }
 
     public function group_data()
@@ -43,7 +50,7 @@ class TaskController extends Controller
         $mark = $request->mark;
         $slider_val = $request->slider;
         $task_id = $request->task_id;
-        $task = task::find($task_id);
+        $task = Task::find($task_id);
 
         if ($slider_val) {
             $task->update([
@@ -52,15 +59,36 @@ class TaskController extends Controller
         }
 
         if ($mark) {
+            $progress = $task->goal_target;
             $task->update([
+                // 'goal_progress' => $progress,
                 'status' => $mark
             ]);
         }
 
         if ($delete) {
             $task->delete();
+            // return $task_id;
+            // task::find($task_id)->delete();
         }
-        
+
+        return redirect()->back();
+    }
+
+    public function progress(Request $request)
+    {
+        // return $request
+        $task =Task::where('id', $request->task_id)->first();
+
+        Progress::create([
+            'tasks_id' => $request->task_id,
+            'progress' => $request->goal_progress,
+            'keterangan' => $request->keterangan,
+        ]);
+
+        $task->update([
+            'goal_progress' => $request->goal_progress
+        ]);
         return redirect()->back();
     }
 

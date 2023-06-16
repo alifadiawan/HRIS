@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('tipe_progress', function (Blueprint $table) {
             $table->id();
             $table->string('nama_tipe');
+            $table->string('add_ons');
             $table->timestamps();
         });
     }
