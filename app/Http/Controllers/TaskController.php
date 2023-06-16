@@ -92,7 +92,7 @@ class TaskController extends Controller
             'goal_progress' => $gp
         ]);
 
-        if ($task->goal_progress == $gp) {
+        if ($gp == $task->goal_target) {
             $task->update([
                 'status' => 'checking'
             ]);
