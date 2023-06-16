@@ -68,8 +68,6 @@ class TaskController extends Controller
 
         if ($delete) {
             $task->delete();
-            // return $task_id;
-            // task::find($task_id)->delete();
         }
 
         return redirect()->back();
@@ -77,7 +75,6 @@ class TaskController extends Controller
 
     public function progress(Request $request)
     {
-        // return $request
         $tid =  $request->task_id;
         $task = Task::where('id', $tid)->first();
         $gp = $request->goal_progress;
@@ -92,7 +89,7 @@ class TaskController extends Controller
             'goal_progress' => $gp
         ]);
 
-        if ($task->goal_progress == $gp) {
+        if ($task->goal_target == $gp) {
             $task->update([
                 'status' => 'checking'
             ]);
