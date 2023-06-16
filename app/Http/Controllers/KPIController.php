@@ -74,7 +74,14 @@ class KPIController extends Controller
         $kpi->isActive = $data['isActive'];
         $kpi->save();
 
-        if ($data['jabatan'] == null) {
+        if ($data['divisi_id'] != null && $data['jabatan'] != null) {
+            $employee = Member::whereHas('user', function ($q) {
+                $q->whereHas('role', function ($u) {
+                    $u->where('role', '!=', 'admin');
+                });
+            })->where('divisi_id', $data['divisi_id'])->where('jabatan', $data['jabatan'])->get();
+        }
+        elseif ($data['jabatan'] == null) {
             $employee = Member::whereHas('user', function ($q) {
                 $q->whereHas('role', function ($u) {
                     $u->where('role', '!=', 'admin');
@@ -133,5 +140,21 @@ class KPIController extends Controller
     public function destroy(KPI $kPI)
     {
         //
+    }
+
+    public function hapus($id)
+    {
+        $kpi = KPI::find($id);
+
+        $sort = KPI::where('id', '!=', $kpi->kpi)->where('sort_no', '>=', $kpi->sort_no)->get();
+        foreach ($sort as $s) {
+            $s->sort_no = $s->sort_no - 1;
+            $s->save();
+        }
+
+        $kpi->delete();
+
+        notify()->success('KPI Berhasil Dihapus !!', 'KPI');
+        return redirect('/kpi');
     }
 }

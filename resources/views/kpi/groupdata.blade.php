@@ -6,7 +6,7 @@
 
     <section class="group_data">
         <div class="content">
-            <a href="{{route('group-data.create')}}" class="btn btn-info text-white mb-3">Add Data</a>
+            <a href="{{route('kpi.create')}}" class="btn btn-info text-white mb-3">Add Data</a>
             <div class="card text-left">
                 <div class="card-body">
                     <div class="d-flex flex-row align-items-center my-3">
@@ -100,9 +100,9 @@
                                     </td>
                                     <td>
                                         <div class="d-flex flex-column">
-                                            <a href="" class="btn btn-success mb-4"><i
+                                            <a href="{{route('kpi.edit', $kpi->id)}}" class="btn btn-success mb-4"><i
                                                     class="fa-solid fa-pen-to-square me-2"></i>Edit</a>
-                                            <a href="" class="btn btn-danger"><i
+                                            <a href="{{route('kpi.hapus', $kpi->id)}}" class="btn btn-danger"><i
                                                     class="fa-solid fa-trash"></i>Delete</a>
                                         </div>
                                     </td>
