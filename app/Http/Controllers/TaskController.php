@@ -31,7 +31,7 @@ class TaskController extends Controller
         })->get();
         // return $member;
         $tipe = TipeProgress::all();
-        $kpi = KPI::all();
+        $kpi = KPI::where('isActive', true)->get();
         return view('kpi.goals', compact('task', 'member', 'tipe', 'task_adm', 'mid', 'kpi'));
     }
 

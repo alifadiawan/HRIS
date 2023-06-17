@@ -95,7 +95,7 @@
                                     <td>
                                         <div class="form-check form-switch"style="width: 0px">
                                             <input class="form-check-input" type="checkbox" role="switch"
-                                                id="flexSwitchCheckDefault" style="height: 30px; width: 70px" {{ $kpi->isActive ? 'checked' : '' }}>
+                                                id="flexSwitchCheckDefault" onclick="toggleIsActive({{ $kpi->id }})" style="height: 30px; width: 70px" {{ $kpi->isActive ? 'checked' : '' }}>
                                         </div>
                                     </td>
                                     <td>
@@ -177,4 +177,26 @@
         </div>
     </section>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function toggleIsActive(kpiId) {
+        $.ajax({
+            url: '{{ route('api.goals.toggleIsActive') }}',
+            type: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                kpiId: kpiId
+            },
+            success: function(response) {
+                // Berhasil mengubah status isActive
+                alert(response.message);
+                console.log(response.success);
+            },
+            error: function(xhr) {
+                // Gagal mengubah status isActive
+                console.log(xhr.responseText);
+            }
+        });
+    }
+</script>
 @endsection
