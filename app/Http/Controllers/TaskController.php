@@ -48,15 +48,8 @@ class TaskController extends Controller
     {
         $delete = $request->delete;
         $mark = $request->mark;
-        $slider_val = $request->slider;
         $task_id = $request->task_id;
         $task = Task::find($task_id);
-
-        if ($slider_val) {
-            $task->update([
-                'grade' => $slider_val
-            ]);
-        }
 
         if ($mark) {
             $progress = $task->goal_target;
@@ -68,21 +61,25 @@ class TaskController extends Controller
 
         if ($delete) {
             $task->delete();
-            // return $task_id;
-            // task::find($task_id)->delete();
         }
 
         return redirect()->back();
     }
 
+    public function view_prog(Request $Request){
+        $task = Task::find($Request->task_id);
+        $member = 
+        return view('kpi.score_data',compact('task'));
+    }
+
     public function progress(Request $request)
     {
-        // return $request
         $tid =  $request->task_id;
         $task = Task::where('id', $tid)->first();
         $gp = $request->goal_progress;
 
-        Progress::create([
+        // progress karyawan
+        Progress::create([ 
             'tasks_id' => $request->task_id,
             'progress' => $gp,
             'keterangan' => $request->keterangan,
@@ -92,11 +89,27 @@ class TaskController extends Controller
             'goal_progress' => $gp
         ]);
 
+        if($task->goal_progress > 0){
+            $task->update([
+                'status' => 'doing'
+            ]);
+        }
+
         if ($gp == $task->goal_target) {
             $task->update([
                 'status' => 'checking'
             ]);
         }
+        // end progress karyawan
+        $slider_val = $request->slider;
+        if ($slider_val) {
+            $task->update([
+                'grade' => $slider_val
+            ]);
+        }
+        // nilai admin
+
+        // end nilai admin
         return redirect()->back();
     }
 

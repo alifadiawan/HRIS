@@ -193,10 +193,13 @@
                                                     </form>
                                                 @endif
                                                 @if ($t->status == 'done')
-                                                    <li><a class="dropdown-item" data-bs-toggle="modal"
-                                                            data-bs-target="#nilai_{{ $t->id }}"><i
+                                                <form action="{{ route('goals.view_prog') }}" method="GET">
+                                                    @csrf
+                                                    <input type="hidden" name="task_id" value="{{ $t->id }}">
+                                                    <li><button class="dropdown-item" type="submit" ><i
                                                                 class="fa-solid fa-star fa-lg"></i>Beri
-                                                            Nilai</a></li>
+                                                            Nilai</button></li>
+                                                </form>
                                                 @endif
                                                 {{-- <form action="{{ route('goals.update_adm') }}" method="POST">
                                                     @csrf

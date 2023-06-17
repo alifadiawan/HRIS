@@ -68,6 +68,19 @@ class TaskSeeder extends Seeder
                 'member_id'=>4,
                 'created_at' => Carbon::parse('14-06-2023'),
             ],
+            [
+                'goal_id'=>'#2321',
+                'goal_name'=>'HR company bookings target for Q5',
+                'owner_id'=>2,
+                'goal_target'=>100,
+                'goal_progress'=>0,
+                'tipe_id'=>2,
+                'tanggal_target'=>Carbon::parse('15-08-2023'),
+                'grade'=>'',
+                'status'=>'todo',
+                'member_id'=>4,
+                'created_at' => Carbon::parse('14-06-2023'),
+            ],
         ];
 
         Task::insert($task);

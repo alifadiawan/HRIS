@@ -29,6 +29,10 @@ Route::get('/employee-list', function(){
     return view('employee-list');
 });
 
+// Route::get('/score-data', function(){
+//     return view('kpi.score_data');
+// });
+
 
 
 Route::middleware(['web', 'guest'])->group(function () {
@@ -52,6 +56,8 @@ Route::middleware('auth')->group(function () {
     // Route::post('grade', [TaskController::class,'grade'])->name('goals.grade');
     // Route::post('mark', [TaskController::class,'mark'])->name('goals.mark');
     Route::post('update_adm', [TaskController::class,'update_adm'])->name('goals.update_adm');
+    Route::post('progress', [TaskController::class,'progress'])->name('goals.progress');
+    Route::get('view_prog', [TaskController::class,'view_prog'])->name('goals.view_prog');
 
     //Input Item Data 
     Route::get('/input', function () {
