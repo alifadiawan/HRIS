@@ -38,6 +38,23 @@ class KPIController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    public function toggleIsActive(Request $request)
+    {
+        $kpiId = $request->input('kpiId');
+        $kpi = KPI::findOrFail($kpiId);
+        $kpi->isActive = !$kpi->isActive;
+        $kpi->save();
+        if ($kpi->isActive == false) {
+            $status = 'Non-Aktif';
+        }
+        else {
+            $status = 'Aktif';
+        }
+        // Respon berhasil
+        // notify()->success('Status Diubah Menjadi '.$status, 'Status KPI');
+        return response()->json(['success' => true, 'message' => 'Status Diubah Menjadi '.$status]);
+    }
+
     public function store(Request $request)
     {
         //validasi
