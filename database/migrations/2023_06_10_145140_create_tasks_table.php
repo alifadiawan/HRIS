@@ -14,7 +14,11 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('goal_id');
-            $table->string('goal_name');
+            // $table->string('goal_name');
+            $table->unsignedBigInteger('kpi_id');
+            $table->foreign('kpi_id')->references('id')->on('k_p_i_s')
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
             $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')->references('id')->on('members')
                 ->onDelete('cascade')

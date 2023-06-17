@@ -74,7 +74,7 @@
                                     <td scope="row"><a href="" class="href"><i
                                                 class="fa-solid fa-chevron-right me-3"></i></a> {{ $t->goal_id }}
                                     </td>
-                                    <td class="fw-bold">{{ $t->goal_name }} <span style="font-weight: normal">
+                                    <td class="fw-bold">{{ $t->kpi->group_name }} <span style="font-weight: normal">
                                             <p>{{ date('d F Y', strtotime($t->created_at)) }} -
                                                 {{ date('d F Y', strtotime($t->tanggal_target)) }}</p>
                                         </span></td>
@@ -334,48 +334,6 @@
                                     {{-- end modal --}}
                                 </tr>
                             @endforeach
-                            <!-- <tr>
-                                                                                                                                                                                                                                                                                                <td scope="row"><a href="" class="href"><i
-                                                                                                                                                                                                                                                                                                            class="fa-solid fa-chevron-right me-3"></i></a> #0861f</td>
-                                                                                                                                                                                                                                                                                                <td class="fw-bold">HR Company bookings target for Q3 <span style="font-weight: normal">
-                                                                                                                                                                                                                                                                                                        <p>1 Jul 2023 - 15 Agustus 2023</p>
-                                                                                                                                                                                                                                                                                                    </span></td>
-                                                                                                                                                                                                                                                                                                <td>Self</td>
-                                                                                                                                                                                                                                                                                                <td>0 / Rp 5.000.000.000 <div class="progress">
-                                                                                                                                                                                                                                                                                                        <div class="progress-bar bg-info" style="width:30%"></div>
-                                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                                </td>
-                                                                                                                                                                                                                                                                                                <td class="text-success">Updated</td>
-                                                                                                                                                                                                                                                                                                <td><i class="fa-solid fa-ellipsis-vertical"></i></td>
-                                                                                                                                                                                                                                                                                            </tr>
-                                                                                                                                                                                                                                                                                            <tr>
-                                                                                                                                                                                                                                                                                                <td scope="row"><a href="" class="href"><i
-                                                                                                                                                                                                                                                                                                            class="fa-solid fa-chevron-right me-3"></i></a> #0861f</td>
-                                                                                                                                                                                                                                                                                                <td class="fw-bold">HR Company bookings target for Q3 <span style="font-weight: normal">
-                                                                                                                                                                                                                                                                                                        <p>1 Jul 2023 - 15 Agustus 2023</p>
-                                                                                                                                                                                                                                                                                                    </span></td>
-                                                                                                                                                                                                                                                                                                <td>Self</td>
-                                                                                                                                                                                                                                                                                                <td>0 / Rp 5.000.000.000 <div class="progress">
-                                                                                                                                                                                                                                                                                                        <div class="progress-bar bg-success" style="width:10%"></div>
-                                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                                </td>
-                                                                                                                                                                                                                                                                                                <td>Not Updated</td>
-                                                                                                                                                                                                                                                                                                <td><i class="fa-solid fa-ellipsis-vertical"></i></td>
-                                                                                                                                                                                                                                                                                            </tr>
-                                                                                                                                                                                                                                                                                            <tr>
-                                                                                                                                                                                                                                                                                                <td scope="row"><a href="" class="href"><i
-                                                                                                                                                                                                                                                                                                            class="fa-solid fa-chevron-right me-3"></i></a> #0861f</td>
-                                                                                                                                                                                                                                                                                                <td class="fw-bold">HR Company bookings target for Q3 <span style="font-weight: normal">
-                                                                                                                                                                                                                                                                                                        <p>1 Jul 2023 - 15 Agustus 2023</p>
-                                                                                                                                                                                                                                                                                                    </span></td>
-                                                                                                                                                                                                                                                                                                <td>Self</td>
-                                                                                                                                                                                                                                                                                                <td>0 / Rp 5.000.000.000 <div class="progress">
-                                                                                                                                                                                                                                                                                                        <div class="progress-bar bg-warning" style="width:47%"></div>
-                                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                                </td>
-                                                                                                                                                                                                                                                                                                <td>Not Updated</td>
-                                                                                                                                                                                                                                                                                                <td><i class="fa-solid fa-ellipsis-vertical"></i></td>
-                                                                                                                                                                                                                                                                                            </tr> -->
                         </tbody>
                     </table>
                 </div>
@@ -411,9 +369,13 @@
                             </div>
                         </div>
                         <div class="form-gorup mt-2">
-                            <label for="goal_name" class="fw-bold">Goal Name</label>
-                            <input type="text" class="form-control" placeholder="nama tugas" name="goal_name"
-                                id="goal_name" required>
+                            <label for="kpi_id" class="fw-bold">Goal KPI</label>
+                            <select type="text" class="form-control form-select" name="kpi_id" id="kpi_id" required>
+                                <option value="">Pilih KPI</option>
+                                @foreach($kpi as $k)
+                                <option value="{{$k->id}}">{{$k->group_name}}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group mt-2">
                             <label for="goal_target">Goal Target</label>
@@ -439,9 +401,6 @@
                             <label for="member_id" class="fw-bold">Employee</label>
                             <select name="member_id" id="member_id" class="form-select text-capitalize" required>
                                 <option value="">Choose..</option>
-                                @foreach ($member as $m)
-                                    <option value="{{ $m->id }}">{{ $m->nama }}</option>
-                                @endforeach
                             </select>
                         </div>
                         <div class="form-group mt-4">
@@ -461,7 +420,7 @@
             border: 1px solid;
         }
     </style>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function updateOutput(taskId) {
             var slider = document.getElementById("slider_" + taskId);
@@ -469,5 +428,29 @@
 
             output.textContent = slider.value;
         }
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#kpi_id').change(function() {
+                var kpiId = $(this).val();
+                if (kpiId) {
+                    $.ajax({
+                        url: '{{ route('api.goals.getMember', '') }}/' + kpiId,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(data) {
+                            $('#member_id').empty();
+                            $('#member_id').append('<option value="">Choose..</option>');
+                            $.each(data, function(key, value) {
+                                $('#member_id').append('<option class="text-capitalize" value="' + value.id + '">' + value.nama + ' ( '+ value.divisi.nama_divisi + ' - '+ value.jabatan + ' )' +'</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $('#member_id').empty();
+                    $('#member_id').append('<option value="">Choose..</option>');
+                }
+            });
+        });
     </script>
 @endsection
