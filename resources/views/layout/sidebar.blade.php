@@ -16,12 +16,12 @@
     </li>
     <!-- End Dashboard Nav -->
 
-    <li class="nav-item">
-        <a class="nav-link " href="/employee-list">
-            <i class="fa-solid fa-users"></i>
-            <span>Employee List</span>
-        </a>
-    </li>
+        {{-- <li class="nav-item">
+            <a class="nav-link " href="/employee-list">
+                <i class="fa-solid fa-users"></i>
+                <span>Employee List</span>
+            </a>
+        </li> --}}
 
     <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
@@ -66,11 +66,11 @@
                     <i class="bi bi-circle"></i><span>Sales Reports</span>
                 </a>
             </li>
-            <li>
+            {{-- <li>
                 <a href="/index-employe">
                     <i class="bi bi-circle"></i><span>Data Employee</span>
                 </a>
-            </li>
+            </li> --}}
         </ul>
     </li><!-- End Icons Nav -->
     <li class="nav-item">

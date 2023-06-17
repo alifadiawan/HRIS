@@ -103,7 +103,7 @@
                                             <a href="" class="btn btn-success mb-4"><i
                                                     class="fa-solid fa-pen-to-square me-2"></i>Edit</a>
                                             <a href="" class="btn btn-danger"><i
-                                                    class="fa-solid fa-trash me-2"></i>Delete</a>
+                                                    class="fa-solid fa-trash"></i>Delete</a>
                                         </div>
                                     </td>
                                 </tr>
