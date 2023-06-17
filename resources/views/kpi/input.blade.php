@@ -7,7 +7,7 @@
     </div>
     <div class="row">
         <div class="col">
-            <a href="{{route('group-data.index')}}" class="btn btn-primary text-white fw-bold"><i class="fa-solid fa-arrow-left"></i> Back</a>
+            <a href="{{route('kpi.index')}}" class="btn btn-primary text-white fw-bold"><i class="fa-solid fa-arrow-left"></i> Back</a>
         </div>
     </div>
     @if($errors->any())
@@ -17,7 +17,7 @@
     @endif
     <div class="container mt-4">
         <div class="row">
-            <form action="{{route('group-data.store')}}" method="post">
+            <form action="{{route('kpi.store')}}" method="post">
                 @csrf
                 <div class="card">
                     <div class="card-body">
