@@ -79,7 +79,7 @@ class TaskController extends Controller
         $task = Task::where('id', $tid)->first();
         $gp = $request->goal_progress;
 
-        Progress::create([
+        Progress::create([ 
             'tasks_id' => $request->task_id,
             'progress' => $gp,
             'keterangan' => $request->keterangan,
@@ -88,6 +88,12 @@ class TaskController extends Controller
         $task->update([
             'goal_progress' => $gp
         ]);
+
+        if($task->goal_progress > 0){
+            $task->update([
+                'status' => 'doing'
+            ]);
+        }
 
         if ($gp == $task->goal_target) {
             $task->update([
