@@ -48,15 +48,8 @@ class TaskController extends Controller
     {
         $delete = $request->delete;
         $mark = $request->mark;
-        $slider_val = $request->slider;
         $task_id = $request->task_id;
         $task = Task::find($task_id);
-
-        if ($slider_val) {
-            $task->update([
-                'grade' => $slider_val
-            ]);
-        }
 
         if ($mark) {
             $progress = $task->goal_target;
@@ -73,12 +66,19 @@ class TaskController extends Controller
         return redirect()->back();
     }
 
+    public function view_prog(Request $Request){
+        $task = Task::find($Request->task_id);
+        $member = 
+        return view('kpi.score_data',compact('task'));
+    }
+
     public function progress(Request $request)
     {
         $tid =  $request->task_id;
         $task = Task::where('id', $tid)->first();
         $gp = $request->goal_progress;
 
+        // progress karyawan
         Progress::create([ 
             'tasks_id' => $request->task_id,
             'progress' => $gp,
@@ -100,6 +100,16 @@ class TaskController extends Controller
                 'status' => 'checking'
             ]);
         }
+        // end progress karyawan
+        $slider_val = $request->slider;
+        if ($slider_val) {
+            $task->update([
+                'grade' => $slider_val
+            ]);
+        }
+        // nilai admin
+
+        // end nilai admin
         return redirect()->back();
     }
 
