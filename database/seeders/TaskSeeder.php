@@ -18,7 +18,7 @@ class TaskSeeder extends Seeder
         $task = [
             [
                 'goal_id'=>'#1098',
-                'goal_name'=>'HR company bookings target for Q1',
+                'kpi_id' => 5,
                 'owner_id'=>1,
                 'goal_target'=>5000000000,
                 'goal_progress'=>0,
@@ -31,7 +31,7 @@ class TaskSeeder extends Seeder
             ],
             [
                 'goal_id'=>'#2048',
-                'goal_name'=>'HR company bookings target for Q2',
+                'kpi_id' => 3,
                 'owner_id'=>2,
                 'goal_target'=>100,
                 'goal_progress'=>20,
@@ -44,7 +44,7 @@ class TaskSeeder extends Seeder
             ],
             [
                 'goal_id'=>'#3078',
-                'goal_name'=>'HR company bookings target for Q3',
+                'kpi_id' => 7,
                 'owner_id'=>1,
                 'goal_target'=>200,
                 'goal_progress'=>200,
@@ -57,7 +57,7 @@ class TaskSeeder extends Seeder
             ],
             [
                 'goal_id'=>'#3489',
-                'goal_name'=>'HR company bookings target for Q4',
+                'kpi_id' => 6,
                 'owner_id'=>2,
                 'goal_target'=>200,
                 'goal_progress'=>200,
@@ -70,7 +70,7 @@ class TaskSeeder extends Seeder
             ],
             [
                 'goal_id'=>'#2321',
-                'goal_name'=>'HR company bookings target for Q5',
+                'kpi_id' => 8,
                 'owner_id'=>2,
                 'goal_target'=>100,
                 'goal_progress'=>0,
