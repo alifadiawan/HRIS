@@ -138,9 +138,13 @@ class KPIController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(KPI $kPI)
+    public function edit(KPI $kpi)
     {
-        //
+        $divisi = Divisi::all();
+        $jabatan = Member::where('jabatan', '!=', 'null')->pluck('jabatan')->unique();
+        // return $kpi->mapping;
+        // return $jabatan;
+        return view('kpi.edit', compact('divisi', 'jabatan', 'kpi'));
     }
 
     /**
