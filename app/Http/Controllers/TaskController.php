@@ -91,48 +91,50 @@ class TaskController extends Controller
 
     public function progress(Request $request)
     {
+        $cek = $request->keterangan;
         $tid =  $request->task_id;
         $task = Task::where('id', $tid)->first();
         $gp = $request->goal_progress;
 
-
-        if ($request->goal_progress == $task->goal_progress || $request->goal_progress <= $task->goal_progress) {
-            return redirect()->back();
-        }
-
-        // progress karyawan
-        Progress::create([
-            'tasks_id' => $request->task_id,
-            'progress' => $gp,
-            'keterangan' => $request->keterangan,
-        ]);
-
-        $task->update([
-            'goal_progress' => $gp
-        ]);
-
-        if ($task->goal_progress > 0) {
+        if ($cek == null) {
             $task->update([
-                'status' => 'doing'
+                'grade' => $request->grade
             ]);
+        } else {
+            // progress karyawan
+            Progress::create([
+                'tasks_id' => $request->task_id,
+                'progress' => $gp,
+                'keterangan' => $request->keterangan,
+            ]);
+            $task->update([
+                'goal_progress' => $gp
+            ]);
+
+            if ($task->goal_progress > 0) {
+                $task->update([
+                    'status' => 'doing'
+                ]);
+            }
+
+            if ($gp == $task->goal_target) {
+                $task->update([
+                    'status' => 'checking'
+                ]);
+            }
+            // end progress karyawan
+            $slider_val = $request->slider;
+            if ($slider_val) {
+                $task->update([
+                    'grade' => $slider_val
+                ]);
+            }
         }
 
-        if ($gp == $task->goal_target) {
-            $task->update([
-                'status' => 'checking'
-            ]);
-        }
-        // end progress karyawan
-        $slider_val = $request->slider;
-        if ($slider_val) {
-            $task->update([
-                'grade' => $slider_val
-            ]);
-        }
         // nilai admin
 
         // end nilai admin
-        return redirect()->back();
+        return redirect()->route('goals.index');
     }
 
     /**
