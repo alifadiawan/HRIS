@@ -63,7 +63,7 @@ h6 {
   height: 580px;
   background-color: #ffffff;
   border-radius: 0 25px 25px 0; */
-  /* box-shadow: 10px 0px 10px 10px rgba(1, 41, 112, 0.08); */
+/* box-shadow: 10px 0px 10px 10px rgba(1, 41, 112, 0.08); */
 /* } */
 
 /*--------------------------------------------------------------
@@ -111,6 +111,29 @@ h6 {
 .back-to-top.active {
   visibility: visible;
   opacity: 1;
+}
+
+/* time off */
+.time-off {
+  /* max-height: 16.7rem;  */
+  max-height: 14rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+/* width */
+.time-off::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Handle */
+.time-off::-webkit-scrollbar-thumb {
+  background: #b9b9b9;
+}
+
+/* Handle on hover */
+.time-off::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 /*--------------------------------------------------------------
