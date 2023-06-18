@@ -214,10 +214,16 @@
                                                 {{-- </form> --}}
                                             @elseif(auth()->user()->role->role == 'employee')
                                                 @if ($t->status != 'done')
-                                                    <li><a class="dropdown-item" data-bs-toggle="modal"
-                                                            data-bs-target="#progress_{{ $t->id }}"><i
+                                                <form action="{{ route('goals.view_prog') }}" method="GET">
+                                                    @csrf
+                                                    <input type="hidden" name="task_id" value="{{ $t->id }}">
+                                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#progress_{{ $t->id }}"><i
                                                                 class="fa-solid fa-edit fa-lg"></i>
-                                                            Update Progress</a></li>
+                                                            nilai</a></li>
+                                                    <li><button type="submit" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#progress_{{ $t->id }}"><i
+                                                                class="fa-solid fa-edit fa-lg"></i>
+                                                            Update Progress</button></li>
+                                                        </form>
                                                 @endif
                                             @endif
                                         </ul>
@@ -237,11 +243,11 @@
                                                 <form action="{{ route('goals.update_adm') }}" method="POST">
                                                     @csrf
                                                     <div class="modal-body">
-                                                        <input type="range" class="form-range" min="1"
+                                                        {{-- <input type="range" class="form-range" min="1"
                                                             max="100" id="slider_{{ $t->id }}"
                                                             oninput="updateOutput({{ $t->id }})" name="slider">
                                                         <output class="fw-bold text-center"
-                                                            id="sliderValue_{{ $t->id }}">0</output>
+                                                            id="sliderValue_{{ $t->id }}">0</output> --}}
                                                     </div>
                                                     <input type="hidden" name="task_id" value="{{ $t->id }}">
                                                     <div class="modal-footer">
@@ -299,48 +305,7 @@
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
-                                            <form action="{{ route('goals.progress') }}" method="POST">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="progress">Progress</h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    @csrf
-                                                    <div class="form-group">
-                                                        <label for="goal_target">Goal Target</label>
-                                                        <div class="input-group">
-                                                            <input type="number" name="goal_target" id="goal_target"
-                                                                class="form-control" value="{{ $t->goal_target }}"
-                                                                readonly>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group mt-2">
-                                                        <label for="goal_progress">Goal Progress</label>
-                                                        <div class="input-group">
-                                                            <input type="number" name="goal_progress" id="goal_progress"
-                                                                class="form-control"
-                                                                placeholder="previous progress : {{ $t->goal_progress }}"
-                                                                min="{{ $t->goal_progress }}"
-                                                                max="{{ $t->goal_target }}" required>
-                                                        </div>
-                                                    </div>
 
-                                                    <div class="form-group mt-2">
-                                                        <label for="keterangan">Keterangan</label>
-                                                        <div class="input-group">
-                                                            <textarea type="number" name="keterangan" id="keterangan" class="form-control" value="{{ $t->goal_target }}"
-                                                                required></textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <input type="hidden" name="task_id" value="{{ $t->id }}">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary">saving it</button>
-                                                </div>
-                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -435,7 +400,7 @@
             border: 1px solid;
         }
     </style>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function updateOutput(taskId) {
             var slider = document.getElementById("slider_" + taskId);
@@ -443,7 +408,7 @@
 
             output.textContent = slider.value;
         }
-    </script>
+    </script> --}}
     <script>
         $(document).ready(function() {
             $('#kpi_id').change(function() {
