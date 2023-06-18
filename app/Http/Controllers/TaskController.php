@@ -74,10 +74,19 @@ class TaskController extends Controller
         return redirect()->back();
     }
 
-    public function view_prog(Request $Request){
+    public function view_prog(Request $Request)
+    {
         $task = Task::find($Request->task_id);
-        // $member = 
-        return view('kpi.score_data',compact('task'));
+        $mid = $task->member_id;
+        $member = Member::find($mid);
+        $member = $task->member;
+        $kpi_id = $task->kpi_id;
+        $kpi = KPI::find($kpi_id);
+        $progress = Progress::where('tasks_id', $Request->task_id)->latest('created_at')->first();
+        // return $progress;
+        // return $member;
+        // return $kpi;
+        return view('kpi.score_data', compact('task', 'kpi', 'progress'));
     }
 
     public function progress(Request $request)
@@ -86,8 +95,13 @@ class TaskController extends Controller
         $task = Task::where('id', $tid)->first();
         $gp = $request->goal_progress;
 
+
+        if ($request->goal_progress == $task->goal_progress || $request->goal_progress <= $task->goal_progress) {
+            return redirect()->back();
+        }
+
         // progress karyawan
-        Progress::create([ 
+        Progress::create([
             'tasks_id' => $request->task_id,
             'progress' => $gp,
             'keterangan' => $request->keterangan,
@@ -97,7 +111,7 @@ class TaskController extends Controller
             'goal_progress' => $gp
         ]);
 
-        if($task->goal_progress > 0){
+        if ($task->goal_progress > 0) {
             $task->update([
                 'status' => 'doing'
             ]);
