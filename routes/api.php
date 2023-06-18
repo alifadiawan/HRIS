@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\KPIController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +19,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/get-member/{kpiId}', [TaskController::class, 'get_member'])->name('api.goals.getMember');
+Route::post('/kpi/toggle-is-active', [KPIController::class, 'toggleIsActive'])->name('api.goals.toggleIsActive');

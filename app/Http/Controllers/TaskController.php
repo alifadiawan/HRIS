@@ -18,7 +18,7 @@ class TaskController extends Controller
     public function index()
     {
         $uid = auth()->user()->id;
-        $mid = member::where('user_id', $uid)->value('id');
+        $mid = Member::where('user_id', $uid)->value('id');
         // return $mid;
 
         $task = Task::where('member_id', $mid)->get();
@@ -31,7 +31,15 @@ class TaskController extends Controller
         })->get();
         // return $member;
         $tipe = TipeProgress::all();
-        return view('kpi.goals', compact('task', 'member', 'tipe', 'task_adm', 'mid'));
+        $kpi = KPI::where('isActive', true)->get();
+        return view('kpi.goals', compact('task', 'member', 'tipe', 'task_adm', 'mid', 'kpi'));
+    }
+
+    public function get_member(Request $request, $kpiId)
+    {
+        $kpi = KPI::findOrFail($kpiId);
+        $members = $kpi->mapping()->with('divisi')->get();
+        return response()->json($members);
     }
 
     public function group_data()
@@ -68,7 +76,7 @@ class TaskController extends Controller
 
     public function view_prog(Request $Request){
         $task = Task::find($Request->task_id);
-        $member = 
+        // $member = 
         return view('kpi.score_data',compact('task'));
     }
 
@@ -128,7 +136,7 @@ class TaskController extends Controller
     {
         $data = $request->validate([
             'goal_id' => 'required|numeric|min:1000',
-            'goal_name' => 'required',
+            'kpi_id' => 'required',
             'goal_target' => 'required|numeric|min:1',
             'tipe_id' => 'required',
             'tanggal_target' => 'required',
@@ -138,8 +146,8 @@ class TaskController extends Controller
 
         $task = new Task();
         $task->goal_id = '#' . $data['goal_id'];
-        $task->goal_name = $data['goal_name'];
-        $task->owner_id = auth()->user()->id;
+        $task->kpi_id = $data['kpi_id'];
+        $task->owner_id = auth()->user()->member->id;
         $task->goal_target = $data['goal_target'];
         $task->tipe_id = $data['tipe_id'];
         $task->tanggal_target = $data['tanggal_target'];

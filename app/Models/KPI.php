@@ -14,4 +14,9 @@ class KPI extends Model
     {
         return $this->belongsToMany(Member::class, 'kpi_mapping', 'kpi_id', 'employee_id');
     }
+
+    public function task()
+    {
+        return $this->hasMany(Task::class);
+    }
 }

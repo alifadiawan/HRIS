@@ -10,6 +10,11 @@ class Task extends Model
     use HasFactory;
     protected $guarded=[];
 
+    public function kpi()
+    {
+        return $this->belongsTo(KPI::class, 'kpi_id');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
