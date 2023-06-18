@@ -66,95 +66,198 @@
                             <div class="card-body">
 
                                 <!-- card title -->
-                                <div class="row align-items-center">
-                                    <div class="col-9">
-                                        <h4 class="card-title">Employee's Time-off</h4>
+                                @if (auth()->user()->role->role == 'employee')
+                                    <div class="row align-items-center">
+                                        <div class="col-9">
+                                            <h4 class="card-title">Daftar Tugas</h4>
+                                        </div>
+                                        <div class="col-3">
+                                            <a href="/goals" class="text-muted">View all</a>
+                                        </div>
                                     </div>
-                                    <div class="col-3">
-                                        <a href="#" class="text-muted">View all</a>
+                                @else
+                                    <div class="row align-items-center">
+                                        <div class="col-9">
+                                            <h4 class="card-title">Tugas Terbaru</h4>
+                                        </div>
+                                        <div class="col-3">
+                                            <a href="#" class="text-muted">View all</a>
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
 
                                 <!-- card-content -->
-                                <div class="content time-off" style="">
-                                    <div class="d-flex flex-column">
-                                        <div class="row my-2 align-items-center">
-                                            <img src="{{ asset('illustration/pp.png') }}" alt=""
-                                                style="max-width: 70px">
-                                            <div class="col">
-                                                Haffiyan
-                                                <br>
-                                                <div class="status text-muted" style="font-size: 13px">Ijin</div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="text-danger text-end">5 - 10 Juni 2021</div>
-                                            </div>
-                                        </div>
-                                        <hr class="my-2 align-content-center text-muted">
-
-
-                                        <div class="row my-2 align-items-center">
-                                            <img src="{{ asset('illustration/pp.png') }}" alt=""
-                                                style="max-width: 70px">
-                                            <div class="col">
-                                                Jaya Raharja
-                                                <br>
-                                                <div class="status text-muted" style="font-size: 13px">Penyesuaian Tidur
+                                @if (auth()->user()->role->role == 'employee')
+                                    <div class="content time-off">
+                                        <div class="d-flex flex-column">
+                                            <div class="row my-2 align-items-center">
+                                                <div class="col">
+                                                   <div class="fw-bold">Input Data</div>
+                                                    <div class="status text-muted text-truncate" style="font-size: 13px; max-width:13rem">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, modi. Omnis enim, sapiente impedit odio facere nam harum ex fuga vitae, recusandae est labore illo necessitatibus nostrum amet distinctio mollitia.</div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="text-danger text-end">5 - 10 Juni 2021</div>
                                                 </div>
                                             </div>
-                                            <div class="col">
-                                                <div class="text-danger text-end">5 - 10 Juni 2021</div>
-                                            </div>
-                                        </div>
-                                        <hr class="my-2 align-content-center text-muted">
-
-
-                                        <div class="row my-2 align-items-center">
-                                            <img src="{{ asset('illustration/pp.png') }}" alt=""
-                                                style="max-width: 70px">
-                                            <div class="col">
-                                                Ega Aisha
-                                                <br>
-                                                <div class="status text-muted" style="font-size: 13px">Family Bussiness
+                                            <hr class="my-2 align-content-center text-muted">
+                                            <div class="row my-2 align-items-center">
+                                                <div class="col">
+                                                   <div class="fw-bold">Input Data</div>
+                                                    <div class="status text-muted text-truncate" style="font-size: 13px; max-width:13rem">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, modi. Omnis enim, sapiente impedit odio facere nam harum ex fuga vitae, recusandae est labore illo necessitatibus nostrum amet distinctio mollitia.</div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="text-danger text-end">5 - 10 Juni 2021</div>
                                                 </div>
                                             </div>
-                                            <div class="col">
-                                                <div class="text-danger text-end">5 - 10 Juni 2021</div>
+                                            <hr class="my-2 align-content-center text-muted">
+                                            <div class="row my-2 align-items-center">
+                                                <div class="col">
+                                                   <div class="fw-bold">Input Data</div>
+                                                    <div class="status text-muted text-truncate" style="font-size: 13px; max-width:13rem">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, modi. Omnis enim, sapiente impedit odio facere nam harum ex fuga vitae, recusandae est labore illo necessitatibus nostrum amet distinctio mollitia.</div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="text-danger text-end">5 - 10 Juni 2021</div>
+                                                </div>
                                             </div>
+                                            <hr class="my-2 align-content-center text-muted">
+                                            <div class="row my-2 align-items-center">
+                                                <div class="col">
+                                                   <div class="fw-bold">Input Data</div>
+                                                    <div class="status text-muted text-truncate" style="font-size: 13px; max-width:13rem">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, modi. Omnis enim, sapiente impedit odio facere nam harum ex fuga vitae, recusandae est labore illo necessitatibus nostrum amet distinctio mollitia.</div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="text-danger text-end">5 - 10 Juni 2021</div>
+                                                </div>
+                                            </div>
+                                            <hr class="my-2 align-content-center text-muted">
+                                                {{-- <div class="accordion accordion-flush" id="accordionFlushExample">
+                                                    <div class="accordion-item">
+                                                        <h2 class="accordion-header">
+                                                            <button class="accordion-button collapsed" type="button"
+                                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                                                                aria-expanded="false" aria-controls="flush-collapseOne">
+                                                                Tugas 1
+                                                            </button>
+                                                        </h2>
+                                                        <div id="flush-collapseOne" class="accordion-collapse collapse"
+                                                            data-bs-parent="#accordionFlushExample">
+                                                            <div class="accordion-body">
+                                                                <p class="pepek">Lorem ipsum dolor sit, amet consectetur
+                                                                    adipisicing elit. Consectetur earum cupiditate expedita
+                                                                    dolorum doloremque, iste optio molestias sunt quod dolores
+                                                                    est rerum neque id laborum natus harum eligendi perferendis
+                                                                    consequuntur?</p>
+                                                                    <a href="/progress">Show More</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="accordion-item">
+                                                            <h2 class="accordion-header">
+                                                                <button class="accordion-button collapsed" type="button"
+                                                                    data-bs-toggle="collapse"
+                                                                    data-bs-target="#flush-collapseOne2" aria-expanded="false"
+                                                                    aria-controls="flush-collapseOne">
+                                                                    Tugas 2
+                                                                </button>
+                                                            </h2>
+                                                            <div id="flush-collapseOne2" class="accordion-collapse collapse"
+                                                                data-bs-parent="#accordionFlushExample">
+                                                                <div class="accordion-body">
+                                                                    <p class="pepek">Lorem ipsum dolor sit, amet consectetur
+                                                                        adipisicing elit. Consectetur earum cupiditate expedita
+                                                                        dolorum dolor</p>
+                                                                        <a href="/progress">Show More</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="accordion-item">
+                                                            <h2 class="accordion-header">
+                                                                <button class="accordion-button collapsed" type="button"
+                                                                    data-bs-toggle="collapse"
+                                                                    data-bs-target="#flush-collapseOne3" aria-expanded="false"
+                                                                    aria-controls="flush-collapseOne">
+                                                                    Tugas 3
+                                                                </button>
+                                                            </h2>
+                                                            <div id="flush-collapseOne3" class="accordion-collapse collapse"
+                                                                data-bs-parent="#accordionFlushExample">
+                                                                <div class="accordion-body">
+                                                                    <p class="pepek">Lorem </p>
+                                                                        <a href="/progress">Show More</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> --}}
                                         </div>
-                                        <hr class="my-2 align-content-center text-muted">
-
-
-                                        <div class="row my-2 align-items-center">
-                                            <img src="{{ asset('illustration/pp.png') }}" alt=""
-                                                style="max-width: 70px">
-                                            <div class="col">
-                                                Anggita
-                                                <br>
-                                                <div class="status text-muted" style="font-size: 13px">Sick</div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="text-danger text-end">5 - 10 Juni 2021</div>
-                                            </div>
-                                        </div>
-                                        <hr class="my-2 align-content-center text-muted">
-                                        <div class="row my-2 align-items-center">
-                                            <img src="{{ asset('illustration/pp.png') }}" alt=""
-                                                style="max-width: 70px">
-                                            <div class="col">
-                                                Anggita
-                                                <br>
-                                                <div class="status text-muted" style="font-size: 13px">Sick</div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="text-danger text-end">5 - 10 Juni 2021</div>
-                                            </div>
-                                        </div>
-                                        <hr class="my-2 align-content-center text-muted">
-
                                     </div>
-                                </div>
+                                @else
+                                    <div class="content time-off" style="">
+                                        
+                                        {{-- <div class="d-flex flex-column">
+                                            <div class="row my-2 align-items-center">
+                                                <img src="{{ asset('illustration/pp.png') }}" alt=""
+                                                    style="max-width: 70px">
+                                                <div class="col">
+                                                    Haffiyan
+                                                    <br>
+                                                    <div class="status text-muted" style="font-size: 13px">Ijin</div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="text-danger text-end">5 - 10 Juni 2021</div>
+                                                </div>
+                                            </div>
+                                            <hr class="my-2 align-content-center text-muted">
+                                        </div> --}}
 
+                                        <div class="d-flex flex-column">
+                                            
+                                            <div class="row my-2 align-items-center">
+                                                <div class="col">
+                                                   <div class="fw-bold">Input Data</div>
+                                                    <div class="status text-muted" style="font-size: 13px">Inna Filjannati</div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="text-danger text-end">5 - 10 Juni 2021</div>
+                                                </div>
+                                            </div>
+                                            <hr class="my-2 align-content-center text-muted">
+
+                                            <div class="row my-2 align-items-center">
+                                                <div class="col">
+                                                   <div class="fw-bold">UI / UX</div>
+                                                    <div class="status text-muted" style="font-size: 13px">Jaya Raharja</div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="text-danger text-end">15 - 20 Juni 2021</div>
+                                                </div>
+                                            </div>
+                                            <hr class="my-2 align-content-center text-muted">
+
+                                            <div class="row my-2 align-items-center">
+                                                <div class="col">
+                                                   <div class="fw-bold">Input Data</div>
+                                                    <div class="status text-muted" style="font-size: 13px">Inna Filjannati</div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="text-danger text-end">5 - 10 Juni 2021</div>
+                                                </div>
+                                            </div>
+                                            <hr class="my-2 align-content-center text-muted">
+                                                
+                                            <div class="row my-2 align-items-center">
+                                                <div class="col">
+                                                   <div class="fw-bold">Input Data</div>
+                                                    <div class="status text-muted" style="font-size: 13px">Inna Filjannati</div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="text-danger text-end">5 - 10 Juni 2021</div>
+                                                </div>
+                                            </div>
+                                            <hr class="my-2 align-content-center text-muted">
+                                        </div>
+                                            
+                                    </div>
+                                @endif
 
                             </div>
                         </div>
@@ -419,14 +522,6 @@
             }
         }
 
-        /* Time off */
-        .time-off {
-            /* max-height: 16.7rem;  */
-            max-height: 14rem;
-            overflow-y: scroll;
-            overflow-x: hidden;
-        }
-
 
         /* Progress bar */
         .bar {
@@ -460,6 +555,15 @@
             background-color: rgb(105, 211, 109);
             float: left;
             border-radius: 10px;
+        }
+
+        /* text truncate override */
+        .pepek {
+            display: -webkit-box;
+            max-width: 320px;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
     </style>
 
@@ -560,7 +664,7 @@
                 }
             }).render();
         });
-        
+
         // calendar
         // Mendapatkan elemen-elemen yang diperlukan
         const calendarHeader = document.querySelector('.calendar_header h2');
