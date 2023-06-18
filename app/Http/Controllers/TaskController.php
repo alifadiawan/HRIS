@@ -68,7 +68,13 @@ class TaskController extends Controller
 
     public function view_prog(Request $Request){
         $task = Task::find($Request->task_id);
-        $member = 
+        // $mid = $task->member_id;
+        // $member = Member::find($mid);
+        $member = $task->member;
+        $kpi = $member->kpis;
+        // $kpi = KPI::where('employee_id',$mid)->get();
+        return $member;
+        return $kpi;
         return view('kpi.score_data',compact('task'));
     }
 
