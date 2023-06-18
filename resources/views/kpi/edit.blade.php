@@ -60,10 +60,25 @@
                                     <label for="divisi_id" class="fw-bold mt-4">FOR DIVISI</label>
                                     <div class="input-group">
                                         <select class="form-select form-control text-capitalize" name="divisi_id" id="divisi_id">
-                                            <option value="">Semua</option>
-                                            @foreach($kpi->mapping as $m)
-                                            <option value="{{$m->divisi_id}}" @if($m->mapping->divisi_id == $m->divisi_id) selected @endif>{{$m->divisi->nama_divisi}}</option>
-                                            @endforeach
+                                            @php
+                                                $totalDivisionCount = $divisi->count();
+                                                $allDivisionsSelected = $kpi->mapping->pluck('divisi_id')->unique()->count() === $totalDivisionCount;
+                                            @endphp
+                                            @if($allDivisionsSelected)
+                                                <option value="" selected>Semua</option>
+                                                @foreach($divisi as $d)
+                                                <option value="{{$d->id}}">{{$d->nama_divisi}}</option>
+                                                @endforeach
+                                            @else
+                                                <option value="">Semua</option>
+                                                @foreach($divisi as $d)
+                                                    <option value="{{$d->id}}"
+                                                        @foreach($kpi->mapping as $m)
+                                                        @if($m->divisi_id === $d->id) selected @endif
+                                                        @endforeach
+                                                    >{{$d->nama_divisi}}</option>
+                                                @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                 </div>
@@ -71,10 +86,25 @@
                                     <label for="jabatan" class="fw-bold mt-4">FOR JABATAN</label>
                                     <div class="input-group">
                                         <select class="form-select form-control text-capitalize" name="jabatan" id="jabatan">
-                                            <option value="">Semua</option>
-                                            @foreach($jabatan as $j)
-                                            <option value="{{$j}}" @if($kpi->mapping->jabatan == $j) selected @endif>{{$j}}</option>
-                                            @endforeach
+                                            @php
+                                                $totalPositionCount = $jabatan->count();
+                                                $allPositionsSelected = $kpi->mapping->pluck('jabatan')->unique()->count() === $totalPositionCount;
+                                            @endphp
+                                            @if($allPositionsSelected)
+                                                <option value="" selected>Semua</option>
+                                                @foreach($jabatan as $j)
+                                                <option value="{{$j}}">{{$j}}</option>
+                                                @endforeach
+                                            @else
+                                                <option value="">Semua</option>
+                                                @foreach($jabatan as $j)
+                                                    <option value="{{$j}}"
+                                                        @foreach($kpi->mapping as $m)
+                                                        @if($m->jabatan === $j) selected @endif
+                                                        @endforeach
+                                                    >{{$j}}</option>
+                                                @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                 </div>
@@ -83,19 +113,19 @@
                                 <div class="col-lg-4">
                                     <label for="weight" class="fw-bold mt-4">WEIGHT</label>
                                     <div class="input-group">
-                                        <input type="number" name="weight" id="weight" class="form-control" placeholder="0" min="1" aria-label="weight" aria-describedby="basic-addon1" value="{{$kpi->weight}}" required>
+                                        <input type="number" name="weight" id="weight" class="form-control" placeholder="0" min="1" step="0.01" aria-label="weight" aria-describedby="basic-addon1" value="{{$kpi->weight}}" required>
                                       </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <label for="min_treshold" class="fw-bold mt-4">MINIMUM THRESHOLD</label>
                                     <div class="input-group">
-                                        <input type="number" name="min_treshold" id="min_treshold" class="form-control" placeholder="0" min="1" aria-label="min" aria-describedby="basic-addon1" value="{{$kpi->min_treshold}}" required>
+                                        <input type="number" name="min_treshold" id="min_treshold" class="form-control" placeholder="0" min="1" step="0.01" aria-label="min" aria-describedby="basic-addon1" value="{{$kpi->min_treshold}}" required>
                                       </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <label for="max_treshold" class="fw-bold mt-4">MAXIMUM THRESHOLD</label>
                                     <div class="input-group">
-                                        <input type="number" name="max_treshold" id="max_treshold" class="form-control" placeholder="0" min="1" aria-label="max" aria-describedby="basic-addon1" value="{{$kpi->max_treshold}}" required>
+                                        <input type="number" name="max_treshold" id="max_treshold" class="form-control" placeholder="0" min="1" step="0.01" aria-label="max" aria-describedby="basic-addon1" value="{{$kpi->max_treshold}}" required>
                                       </div>
                                 </div>
                             </div>

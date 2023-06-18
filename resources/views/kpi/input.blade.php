@@ -82,19 +82,19 @@
                                 <div class="col-lg-4">
                                     <label for="weight" class="fw-bold mt-4">WEIGHT</label>
                                     <div class="input-group">
-                                        <input type="number" name="weight" id="weight" class="form-control" placeholder="0" min="1" aria-label="weight" aria-describedby="basic-addon1" required>
+                                        <input type="number" name="weight" id="weight" class="form-control" placeholder="0" min="1" step="0.01" aria-label="weight" aria-describedby="basic-addon1" required>
                                       </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <label for="min_treshold" class="fw-bold mt-4">MINIMUM THRESHOLD</label>
                                     <div class="input-group">
-                                        <input type="number" name="min_treshold" id="min_treshold" class="form-control" placeholder="0" min="1" aria-label="min" aria-describedby="basic-addon1" required>
+                                        <input type="number" name="min_treshold" id="min_treshold" class="form-control" placeholder="0" min="1" step="0.01" aria-label="min" aria-describedby="basic-addon1" required>
                                       </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <label for="max_treshold" class="fw-bold mt-4">MAXIMUM THRESHOLD</label>
                                     <div class="input-group">
-                                        <input type="number" name="max_treshold" id="max_treshold" class="form-control" placeholder="0" min="1" aria-label="max" aria-describedby="basic-addon1" required>
+                                        <input type="number" name="max_treshold" id="max_treshold" class="form-control" placeholder="0" min="1" step="0.01" aria-label="max" aria-describedby="basic-addon1" required>
                                       </div>
                                 </div>
                             </div>
