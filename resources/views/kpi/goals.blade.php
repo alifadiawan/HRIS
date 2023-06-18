@@ -60,11 +60,11 @@
                             <tr style="text-align: start">
                                 <th>Goal ID</th>
                                 <th>Goal Name</th>
-                                <th>Goal Owner</th>
+                                {{-- <th>Goal Owner</th> --}}
                                 <th>To</th>
                                 <th>Goal Progress</th>
                                 <th>Status</th>
-                                <th>Grade</th>
+                                {{-- <th>Grade</th> --}}
                                 <th></th>
                             </tr>
                         </thead>
@@ -83,7 +83,7 @@
                                                 {{ date('d F Y', strtotime($t->tanggal_target)) }}</p>
                                         </span></td>
                                     <td>{{ $t->owner->nama }}</td>
-                                    <td>{{ $t->member->nama }}</td>
+                                    {{-- <td>{{ $t->member->nama }}</td> --}}
                                     @if ($t->tipe_progress->nama_tipe == 'idr')
                                         <td>{{ $t->goal_progress }} / Rp. {{ number_format($t->goal_target) }} <div
                                                 class="progress">
@@ -177,11 +177,11 @@
                                     @if ($t->status == 'done')
                                         <td class="text-capitalize text-success">{{ $t->status }}</td>
                                     @endif
-                                    @if ($t->grade == null)
+                                    {{-- @if ($t->grade == null)
                                         <td>-</td>
                                     @else
                                         <td>{{ $t->grade }}</td>
-                                    @endif
+                                    @endif --}}
                                     <td>
                                         <a href="" class="btn" data-bs-toggle="dropdown">
                                             <i class="fa-solid fa-ellipsis-vertical"></i>
@@ -229,13 +229,38 @@
                                     </td>
                                 <tr id="flush-collapseOne{{ $t->id }}" class="accordion-collapse collapse"
                                     data-bs-parent="#accordionFlushExample">
-                                    <td class="bg-light"></td>
-                                    <td class="bg-light">awdaoiw</td>
-                                    <td class="bg-light">awdaoiw</td>
-                                    <td class="bg-light">awdaoiw</td>
-                                    <td class="bg-light">awdaoiw</td>
-                                    <td class="bg-light">awdaoiw</td>
-                                    <td class="bg-light">awdaoiw</td>
+                                    <td class="bg-light">
+                                        <div class="card">
+                                            <div>
+                                                goal owner : {{ $t->owner->nama }}
+                                            </div>
+                                            <div>
+                                                @if ($t->grade == null)
+                                                    grade : belum dinilai
+                                                @else
+                                                    grade : {{ $t->grade }}
+                                                @endif
+                                            </div>
+                                            <div>
+                                                goal target : {{ $t->goal_target }}
+                                            </div>
+                                            <div>
+                                                tipe tugas : {{ $t->tipe_progress->nama_tipe }}
+                                            </div>
+                                            <div>
+                                                tanggal target : {{ $t->tanggal_target }}
+                                            </div>
+                                            <div>
+                                                kpi yang dinilai : {{ $t->kpi->group_name }}
+                                            </div>
+                                            <div>
+                                                jabatan : {{ $t->member->jabatan }}
+                                            </div>
+                                            <div>
+                                                divisi : {{ $t->member->divisi->nama_divisi }}
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
                                 {{-- modal hapus --}}
                                 <div class="modal fade" id="hapustugas_{{ $t->id }}" tabindex="-1"
