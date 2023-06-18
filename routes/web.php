@@ -25,7 +25,7 @@ Route::get('/', function () {
 });
 
 
-Route::get('/employee-list', function(){
+Route::get('/employee-list', function () {
     return view('employee-list');
 });
 
@@ -55,9 +55,9 @@ Route::middleware('auth')->group(function () {
     // Route::get('group-data', [TaskController::class,'group_data'])->name('goals.group');
     // Route::post('grade', [TaskController::class,'grade'])->name('goals.grade');
     // Route::post('mark', [TaskController::class,'mark'])->name('goals.mark');
-    Route::post('update_adm', [TaskController::class,'update_adm'])->name('goals.update_adm');
-    Route::post('progress', [TaskController::class,'progress'])->name('goals.progress');
-    Route::get('view_prog', [TaskController::class,'view_prog'])->name('goals.view_prog');
+    Route::post('update_adm', [TaskController::class, 'update_adm'])->name('goals.update_adm');
+    Route::post('progress', [TaskController::class, 'progress'])->name('goals.progress');
+    Route::get('view_prog', [TaskController::class, 'view_prog'])->name('goals.view_prog');
 
     //Input Item Data 
     Route::get('/input', function () {
@@ -72,6 +72,11 @@ Route::middleware('auth')->group(function () {
     //Index Employee
     Route::get('/index-employe', function () {
         return view('kpi.index');
+    });
+
+    //Sales Reports
+    Route::get('/progress', function () {
+        return view('progress');
     });
 
     Route::resource('kpi', KPIController::class);

@@ -74,6 +74,12 @@
         </ul>
     </li><!-- End Icons Nav -->
     <li class="nav-item">
+        <a class="nav-link collapsed" href="/progress">
+            <i class="fa-solid fa-circle-info fa-lg"></i>
+            <span>Detail Progress</span>
+        </a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
             <i class="fa-solid fa-right-from-bracket fa-lg"></i>
             <span>Log out</span>
