@@ -141,18 +141,91 @@ class KPIController extends Controller
     public function edit(KPI $kpi)
     {
         $divisi = Divisi::all();
-        $jabatan = Member::where('jabatan', '!=', 'null')->pluck('jabatan')->unique();
+        $jabatan = Member::where('jabatan', '!=', null)->pluck('jabatan')->unique();
+        $member = Member::whereHas('user', function ($query) {
+            $query->whereHas('role', function ($user) {
+                $user->where('role', '!=', 'admin');
+            });
+        })->get();
         // return $kpi->mapping;
         // return $jabatan;
-        return view('kpi.edit', compact('divisi', 'jabatan', 'kpi'));
+        return view('kpi.edit', compact('divisi', 'jabatan', 'kpi', 'member'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, KPI $kPI)
+    public function update(Request $request, KPI $kpi)
     {
-        //
+        //validasi
+        $data = $request->validate([
+            'group_name' => 'required',
+            'sort_no' => 'required|numeric|min:1',
+            'deskripsi' => 'required',
+            'parameter' => 'required',
+            'divisi_id' => 'nullable',
+            'jabatan' => 'nullable',
+            'weight' => 'required|numeric|min:1',
+            'min_treshold' => 'required|numeric|min:1',
+            'max_treshold' => 'required|numeric|min:1',
+            'isActive' => 'required|boolean',
+        ]);
+
+        if ($kpi->sort_no != $data['sort_no']) {
+            //update sort number
+            $sort = KPI::where('sort_no' , '>=', $data['sort_no'])->where('id', '!=', $kpi->id)->get();
+            // return $sort;
+            foreach($sort as $s){
+                $s->sort_no = $s->sort_no + 1;
+                $s->save();
+            }
+        }
+
+        //update kpi
+        $kpi->group_name = $data['group_name'];
+        $kpi->deskripsi = $data['deskripsi'];
+        $kpi->parameter = $data['parameter'];
+        $kpi->sort_no = $data['sort_no'];
+        $kpi->weight = $data['weight'];
+        $kpi->min_treshold = $data['min_treshold'];
+        $kpi->max_treshold = $data['max_treshold'];
+        $kpi->isActive = $data['isActive'];
+        $kpi->save();
+
+        if ($data['divisi_id'] != null && $data['jabatan'] != null) {
+            $employee = Member::whereHas('user', function ($q) {
+                $q->whereHas('role', function ($u) {
+                    $u->where('role', '!=', 'admin');
+                });
+            })->where('divisi_id', $data['divisi_id'])->where('jabatan', $data['jabatan'])->get();
+        }
+        elseif ($data['jabatan'] != null) {
+            $employee = Member::whereHas('user', function ($q) {
+                $q->whereHas('role', function ($u) {
+                    $u->where('role', '!=', 'admin');
+                });
+            })->where('jabatan', $data['jabatan'])->get();
+        }
+        elseif ($data['divisi_id'] != null) {
+            $employee = Member::whereHas('user', function ($q) {
+                $q->whereHas('role', function ($u) {
+                    $u->where('role', '!=', 'admin');
+                });
+            })->where('divisi_id', $data['divisi_id'])->get();
+        }
+        else {
+            $employee = Member::whereHas('user', function ($q) {
+                $q->whereHas('role', function ($u) {
+                    $u->where('role', '!=', 'admin');
+                });
+            })->get();
+        }
+        // return $employee;
+        $kpi->mapping()->sync($employee);
+
+        //notif
+        notify()->success('KPI Berhasil Diupdate !!', 'KPI');
+        return redirect('/kpi');
     }
 
     /**
