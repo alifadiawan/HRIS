@@ -35,7 +35,7 @@ class MemberSeeder extends Seeder
                 'jk'=>'laki',
                 'tgl_lahir'=>Carbon::parse('18-11-2005'),
                 // 'foto'=>'',
-                'user_id'=>2,
+                'user_id'=>3,
                 'divisi_id' => 1,
             ],
         ];

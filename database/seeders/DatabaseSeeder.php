@@ -21,7 +21,6 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             MemberSeeder::class,
             TipeSeeder::class,
-            TaskSeeder::class,
 
             BankSeeder::class,
             EwalletSeeder::class,
@@ -29,6 +28,7 @@ class DatabaseSeeder extends Seeder
             PembayaranSeeder::class,
             TransaksiDetailSeeder::class,
             KPISeeder::class,
+            TaskSeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();
 
