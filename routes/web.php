@@ -79,6 +79,12 @@ Route::middleware('auth')->group(function () {
         return view('progress');
     });
 
+
+    //Profile
+    Route::get('/profile', function () {
+        return view('profile');
+    });
+
     Route::resource('kpi', KPIController::class);
     Route::get('/kpi/{id}/hapus', [KPIController::class, 'hapus'])->name('kpi.hapus');
 
