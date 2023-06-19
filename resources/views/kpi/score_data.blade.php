@@ -3,6 +3,7 @@
 @section('page-title', 'Create Score Data')
 @section('content')
 
+
     <section class="score_data">
         < class="content">
             <div class="card text-left">
@@ -64,7 +65,6 @@
                     </div>
             @endif
 
-
             @if (auth()->user()->role->role == 'employee')
                 <div class="card text-left mt-3">
                     <img class="card-img-top" src="holder.js/100px180/" alt="">
@@ -94,55 +94,56 @@
                     </div>
                 </div>
 
-                <div class="card text-left mt-3">
-                    <img class="card-img-top" src="holder.js/100px180/" alt="">
-                    <div class="card-body">
-                        <p class="text-muted mt-3">previous Progress</p>
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th class="bg-light">Progress</th>
-                                    <th class="bg-light">keterangan</th>
-                                    <th class="bg-light">Goal target</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    @if ($progress == null)
-                                        <td>0</td>
-                                        <td>-</td>
-                                        <td>{{ $task->goal_target }}</td>
-                                    @else
-                                        <td>{{ $progress->progress }}</td>
-                                        <td>{{ $progress->keterangan }}</td>
-                                        <td>{{ $task->goal_target }}</td>
-                                    @endif
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="row">
+
+                    <!-- Previous Progress -->
+                    <div class="col">
+                        <div class="card text-left mt-3">
+                            <img class="card-img-top" src="holder.js/100px180/" alt="">
+                            <div class="card-body">
+                                <p class="text-muted mt-3">Previous Progress</p>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="bg-light">Progress</th>
+                                            <th class="bg-light">keterangan</th>
+                                            <th class="bg-light">Goal target</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            @if ($progress == null)
+                                                <td>0</td>
+                                                <td>-</td>
+                                                <td>{{ $task->goal_target }}</td>
+                                            @else
+                                                <td>{{ $progress->progress }}</td>
+                                                <td>{{ $progress->keterangan }}</td>
+                                                <td>{{ $task->goal_target }}</td>
+                                            @endif
+                                            {{-- <td>
+                                                <input type="range" class="w-75" value="0" min="1" max="100"
+                                                    id="range" oninput="rangenumber.value=value" readonly/>
+                                                <input type="number" class="text-center rounded-4" id="rangenumber" min="1"
+                                                    max="100" value="{{ $task->grade }}" oninput="range.value=value"
+                                                    style="background-color: #e6e6e6" readonly>
+                                            </td> --}}
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
 
+                    <!-- Upcoming Progress -->
+                    <div class="col">
+                        <div class="card text-left mt-3">
+                            <img class="card-img-top" src="holder.js/100px180/" alt="">
+                            <div class="card-body">
+                                <p class="text-muted mt-3">Upcoming Progress</p>
+                                <form action="{{ route('goals.progress') }}" method="POST">
 
-                    @if ($task->status == 'todo')
-                        <div class="alert alert-danger" role="alert">
-                            todo
-                        </div>
-                    @elseif($task->status == 'doing')
-                        <div class="alert alert-warning" role="alert">
-                            doing
-                        </div>
-                    @endif
-                    <div class="card text-left mt-3">
-                        <img class="card-img-top" src="holder.js/100px180/" alt="">
-                        <div class="card-body">
-                            <p class="text-muted mt-3">Progress</p>
-                            <form action="{{ route('goals.progress') }}" method="POST">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="progress">Progress</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
+
                                     @csrf
                                     <div class="form-group">
                                         <label for="goal_target">Goal Target</label>
@@ -154,6 +155,7 @@
                                     <div class="form-group mt-2">
                                         <label for="goal_progress">Goal Progress</label>
                                         <div class="input-group">
+
                                             <input type="range" class="w-75" min="{{ $task->goal_progress }}"
                                                 max="{{ $task->goal_target }}" value="{{ $task->goal_progress }}"
                                                 name="goal_progress" id="slider" oninput="updateOutput()" />
@@ -172,14 +174,13 @@
                                                 required></textarea>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <input type="hidden" name="task_id" value="{{ $task->id }}">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">saving it</button>
-                                </div>
-                            </form>
+                                    <div class="form-group mt-3">
+                                        <input type="hidden" name="task_id" value="{{ $task->id }}">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+
+                                </form>
+                            </div>
                         </div>
                     </div>
             @endif
