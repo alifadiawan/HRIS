@@ -1,5 +1,6 @@
 @extends('layout.body')
 @section('title', 'Dashboard')
+@section('welcome', 'active')
 @section('content')
 
     <section class="Dashboard">
