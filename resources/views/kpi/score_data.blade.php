@@ -50,11 +50,12 @@
                                         <td>{{ $kpi->weight }}</td>
                                         <td>
                                             <input type="hidden" name="task_id" value="{{ $task->id }}">
-                                            <input type="range" class="w-75" value="0" min="1"
-                                                max="100" id="slider" oninput="updateOutput()" name="grade" />
+                                            <input type="range" class="w-75" value="0"
+                                                min={{ $task->goal_progress + 1 }}" max="{{ $task->goal_target }}"
+                                                id="slider" oninput="updateOutput()" name="grade" />
                                             <input type="number" class="text-center rounded-4" id="sliderValue"
-                                                min="1" max="100" value="0"
-                                                style="background-color: #e6e6e6" oninput="updateSlider()"
+                                                min="{{ $task->goal_progress + 1 }}" max="{{ $task->goal_target }}"
+                                                value="0" style="background-color: #e6e6e6" oninput="updateSlider()"
                                                 onchange="validateMaxValue()" name="grade">
                                         </td>
                                     </tr>
@@ -160,9 +161,10 @@
                                                 max="{{ $task->goal_target }}" value="{{ $task->goal_progress }}"
                                                 name="goal_progress" id="slider" oninput="updateOutput()" />
                                             <input type="number" class="text-center rounded-4" id="sliderValue"
-                                                min="{{ $task->goal_progress + 1 }}" max="100"
+                                                min="{{ $task->goal_progress + 1 }}" max="{{ $task->goal_target }}"
                                                 value="{{ $task->goal_progress }}" style="background-color: #e6e6e6"
-                                                oninput="updateSlider()" onchange="validateMaxValue()" name="goal_progress">
+                                                oninput="updateSlider()" onchange="validateMaxValue()"
+                                                name="goal_progress">
                                         </div>
                                     </div>
 
