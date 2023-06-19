@@ -30,10 +30,10 @@
                         {{-- <div class="card"> --}}
                         <div class="card-body">
                             <div class="row align-items-center">
-                                <div class="col-10">
+                                <div class="col-lg-10 col-7">
                                     <h4 class="card-title">Payroll Summary</h4>
                                 </div>
-                                <div class="col-2">
+                                <div class="col-lg-2 col-5">
                                     <select name="" class="form-select" id="">
                                         <option value="">Yearly</option>
                                         <option value="">Monthly</option>
@@ -74,19 +74,19 @@
                                 <!-- card title -->
                                 @if (auth()->user()->role->role == 'employee')
                                     <div class="row align-items-center">
-                                        <div class="col-9">
+                                        <div class="col-lg-9 col-8">
                                             <h4 class="card-title">Daftar Tugas</h4>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg-3 col-4">
                                             <a href="/goals" class="text-muted">View all</a>
                                         </div>
                                     </div>
                                 @else
                                     <div class="row align-items-center">
-                                        <div class="col-9">
+                                        <div class="col-lg-9 col-8">
                                             <h4 class="card-title">Tugas Terbaru</h4>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg-3 col-4">
                                             <a href="/goals" class="text-muted">View all</a>
                                         </div>
                                     </div>
