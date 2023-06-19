@@ -76,7 +76,7 @@
     <li class="nav-item">
         <a class="nav-link collapsed" href="/progress">
             <i class="fa-solid fa-circle-info fa-lg"></i>
-            <span>Detail Progress</span>
+            <span>Show Progress</span>
         </a>
     </li>
     <li class="nav-item">
