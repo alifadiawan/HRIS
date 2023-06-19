@@ -88,24 +88,24 @@
                                         <td>{{ $t->goal_progress }} / Rp. {{ number_format($t->goal_target) }} <div
                                                 class="progress">
                                                 @if ($t->status == 'todo')
-                                                    <div class="progress-bar bg-secondary"
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary"
                                                         style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
                                                     </div>
                                                 @endif
                                                 @if ($t->status == 'doing')
-                                                    <div class="progress-bar bg-primary"
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
                                                         style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
                                                     </div>
                                                 @endif
                                                 @if ($t->status == 'checking')
-                                                    <div class="progress-bar bg-warning"
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
                                                         style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
                                                     </div>
                                                 @endif
 
 
                                                 @if ($t->status == 'done')
-                                                    <div class="progress-bar bg-success"
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
                                                         style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
                                                     </div>
                                                 @endif
@@ -115,23 +115,23 @@
                                     @if ($t->tipe_progress->nama_tipe == 'persentase')
                                         <td>{{ $t->goal_progress }}% / {{ $t->goal_target }}% <div class="progress">
                                                 @if ($t->status == 'todo')
-                                                    <div class="progress-bar bg-secondary"
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary"
                                                         style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
                                                     </div>
                                                 @endif
                                                 @if ($t->status == 'doing')
-                                                    <div class="progress-bar bg-primary"
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
                                                         style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
                                                     </div>
                                                 @endif
                                                 @if ($t->status == 'checking')
-                                                    <div class="progress-bar bg-warning"
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
                                                         style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
                                                     </div>
                                                 @endif
 
                                                 @if ($t->status == 'done')
-                                                    <div class="progress-bar bg-success"
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
                                                         style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
                                                     </div>
                                                 @endif
@@ -142,23 +142,23 @@
                                         <td>{{ $t->goal_progress }} / {{ number_format($t->goal_target) }} <div
                                                 class="progress">
                                                 @if ($t->status == 'todo')
-                                                    <div class="progress-bar bg-secondary"
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary"
                                                         style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
                                                     </div>
                                                 @endif
                                                 @if ($t->status == 'doing')
-                                                    <div class="progress-bar bg-primary"
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
                                                         style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
                                                     </div>
                                                 @endif
                                                 @if ($t->status == 'checking')
-                                                    <div class="progress-bar bg-warning"
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
                                                         style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
                                                     </div>
                                                 @endif
 
                                                 @if ($t->status == 'done')
-                                                    <div class="progress-bar bg-success"
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
                                                         style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
                                                     </div>
                                                 @endif
