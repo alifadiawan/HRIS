@@ -60,10 +60,11 @@
                             <tr style="text-align: start">
                                 <th>Goal ID</th>
                                 <th>Goal Name</th>
-                                <th>Goal Owner</th>
+                                {{-- <th>Goal Owner</th> --}}
                                 <th>To</th>
                                 <th>Goal Progress</th>
                                 <th>Status</th>
+                                {{-- <th>Grade</th> --}}
                                 <th></th>
                             </tr>
                         </thead>
@@ -82,8 +83,7 @@
                                                 {{ date('d F Y', strtotime($t->tanggal_target)) }}</p>
                                         </span></td>
                                     <td>{{ $t->owner->nama }}</td>
-                                    <td>{{ $t->member->nama }}</td>
-                                    {{-- <td>{{ $t->goal_id}}</td> --}}
+                                    {{-- <td>{{ $t->member->nama }}</td> --}}
                                     @if ($t->tipe_progress->nama_tipe == 'idr')
                                         <td>{{ $t->goal_progress }} / Rp. {{ number_format($t->goal_target) }} <div
                                                 class="progress">
@@ -177,6 +177,11 @@
                                     @if ($t->status == 'done')
                                         <td class="text-capitalize text-success">{{ $t->status }}</td>
                                     @endif
+                                    {{-- @if ($t->grade == null)
+                                        <td>-</td>
+                                    @else
+                                        <td>{{ $t->grade }}</td>
+                                    @endif --}}
                                     <td>
                                         <a href="" class="btn" data-bs-toggle="dropdown">
                                             <i class="fa-solid fa-ellipsis-vertical"></i>
@@ -204,74 +209,59 @@
                                                                 Nilai</button></li>
                                                     </form>
                                                 @endif
-                                                {{-- <form action="{{ route('goals.update_adm') }}" method="POST">
-                                                    @csrf
-                                                    @method('delete') --}}
                                                 <li><button class="dropdown-item" data-bs-toggle="modal"
                                                         data-bs-target="#hapustugas_{{ $t->id }}"><i
                                                             class="fa-solid fa-trash fa-lg"></i>Hapus Tugas</button>
                                                 </li>
-                                                {{-- </form> --}}
                                             @elseif(auth()->user()->role->role == 'employee')
-                                                @if ($t->status != 'done')
-                                                <form action="{{ route('goals.view_prog') }}" method="GET">
-                                                    @csrf
-                                                    <input type="hidden" name="task_id" value="{{ $t->id }}">
-                                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#progress_{{ $t->id }}"><i
-                                                                class="fa-solid fa-edit fa-lg"></i>
-                                                            nilai</a></li>
-                                                    <li><button type="submit" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#progress_{{ $t->id }}"><i
-                                                                class="fa-solid fa-edit fa-lg"></i>
-                                                            Update Progress</button></li>
-                                                        </form>
+                                                @if ($t->status == 'doing' || $t->status == 'todo')
+                                                    <form action="{{ route('goals.view_prog') }}" method="GET">
+                                                        @csrf
+                                                        <input type="hidden" name="task_id"
+                                                            value="{{ $t->id }}">
+                                                        <li><button type="submit" class="dropdown-item"><i
+                                                                    class="fa-solid fa-edit fa-lg"></i>
+                                                                Update Progress</button></li>
+                                                    </form>
                                                 @endif
                                             @endif
                                         </ul>
                                     </td>
-                                    {{-- modal nilai  --}}
-                                    <div class="modal fade" id="nilai_{{ $t->id }}" tabindex="-1"
-                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nilai 1 -
-                                                        100
-                                                    </h1>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <form action="{{ route('goals.update_adm') }}" method="POST">
-                                                    @csrf
-                                                    <div class="modal-body">
-                                                        {{-- <input type="range" class="form-range" min="1"
-                                                            max="100" id="slider_{{ $t->id }}"
-                                                            oninput="updateOutput({{ $t->id }})" name="slider">
-                                                        <output class="fw-bold text-center"
-                                                            id="sliderValue_{{ $t->id }}">0</output> --}}
-                                                    </div>
-                                                    <input type="hidden" name="task_id" value="{{ $t->id }}">
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary">Save
-                                                            changes</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
                                 <tr id="flush-collapseOne{{ $t->id }}" class="accordion-collapse collapse"
                                     data-bs-parent="#accordionFlushExample">
-                                    <td class="bg-light"></td>
-                                    <td class="bg-light">awdaoiw</td>
-                                    <td class="bg-light">awdaoiw</td>
-                                    <td class="bg-light">awdaoiw</td>
-                                    <td class="bg-light">awdaoiw</td>
-                                    <td class="bg-light">awdaoiw</td>
-                                    <td class="bg-light">awdaoiw</td>
+                                    <td class="bg-light">
+                                        <div class="card">
+                                            <div>
+                                                goal owner : {{ $t->owner->nama }}
+                                            </div>
+                                            <div>
+                                                @if ($t->grade == null)
+                                                    grade : belum dinilai
+                                                @else
+                                                    grade : {{ $t->grade }}
+                                                @endif
+                                            </div>
+                                            <div>
+                                                goal target : {{ $t->goal_target }}
+                                            </div>
+                                            <div>
+                                                tipe tugas : {{ $t->tipe_progress->nama_tipe }}
+                                            </div>
+                                            <div>
+                                                tanggal target : {{ $t->tanggal_target }}
+                                            </div>
+                                            <div>
+                                                kpi yang dinilai : {{ $t->kpi->group_name }}
+                                            </div>
+                                            <div>
+                                                jabatan : {{ $t->member->jabatan }}
+                                            </div>
+                                            <div>
+                                                divisi : {{ $t->member->divisi->nama_divisi }}
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
-
-                                {{-- end modal --}}
                                 {{-- modal hapus --}}
                                 <div class="modal fade" id="hapustugas_{{ $t->id }}" tabindex="-1"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -300,17 +290,6 @@
                                     </div>
                                 </div>
                                 {{-- end modal --}}
-                                {{-- modal progress --}}
-                                <div class="modal fade" id="progress_{{ $t->id }}" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-
-                                        </div>
-                                    </div>
-                                </div>
-                                {{-- end modal --}}
-
                                 </tr>
                             @endforeach
                         </tbody>
@@ -400,8 +379,8 @@
             border: 1px solid;
         }
     </style>
-    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {{-- <script>
         function updateOutput(taskId) {
             var slider = document.getElementById("slider_" + taskId);
             var output = document.getElementById("sliderValue_" + taskId);

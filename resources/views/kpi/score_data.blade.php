@@ -3,36 +3,37 @@
 @section('page-title', 'Create Score Data')
 @section('content')
 
-    @if (auth()->user()->role->role == 'admin')
-        <section class="score_data">
-            <div class="content">
-                <div class="card text-left">
-                    <img class="card-img-top" src="holder.js/100px180/" alt="">
-                    <div class="card-body">
-                        <div class="row mt-2">
-                            <div class="col">
-                                <p class="p-0 m-0 fw-bold">Period</p>
-                                <p class="text-muted m-0 p-0">July 2023 </p>
-                            </div>
-                            <div class="col">
-                                <div class="d-flex flex-column">
-                                    <p class="my-0 fw-bold">To Employee</p>
-                                    <p class="text-info my-2">{{ $task->member->nama }}</p>
-                                    <div class="d-flex flex-row gap-2">
-                                        <a href="#"
-                                            class="btn btn-success px-3">{{ $task->member->divisi->nama_divisi }}</a>
-                                        <a href="#" class="btn btn-info px-3">{{ $task->member->jabatan }}</a>
-                                    </div>
+
+    <section class="score_data">
+        < class="content">
+            <div class="card text-left">
+                <img class="card-img-top" src="holder.js/100px180/" alt="">
+                <div class="card-body">
+                    <div class="row mt-2">
+                        <div class="col">
+                            <p class="p-0 m-0 fw-bold">Period</p>
+                            <p class="text-muted m-0 p-0">July 2023</p>
+                        </div>
+                        <div class="col">
+                            <div class="d-flex flex-column">
+                                <p class="my-0 fw-bold">To Employee</p>
+                                <p class="text-info my-2">{{ $task->member->nama }}</p>
+                                <div class="d-flex flex-row gap-2">
+                                    <a href="#"
+                                        class="btn btn-success px-3">{{ $task->member->divisi->nama_divisi }}</a>
+                                    <a href="#" class="btn btn-info px-3">{{ $task->member->jabatan }}</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
+            @if (auth()->user()->role->role == 'admin')
                 <div class="card text-left mt-3">
                     <img class="card-img-top" src="holder.js/100px180/" alt="">
                     <div class="card-body">
-                        <p class="text-muted mt-3">Computer Skill KPI KPI</p>
+                        <p class="text-muted mt-3">{{ $task->goal_id }} - {{ $kpi->group_name }}</p>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -42,53 +43,29 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Bahasa pemrograman yang dikuasai</td>
-                                    <td>30</td>
-                                    <td>
-                                        <input type="range" class="w-75" value="0" min="1" max="100"
-                                            id="range" oninput="rangenumber.value=value" />
-                                        <input type="number" class="text-center rounded-4" id="rangenumber" min="1"
-                                            max="100" value="0" oninput="range.value=value"
-                                            style="background-color: #e6e6e6">
-                                    </td>
-                                </tr>
+                                <form action="{{ route('goals.progress') }}" method="POST">
+                                    @csrf
+                                    <tr>
+                                        <td>{{ $kpi->parameter }}</td>
+                                        <td>{{ $kpi->weight }}</td>
+                                        <td>
+                                            <input type="hidden" name="task_id" value="{{ $task->id }}">
+                                            <input type="range" class="w-75" value="0" min="1"
+                                                max="100" id="slider" oninput="updateOutput()" name="grade" />
+                                            <input type="number" class="text-center rounded-4" id="sliderValue"
+                                                min="1" max="100" value="0"
+                                                style="background-color: #e6e6e6" oninput="updateSlider()"
+                                                onchange="validateMaxValue()" name="grade">
+                                        </td>
+                                    </tr>
+                                    <button class="btn btn-success" type="submit">nilai </button>
+                                </form>
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </div>
-        </section>
-    @endif
+            @endif
 
-
-    @if (auth()->user()->role->role == 'employee')
-        <section class="score_data">
-            <div class="content">
-                <div class="card text-left">
-                    <img class="card-img-top" src="holder.js/100px180/" alt="">
-                    <div class="card-body">
-                        <div class="row mt-2">
-                            <div class="col">
-                                <p class="p-0 m-0 fw-bold">Period</p>
-                                <p class="text-muted m-0 p-0">July 2023</p>
-                            </div>
-                            <div class="col">
-                                <div class="d-flex flex-column">
-                                    <p class="my-0 fw-bold">To Employee</p>
-                                    <p class="text-info my-2 text-capitalize">{{ $task->member->nama }}</p>
-                                    <div class="d-flex flex-row gap-2">
-                                        <a href="#"
-                                            class="btn btn-success px-3 text-capitalize">{{ $task->member->divisi->nama_divisi }}</a>
-                                        <a href="#"
-                                            class="btn btn-info px-3 text-capitalize">{{ $task->member->jabatan }}</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+            @if (auth()->user()->role->role == 'employee')
                 <div class="card text-left mt-3">
                     <img class="card-img-top" src="holder.js/100px180/" alt="">
                     <div class="card-body">
@@ -166,6 +143,7 @@
                                 <p class="text-muted mt-3">Upcoming Progress</p>
                                 <form action="{{ route('goals.progress') }}" method="POST">
 
+
                                     @csrf
                                     <div class="form-group">
                                         <label for="goal_target">Goal Target</label>
@@ -177,17 +155,14 @@
                                     <div class="form-group mt-2">
                                         <label for="goal_progress">Goal Progress</label>
                                         <div class="input-group">
-                                            <input type="range" min="1"
-                                                max="{{ $task->goal_target }}" id="slider"
-                                                value="{{ $task->goal_progress }}" oninput="updateOutput()"
-                                                name="goal_progress">
-                                            <output class="fw-bold text-center"
-                                                id="sliderValue">{{ $task->goal_progress }}</output>
-                                            {{-- <input type="number" name="goal_progress" id="goal_progress"
-                                                    class="form-control"
-                                                    placeholder="previous progress : {{ $task->goal_progress }}"
-                                                    min="{{ $task->goal_progress + 1 }}" max="{{ $task->goal_target }}"
-                                                    required> --}}
+
+                                            <input type="range" class="w-75" min="{{ $task->goal_progress }}"
+                                                max="{{ $task->goal_target }}" value="{{ $task->goal_progress }}"
+                                                name="goal_progress" id="slider" oninput="updateOutput()" />
+                                            <input type="number" class="text-center rounded-4" id="sliderValue"
+                                                min="{{ $task->goal_progress + 1 }}" max="100"
+                                                value="{{ $task->goal_progress }}" style="background-color: #e6e6e6"
+                                                oninput="updateSlider()" onchange="validateMaxValue()" name="goal_progress">
                                         </div>
                                     </div>
 
@@ -208,25 +183,46 @@
                             </div>
                         </div>
                     </div>
-                </div>
+            @endif
+            </div>
+    </section>
 
-
-
-        </section>
-    @endif
     <script>
-        function updateOutput(taskId) {
+        function updateOutput() {
             var slider = document.getElementById("slider");
-            var output = document.getElementById("sliderValue");
+            var sliderVal = document.getElementById("sliderValue");
 
-            output.textContent = slider.value;
+            sliderVal.value = slider.value;
+            localStorage.setItem("sliderValue", slider.value);
         }
-        // var slider = document.getElementById("slider");
-        // slider.addEventListener("change", function() {
-        //     var minValue = {{ $task->goal_progress + 1 }};
-        //     if (slider.value < minValue) {
-        //         slider.value = minValue;
-        //     }
-        // });
+
+        function updateSlider() {
+            var slider = document.getElementById("slider");
+            var sliderVal = document.getElementById("sliderValue");
+
+            slider.value = sliderVal.value;
+            localStorage.setItem("sliderValue", sliderVal.value);
+        }
+
+        function validateMaxValue() {
+            var sliderVal = document.getElementById("sliderValue");
+            var maxValue = parseInt(sliderVal.max);
+
+            if (parseInt(sliderVal.value) > sliderVal.max) {
+                sliderVal.value = sliderVal.max;
+            }
+        }
+
+        window.onload = function() {
+            var storedValue = localStorage.getItem("sliderValue");
+
+            if (storedValue) {
+                var slider = document.getElementById("slider");
+                var sliderVal = document.getElementById("sliderValue");
+
+                slider.value = storedValue;
+                sliderVal.value = storedValue;
+            }
+        }
     </script>
 @endsection
