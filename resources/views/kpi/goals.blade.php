@@ -1,11 +1,9 @@
 @extends('layout.body')
 @section('title', 'Goals Team')
+@section('page-title', 'Goals Team')
 @section('content')
 
     <section class="goals">
-        <div class="d-flex flex-row">
-            <h4 class="fw-bold mb-4">Goals Team</h4>
-        </div>
         <div class="row">
             <div class="col">
                 @if (auth()->user()->role->role == 'admin')
@@ -23,339 +21,347 @@
                 </ul>
             </div>
         @endif
-        <!-- table -->
-        <div class="content ">
+
+
+        <div class="content">
             <div class="card">
-                <div class="row ">
-                    <div class="col-lg-4">
-                        <div class="input-group ms-4 mt-3">
-                            <select class="form-select" id="inputGroupSelect02" onchange="searchData()">
-                                <option selected>Choose...</option>
-                                @foreach ($member as $m)
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-4 col-12">
+                            <div class="input-group mt-3">
+                                <select class="form-select" id="inputGroupSelect02" onchange="searchData()">
+                                    <option selected>Choose...</option>
+                                    @foreach ($member as $m)
                                     <option value="{{ $m->id }}">{{ $m->nama }} - {{ $m->divisi->nama_divisi }}
                                     </option>
-                                @endforeach
-                            </select>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-12">
+                            <div class="input-group mt-3">
+                                <select class="form-select" id="inputGroupSelect02">
+                                    <option selected>Ongoing Goals</option>
+                                    <option value="">Todo</option>
+                                    <option value="">Doing</option>
+                                    <option value="">Checking</option>
+                                    <option value="">Done</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="input-group ms-4 mt-3">
-                            <select class="form-select" id="inputGroupSelect02">
-                                <option selected>Ongoing Goals</option>
-                                <option value="">Todo</option>
-                                <option value="">Doing</option>
-                                <option value="">Checking</option>
-                                <option value="">Done</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
+                    
+                    
+                    <!-- table -->
+                    <div class="table-responsive-lg">
+                        <table class="table mt-3 " style="outline: 2px">
+                            <thead class="table-secondary table-responsive">
+                                <tr style="text-align: start">
+                                    <th>Goal ID</th>
+                                    <th>Goal Name</th>
+                                    {{-- <th>Goal Owner</th> --}}
+                                    <th>To</th>
+                                    <th>Goal Progress</th>
+                                    <th>Status</th>
+                                    {{-- <th>Grade</th> --}}
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                <!-- Steven -->
-
-                <div class="card-body">
-                    <table class="table mt-3 " style="outline: 2px">
-                        <thead class="table-secondary">
-                            <tr style="text-align: start">
-                                <th>Goal ID</th>
-                                <th>Goal Name</th>
-                                {{-- <th>Goal Owner</th> --}}
-                                <th>To</th>
-                                <th>Goal Progress</th>
-                                <th>Status</th>
-                                {{-- <th>Grade</th> --}}
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            @foreach (auth()->user()->role->role == 'admin' ? $task_adm : $task as $t)
-                                <tr>
-                                    <td scope="row">
-                                        <button data-bs-toggle="collapse"
-                                            data-bs-target="#flush-collapseOne{{ $t->id }}"><i
-                                                class="fa-solid fa-chevron-right me-3" aria-expanded="true"
-                                                aria-controls="flush-collapseOne"></i>
-                                        </button> {{ $t->goal_id }}
-                                    </td>
-                                    <td class="fw-bold">{{ $t->kpi->group_name }} <span style="font-weight: normal">
-                                            <p>{{ date('d F Y', strtotime($t->created_at)) }} -
-                                                {{ date('d F Y', strtotime($t->tanggal_target)) }}</p>
-                                        </span></td>
-                                    {{-- <td>{{ $t->owner->nama }}</td> --}}
-                                    <td>{{ $t->member->nama }}</td>
-                                    @if ($t->tipe_progress->nama_tipe == 'idr')
-                                        <td>{{ $t->goal_progress }} / Rp. {{ number_format($t->goal_target) }} <div
-                                                class="progress">
-                                                @if ($t->status == 'todo')
-                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary"
-                                                        style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
-                                                    </div>
-                                                @endif
-                                                @if ($t->status == 'doing')
-                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
-                                                        style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
-                                                    </div>
-                                                @endif
-                                                @if ($t->status == 'checking')
-                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
-                                                        style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
-                                                    </div>
-                                                @endif
-
-
-                                                @if ($t->status == 'done')
-                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
-                                                        style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
-                                                    </div>
-                                                @endif
-                                            </div>
+                                @foreach (auth()->user()->role->role == 'admin' ? $task_adm : $task as $t)
+                                    <tr>
+                                        <td scope="row">
+                                            <button data-bs-toggle="collapse"
+                                                data-bs-target="#flush-collapseOne{{ $t->id }}"><i
+                                                    class="fa-solid fa-chevron-right me-3" aria-expanded="true"
+                                                    aria-controls="flush-collapseOne"></i>
+                                            </button> {{ $t->goal_id }}
                                         </td>
-                                    @endif
-                                    @if ($t->tipe_progress->nama_tipe == 'persentase')
-                                        <td>{{ $t->goal_progress }}% / {{ $t->goal_target }}% <div class="progress">
-                                                @if ($t->status == 'todo')
-                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary"
-                                                        style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
-                                                    </div>
-                                                @endif
-                                                @if ($t->status == 'doing')
-                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
-                                                        style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
-                                                    </div>
-                                                @endif
-                                                @if ($t->status == 'checking')
-                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
-                                                        style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
-                                                    </div>
-                                                @endif
+                                        <td class="fw-bold">{{ $t->kpi->group_name }} <span style="font-weight: normal">
+                                                <p>{{ date('d F Y', strtotime($t->created_at)) }} -
+                                                    {{ date('d F Y', strtotime($t->tanggal_target)) }}</p>
+                                            </span></td>
+                                        {{-- <td>{{ $t->owner->nama }}</td> --}}
+                                        <td>{{ $t->member->nama }}</td>
+                                        @if ($t->tipe_progress->nama_tipe == 'idr')
+                                            <td>{{ $t->goal_progress }} / Rp. {{ number_format($t->goal_target) }} <div
+                                                    class="progress">
+                                                    @if ($t->status == 'todo')
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary"
+                                                            style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
+                                                        </div>
+                                                    @endif
+                                                    @if ($t->status == 'doing')
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
+                                                            style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
+                                                        </div>
+                                                    @endif
+                                                    @if ($t->status == 'checking')
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
+                                                            style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
+                                                        </div>
+                                                    @endif
 
-                                                @if ($t->status == 'done')
-                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
-                                                        style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </td>
-                                    @endif
-                                    @if ($t->tipe_progress->nama_tipe == 'nominal')
-                                        <td>{{ $t->goal_progress }} / {{ number_format($t->goal_target) }} <div
-                                                class="progress">
-                                                @if ($t->status == 'todo')
-                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary"
-                                                        style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
-                                                    </div>
-                                                @endif
-                                                @if ($t->status == 'doing')
-                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
-                                                        style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
-                                                    </div>
-                                                @endif
-                                                @if ($t->status == 'checking')
-                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
-                                                        style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
-                                                    </div>
-                                                @endif
 
-                                                @if ($t->status == 'done')
-                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
-                                                        style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </td>
-                                    @endif
-                                    @if ($t->status == 'todo')
-                                        <td class="text-capitalize">{{ $t->status }}</td>
-                                    @endif
-                                    @if ($t->status == 'doing')
-                                        <td class="text-capitalize text-primary">{{ $t->status }}</td>
-                                    @endif
-                                    @if ($t->status == 'checking')
-                                        <td class="text-capitalize text-warning">{{ $t->status }}</td>
-                                    @endif
-                                    @if ($t->status == 'done')
-                                        <td class="text-capitalize text-success">{{ $t->status }}</td>
-                                    @endif
-                                    {{-- @if ($t->grade == null)
+                                                    @if ($t->status == 'done')
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                                                            style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                        @endif
+                                        @if ($t->tipe_progress->nama_tipe == 'persentase')
+                                            <td>{{ $t->goal_progress }}% / {{ $t->goal_target }}% <div class="progress">
+                                                    @if ($t->status == 'todo')
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary"
+                                                            style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
+                                                        </div>
+                                                    @endif
+                                                    @if ($t->status == 'doing')
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
+                                                            style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
+                                                        </div>
+                                                    @endif
+                                                    @if ($t->status == 'checking')
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
+                                                            style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
+                                                        </div>
+                                                    @endif
+
+                                                    @if ($t->status == 'done')
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                                                            style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                        @endif
+                                        @if ($t->tipe_progress->nama_tipe == 'nominal')
+                                            <td>{{ $t->goal_progress }} / {{ number_format($t->goal_target) }} <div
+                                                    class="progress">
+                                                    @if ($t->status == 'todo')
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary"
+                                                            style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
+                                                        </div>
+                                                    @endif
+                                                    @if ($t->status == 'doing')
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
+                                                            style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
+                                                        </div>
+                                                    @endif
+                                                    @if ($t->status == 'checking')
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
+                                                            style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
+                                                        </div>
+                                                    @endif
+
+                                                    @if ($t->status == 'done')
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                                                            style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                        @endif
+                                        @if ($t->status == 'todo')
+                                            <td class="text-capitalize">{{ $t->status }}</td>
+                                        @endif
+                                        @if ($t->status == 'doing')
+                                            <td class="text-capitalize text-primary">{{ $t->status }}</td>
+                                        @endif
+                                        @if ($t->status == 'checking')
+                                            <td class="text-capitalize text-warning">{{ $t->status }}</td>
+                                        @endif
+                                        @if ($t->status == 'done')
+                                            <td class="text-capitalize text-success">{{ $t->status }}</td>
+                                        @endif
+                                        {{-- @if ($t->grade == null)
                                         <td>-</td>
                                     @else
                                         <td>{{ $t->grade }}</td>
                                     @endif --}}
-                                    <td>
-                                        <a href="" class="btn" data-bs-toggle="dropdown">
-                                            <i class="fa-solid fa-ellipsis-vertical"></i>
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            @if (auth()->user()->role->role == 'admin')
-                                                @if ($t->status != 'done')
-                                                    <form action="{{ route('goals.update_adm') }}" method="POST">
-                                                        @csrf
-                                                        <li><button class="dropdown-item" name="mark" value="done"><i
-                                                                    class="fa-solid fa-clipboard-check fa-lg"></i>Mark
-                                                                as
-                                                                done</button>
-                                                            <input type="hidden" value="{{ $t->id }}"
-                                                                name="task_id">
-                                                        </li>
-                                                    </form>
+                                        <td>
+                                            <a href="" class="btn" data-bs-toggle="dropdown">
+                                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                @if (auth()->user()->role->role == 'admin')
+                                                    @if ($t->status != 'done')
+                                                        <form action="{{ route('goals.update_adm') }}" method="POST">
+                                                            @csrf
+                                                            <li><button class="dropdown-item" name="mark"
+                                                                    value="done"><i
+                                                                        class="fa-solid fa-clipboard-check fa-lg"></i>Mark
+                                                                    as
+                                                                    done</button>
+                                                                <input type="hidden" value="{{ $t->id }}"
+                                                                    name="task_id">
+                                                            </li>
+                                                        </form>
+                                                    @endif
+                                                    @if ($t->status == 'done')
+                                                        <form action="{{ route('goals.view_prog') }}" method="GET">
+                                                            @csrf
+                                                            <input type="hidden" name="task_id"
+                                                                value="{{ $t->id }}">
+                                                            <li><button class="dropdown-item" type="submit"><i
+                                                                        class="fa-solid fa-star fa-lg"></i>Beri
+                                                                    Nilai</button></li>
+                                                        </form>
+                                                    @endif
+                                                    <li><button class="dropdown-item" data-bs-toggle="modal"
+                                                            data-bs-target="#hapustugas_{{ $t->id }}"><i
+                                                                class="fa-solid fa-trash fa-lg"></i>Hapus Tugas</button>
+                                                    </li>
+                                                @elseif(auth()->user()->role->role == 'employee')
+                                                    @if ($t->status == 'doing' || $t->status == 'todo')
+                                                        <form action="{{ route('goals.view_prog') }}" method="GET">
+                                                            @csrf
+                                                            <input type="hidden" name="task_id"
+                                                                value="{{ $t->id }}">
+                                                            <li><button type="submit" class="dropdown-item"><i
+                                                                        class="fa-solid fa-edit fa-lg"></i>
+                                                                    Update Progress</button></li>
+                                                        </form>
+                                                    @endif
                                                 @endif
-                                                @if ($t->status == 'done')
-                                                    <form action="{{ route('goals.view_prog') }}" method="GET">
-                                                        @csrf
-                                                        <input type="hidden" name="task_id" value="{{ $t->id }}">
-                                                        <li><button class="dropdown-item" type="submit"><i
-                                                                    class="fa-solid fa-star fa-lg"></i>Beri
-                                                                Nilai</button></li>
-                                                    </form>
-                                                @endif
-                                                <li><button class="dropdown-item" data-bs-toggle="modal"
-                                                        data-bs-target="#hapustugas_{{ $t->id }}"><i
-                                                            class="fa-solid fa-trash fa-lg"></i>Hapus Tugas</button>
-                                                </li>
-                                            @elseif(auth()->user()->role->role == 'employee')
-                                                @if ($t->status == 'doing' || $t->status == 'todo')
-                                                    <form action="{{ route('goals.view_prog') }}" method="GET">
-                                                        @csrf
-                                                        <input type="hidden" name="task_id" value="{{ $t->id }}">
-                                                        <li><button type="submit" class="dropdown-item"><i
-                                                                    class="fa-solid fa-edit fa-lg"></i>
-                                                                Update Progress</button></li>
-                                                    </form>
-                                                @endif
-                                            @endif
-                                        </ul>
-                                    </td>
-                                <tr id="flush-collapseOne{{ $t->id }}" class="accordion-collapse collapse "
-                                    data-bs-parent="#accordionFlushExample">
-                                    <td colspan="6 bg-light">
-                                        <div class="row p-3">
-                                            <!-- kiri -->
-                                            <div class="col border-end">
-                                                <div class="row">
-                                                    <div class="col text-capitalize fw-bold">
-                                                        kpi yang dinilai
-                                                    </div>
-                                                    <div class="col text-start">
-                                                        {{ $t->kpi->group_name }}
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col text-capitalize fw-bold">
-                                                        parameter
-                                                    </div>
-                                                    <div class="col text-start">
-                                                        {{ $t->kpi->parameter }}
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col text-capitalize fw-bold">
-                                                        weight
-                                                    </div>
-                                                    <div class="col text-start">
-                                                        {{ $t->kpi->weight }}
-                                                    </div>
-                                                </div>
-                                                <hr>
-                                                <div class="row">
-                                                    <div class="col text-capitalize fw-bold">
-                                                        jabatan
-                                                    </div>
-                                                    <div class="col text-start text-capitaliz">
-                                                        {{ $t->member->jabatan }}
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col text-capitalize fw-bold">
-                                                        divisi
-                                                    </div>
-                                                    <div class="col text-start text-capitalize">
-                                                        {{ $t->member->divisi->nama_divisi }}
-                                                    </div>
-                                                </div>
-                                                <hr>
-                                                <div class="row">
-                                                    <div class="col text-capitalize fw-bold">
-                                                        Goal Owner
-                                                    </div>
-                                                    <div class="col text-start">
-                                                        {{ $t->owner->nama }}
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="col text-capitalize fw-bold">
-                                                        Grade
-                                                    </div>
-                                                    <div class="col text-start text-uppercase text-danger">
-                                                        @if ($t->grade == null)
-                                                            belum dinilai
-                                                        @else
-                                                            {{ $t->grade }}
-                                                        @endif
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="col text-capitalize fw-bold">
-                                                        goal target
-                                                    </div>
-                                                    <div class="col text-start">
-                                                        {{ $t->goal_target }}
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="col text-capitalize fw-bold">
-                                                        tipe tugas
-                                                    </div>
-                                                    <div class="col text-start">
-                                                        {{ $t->tipe_progress->nama_tipe }}
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="col text-capitalize fw-bold">
-                                                        Tanggal dibuatnya target
-                                                    </div>
-                                                    <div class="col text-start">
-                                                        {{ $t->created_at->format('d M Y') }}
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-
-
-                                            <!-- kanan -->
-                                            <div class="col">
-                                                <div class="row p-3">
-                                                    <div class="col-12 text-center text-capitalize fw-bold mb-3">
-                                                        List Progress
-                                                    </div>
-                                                    @if ($progress->isEmpty())
-                                                        <div class="col text-center text-capitalize">
-                                                           - Belum ada progress -
+                                            </ul>
+                                        </td>
+                                    <tr id="flush-collapseOne{{ $t->id }}" class="accordion-collapse collapse "
+                                        data-bs-parent="#accordionFlushExample">
+                                        <td colspan="6 bg-light">
+                                            <div class="row p-3">
+                                                <!-- kiri -->
+                                                <div class="col border-end">
+                                                    <div class="row">
+                                                        <div class="col-lg col-12 text-capitalize fw-bold">
+                                                            kpi yang dinilai
                                                         </div>
-                                                    @else
-                                                        <div class="col text-start text-capitalize">
-                                                            <div class="d-flex flex-column">
-                                                                <div class="content time-off">
-                                                                    @foreach ($progress->where('tasks_id', $t->id) as $p)
-                                                                    <div class="row my-2 align-items-center">
-                                                                        <div class="col">
-                                                                            <div class="fw-bold">{{ $p->progress }}</div>
-                                                                            <div class="status text-muted">
-                                                                                {{ $p->keterangan }}</div>
-                                                                        </div>
-                                                                        <div class="col-3">
-                                                                            <div class=" text-end">{{ $p->created_at->format('d M Y') }}</div>
-                                                                        </div>
-                                                                    </div>
-                                                                    @endforeach
-                                                                    
-                                                                </div>
+                                                        <div class="col-lg col-12 text-start">
+                                                            {{ $t->kpi->group_name }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg col-12 text-capitalize fw-bold">
+                                                            parameter
+                                                        </div>
+                                                        <div class="col-lg col-12 text-start">
+                                                            {{ $t->kpi->parameter }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg col-12 text-capitalize fw-bold">
+                                                            weight
+                                                        </div>
+                                                        <div class="col-lg col-12 text-start">
+                                                            {{ $t->kpi->weight }}
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="row">
+                                                        <div class="col-lg col-12 text-capitalize fw-bold">
+                                                            jabatan
+                                                        </div>
+                                                        <div class="col-lg col-12 text-start text-capitaliz">
+                                                            {{ $t->member->jabatan }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg col-12 text-capitalize fw-bold">
+                                                            divisi
+                                                        </div>
+                                                        <div class="col-lg col-12 text-start text-capitalize">
+                                                            {{ $t->member->divisi->nama_divisi }}
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="row">
+                                                        <div class="col-lg col-12 text-capitalize fw-bold">
+                                                            Goal Owner
+                                                        </div>
+                                                        <div class="col-lg col-12 text-start">
+                                                            {{ $t->owner->nama }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-lg col-12 text-capitalize fw-bold">
+                                                            Grade
+                                                        </div>
+                                                        <div class="col-lg col-12 text-start text-uppercase text-danger">
+                                                            @if ($t->grade == null)
+                                                                belum dinilai
+                                                            @else
+                                                                {{ $t->grade }}
+                                                            @endif
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-lg col-12 text-capitalize fw-bold">
+                                                            goal target
+                                                        </div>
+                                                        <div class="col-lg col-12 text-start">
+                                                            {{ $t->goal_target }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-lg col-12 text-capitalize fw-bold">
+                                                            tipe tugas
+                                                        </div>
+                                                        <div class="col-lg col-12 text-start">
+                                                            {{ $t->tipe_progress->nama_tipe }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-lg col-12 text-capitalize fw-bold">
+                                                            Tanggal dibuatnya target
+                                                        </div>
+                                                        <div class="col-lg col-12 text-start">
+                                                            {{ $t->created_at->format('d M Y') }}
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+                                                <!-- kanan -->
+                                                <div class="col">
+                                                    <div class="row p-3">
+                                                        <div class="col-12 text-center text-capitalize fw-bold mb-3">
+                                                            List Progress
+                                                        </div>
+                                                        @if ($progress->isEmpty())
+                                                            <div class="col text-center text-capitalize">
+                                                                - Belum ada progress -
                                                             </div>
-                                                            {{-- <table class="table table-borderless">
+                                                        @else
+                                                            <div class="col text-start text-capitalize">
+                                                                <div class="d-flex flex-column">
+                                                                    <div class="content list-progress">
+                                                                        @foreach ($progress->where('tasks_id', $t->id) as $p)
+                                                                            <div class="row my-2 align-items-center">
+                                                                                <div class="col-lg col-12">
+                                                                                    <div class="fw-bold">
+                                                                                        {{ $p->progress }}</div>
+                                                                                    <div class="status text-muted">
+                                                                                        {{ $p->keterangan }}</div>
+                                                                                </div>
+                                                                                <div class="col-lg-3 col-12">
+                                                                                    <div class=" text-end">
+                                                                                        {{ $p->created_at->format('d M Y') }}
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        @endforeach
+
+                                                                    </div>
+                                                                </div>
+                                                                {{-- <table class="table table-borderless">
                                                                 <thead>
                                                                     <th>Tanggal Submit</th>
                                                                     <th>Progress</th>
@@ -371,16 +377,16 @@
                                                                     @endforeach
                                                                 </tbody>
                                                             </table> --}}
-                                                        </div>
-                                                    @endif
+                                                            </div>
+                                                        @endif
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
 
-                                    </td>
-                                </tr>
-                                {{-- <tr id="flush-collapseOne{{ $t->id }}" class="accordion-collapse collapse"
+                                        </td>
+                                    </tr>
+                                    {{-- <tr id="flush-collapseOne{{ $t->id }}" class="accordion-collapse collapse"
                                     data-bs-parent="#accordionFlushExample">
                                     <td class="bg-light">
                                         <div class="card">
@@ -453,39 +459,42 @@
                                     </td>
                                 </tr> --}}
 
-                                {{-- modal hapus --}}
-                                <div class="modal fade" id="hapustugas_{{ $t->id }}" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="hapustugas">deleting this?</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                r u sure ?
-                                            </div>
-                                            <div class="modal-footer">
-                                                <form action="{{ route('goals.update_adm') }}" method="post">
-                                                    @csrf
-                                                    <input type="hidden" name="delete" value="delete">
-                                                    <input type="hidden" name="task_id" value="{{ $t->id }}">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary">Yes i
-                                                        do</button>
-                                                </form>
+                                    {{-- modal hapus --}}
+                                    <div class="modal fade" id="hapustugas_{{ $t->id }}" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="hapustugas">deleting this?</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    r u sure ?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <form action="{{ route('goals.update_adm') }}" method="post">
+                                                        @csrf
+                                                        <input type="hidden" name="delete" value="delete">
+                                                        <input type="hidden" name="task_id"
+                                                            value="{{ $t->id }}">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Yes i
+                                                            do</button>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                {{-- end modal --}}
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                    {{-- end modal --}}
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+            </div>
     </section>
 
 

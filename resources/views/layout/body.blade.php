@@ -50,7 +50,7 @@
 
 
     <div class="pagetitle">
-      <h1>@yield('page-title')</h1>
+      <h1 class="mt-5 mt-lg-0">@yield('page-title')</h1>
       {{-- <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
