@@ -6,6 +6,8 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\KPIController;
+use App\Http\Controllers\MemberController;
+use App\Http\Controllers\DivisiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,36 +61,24 @@ Route::middleware('auth')->group(function () {
     Route::post('progress', [TaskController::class, 'progress'])->name('goals.progress');
     Route::get('view_prog', [TaskController::class, 'view_prog'])->name('goals.view_prog');
 
-    //Input Item Data 
-    Route::get('/input', function () {
-        return view('kpi.input');
-    });
+    //employee
+    Route::resource('employee', MemberController::class);
+    Route::get('/profile', [MemberController::class, 'profile'])->name('employee.profile');
+    Route::get('/employee/{id}/hapus', [MemberController::class, 'hapus'])->name('employee.hapus');
+
+    //divisi
+    Route::resource('divisi', DivisiController::class);
+    Route::get('/divisi/{id}/hapus', [DivisiController::class, 'hapus'])->name('divisi.hapus');
 
     //Sales Reports
     Route::get('/reports', function () {
         return view('kpi.reports');
     });
 
-    //Index Employee
-    Route::get('/index-employe', function () {
-        return view('kpi.index');
-    });
-
     //Sales Reports
     Route::get('/progress', function () {
         return view('progress');
     });
-
-
-    //Profile
-    Route::get('/profile', function () {
-        return view('profile');
-    });
-
-        //Profile
-        Route::get('/edit-profile', function () {
-            return view('edit-profile');
-        });
 
     Route::resource('kpi', KPIController::class);
     Route::get('/kpi/{id}/hapus', [KPIController::class, 'hapus'])->name('kpi.hapus');

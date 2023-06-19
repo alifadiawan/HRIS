@@ -14,13 +14,13 @@
                 @endif, How are you ? 👋</h4>
                 @if(auth()->user()->hasIncompleteProfile())
                 <div class="alert alert-warning">
-                    Silahkan Lengkapi Profile Terlebih Dahulu. <a href="">Klik Ini.</a>
+                    Silahkan Lengkapi Profile Terlebih Dahulu. <a href="{{route('employee.create')}}">Klik Ini.</a>
                 </div>
                 @endif
             <p class="text-muted">See a summary of your employee's progress</p>
         </div>
 
-
+        @if(auth()->user()->hasProfile())
         <div class="content">
             <div class="row">
 
@@ -30,8 +30,8 @@
                         {{-- <div class="card"> --}}
                         <div class="card-body">
                             <div class="row align-items-center">
-                                <div class="col-lg-10 col-7">
-                                    <h4 class="card-title">Payroll Summary</h4>
+                                <div class="col-10">
+                                    <h4 class="card-title">KPI Task Summary</h4>
                                 </div>
                                 <div class="col-lg-2 col-5">
                                     <select name="" class="form-select" id="">
@@ -45,14 +45,14 @@
                             <!-- card content -->
                             <div class="row mt-3">
                                 <div class="col">
-                                    <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: #0861fd;"></i>Taxes
+                                    <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: #0861fd;"></i>Doing
                                 </div>
                                 <div class="col">
-                                    <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: orange;"></i>Net Salary
+                                    <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: orange;"></i>Checking
                                 </div>
                                 <div class="col">
                                     <i class="fa-solid fa-square fa-2xl me-2 p-0"
-                                        style="color: rgb(105, 211, 109);"></i>Gross Salary
+                                        style="color: rgb(105, 211, 109);"></i>Done
                                 </div>
                             </div>
 
@@ -220,6 +220,7 @@
                         </div>
 
                         <!-- payment status -->
+                        @if($task_all->count() > 0 && $task_doing->count() > 0 &&$task_checking->count() > 0 && $task_done->count() > 0 && $task_todo->count() > 0)
                         <div class="card">
                             <div class="card-body">
                                 <div class="row align-items-center">
@@ -266,22 +267,21 @@
                                 </div>
                             </div>
                         </div>
-
-
+                        @endif
                     </div>
                 </div>
             </div>
 
 
             <!-- second row -->
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-lg-8">
                     <div class="card text-left">
                         <div class="card-body">
-                            <h4 class="card-title">Profit Margin Analysis</h4>
+                            <h4 class="card-title">Profit Margin Analysis</h4> -->
 
                             <!-- Bar Chart -->
-                            <canvas id="barChart" style="max-height: 400px;"></canvas>
+                            <!-- <canvas id="barChart" style="max-height: 400px;"></canvas>
                         </div>
                     </div>
                 </div>
@@ -373,8 +373,9 @@
                         </b-row> --}}
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
+        @endif
 
 
     </section>
@@ -495,6 +496,7 @@
             color: white;
             text-align: center;
         }
+        @if(auth()->user()->hasProfile() && $task_all->count() > 0 && $task_doing->count() > 0 &&$task_checking->count() > 0 && $task_done->count() > 0 && $task_todo->count() > 0)
 
         .biru {
             width: {{($task_doing->count() / $task_all->count()) * 100}}%;
@@ -527,7 +529,7 @@
             border-top-right-radius: 10px;
             border-bottom-right-radius: 10px;
         }
-
+        @endif
         /* text truncate override */
         .pepek {
             display: -webkit-box;
@@ -584,13 +586,13 @@
         document.addEventListener("DOMContentLoaded", () => {
             new ApexCharts(document.querySelector("#reportsChart"), {
                 series: [{
-                    name: 'Sales',
+                    name: 'Doing',
                     data: [31, 40, 28, 51, 42, 82, 56],
                 }, {
-                    name: 'Revenue',
+                    name: 'Checking',
                     data: [11, 32, 45, 32, 34, 52, 41]
                 }, {
-                    name: 'Customers',
+                    name: 'Done',
                     data: [15, 11, 32, 18, 9, 24, 11]
                 }],
                 chart: {

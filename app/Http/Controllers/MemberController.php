@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Member;
+use App\Models\User;
+use App\Models\Divisi;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller
@@ -12,7 +14,14 @@ class MemberController extends Controller
      */
     public function index()
     {
-        //
+        $member = Member::all();
+        $divisi = Divisi::all();
+        return view('kpi.index', compact('member', 'divisi'));
+    }
+
+    public function profile()
+    {
+        return view('profile');
     }
 
     /**
@@ -20,7 +29,8 @@ class MemberController extends Controller
      */
     public function create()
     {
-        //
+        $divisi = Divisi::all();
+        return view('add-profile', compact('divisi'));
     }
 
     /**
@@ -28,31 +38,71 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $member = new Member();
+        $member->nama = $request->nama;
+        $member->no_hp = $request->no_hp;
+        $member->alamat = $request->alamat;
+        $member->nik = $request->nik;
+        $member->jk = $request->jk;
+        $member->tgl_lahir = $request->tgl_lahir;
+        $member->divisi_id = $request->divisi_id;
+        $member->user_id = $request->user_id;
+        $member->save();
+
+        notify()->success('Profile Berhasil Ditambahkan', 'Data Profile');
+        return redirect('/profile');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Member $member)
+    public function show($id)
     {
-        //
+        $member = Member::find($id);
+        // return $member;
+        return view('show-employee', compact('member'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Member $member)
+    public function edit($id)
     {
-        //
+        $divisi = Divisi::all();
+        $member = Member::find($id);
+        return view('edit-profile', compact('member', 'divisi'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Member $member)
+    public function update(Request $request, $id)
     {
-        //
+        $member = Member::find($id);
+        $user = User::find($member->user->id);
+        $member->nama = $request->nama;
+        $member->no_hp = $request->no_hp;
+        $member->alamat = $request->alamat;
+        $member->nik = $request->nik;
+        $member->jk = $request->jk;
+        $member->tgl_lahir = $request->tgl_lahir;
+        $member->jabatan = $request->jabatan;
+        $member->divisi_id = $request->divisi_id;
+        $member->save();
+
+        $user->username = $request->username;
+        $user->email = $request->email;
+        if ($request->password != null) {
+            $user->password = bcrypt($request->password);
+        }
+        $user->save();
+
+        notify()->success('Data Berhasil Diupdate !!', 'Data Profile');
+        if(auth()->user()->role->role == 'admin'){
+            return redirect('/employee');
+        } else {
+            return redirect('/profile');
+        }
     }
 
     /**
@@ -61,5 +111,15 @@ class MemberController extends Controller
     public function destroy(Member $member)
     {
         //
+    }
+
+    public function hapus($id)
+    {
+        $member = Member::find($id);
+        $user = User::find($member->user->id);
+        $user->delete();
+
+        notify()->success('Berhasil Hapus Data !!', 'Data Profile');
+        return redirect('/employee');
     }
 }

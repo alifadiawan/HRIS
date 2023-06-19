@@ -22,13 +22,13 @@ class DatabaseSeeder extends Seeder
             MemberSeeder::class,
             TipeSeeder::class,
 
-            BankSeeder::class,
-            EwalletSeeder::class,
-            TransaksiSeeder::class,
-            PembayaranSeeder::class,
-            TransaksiDetailSeeder::class,
-            KPISeeder::class,
-            TaskSeeder::class,
+            // BankSeeder::class,
+            // EwalletSeeder::class,
+            // TransaksiSeeder::class,
+            // PembayaranSeeder::class,
+            // TransaksiDetailSeeder::class,
+            // KPISeeder::class,
+            // TaskSeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();
 
