@@ -6,7 +6,7 @@
             <span class="d-none d-lg-block">HRIS.co</span>
         </a>
     </div>
-    <li class="nav-heading">Pages</li>
+    <li class="nav-heading mt-5 mt-lg-0">Pages</li>
 
     <li class="nav-item">
         <a class="nav-link " href="/dashboard">
@@ -70,7 +70,7 @@
                     <i class="bi bi-circle"></i><span>Group Data</span>
                 </a>
                 @else
-                
+
                 @endif
             </li>
             {{-- <li>

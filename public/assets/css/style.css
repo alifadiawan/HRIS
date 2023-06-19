@@ -149,17 +149,24 @@ h6 {
   list-style-type: decimal;
 }
 
+
+/* Toggle */
 .form-check-input:checked {
   background-color: rgb(17, 255, 0);
-  border-color: rgb(255, 255, 255);
+  border-color: rgb(17, 255, 0);
 }
 
-.form-switch .form-check-input {
+.form-check-input {
+  background-color: rgb(248, 0, 0);
+  border-color: rgb(255, 0, 0);
+}
+
+/* .form-switch .form-check-input {
 background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='red'/%3e%3c/svg%3e");
 }
 .form-switch .form-check-input:focus {
 background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='pink'/%3e%3c/svg%3e");
-}
+} */
 
 /*--------------------------------------------------------------
 # Override some default Bootstrap stylings
@@ -813,9 +820,9 @@ background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/s
   align-items: center;
   font-size: 15px;
   font-weight: 600;
-  color: #4154f1;
+  /* color: #4154f1; */
   transition: 0.3;
-  background: #f6f9ff;
+  /* background: #f6f9ff; */
   padding: 10px 15px;
   border-radius: 4px;
 }
@@ -823,7 +830,7 @@ background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/s
 .sidebar-nav .nav-link i {
   font-size: 16px;
   margin-right: 10px;
-  color: #4154f1;
+  /* color: #4154f1; */
 }
 
 .sidebar-nav .nav-link.collapsed {
