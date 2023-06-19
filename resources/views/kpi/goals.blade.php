@@ -230,7 +230,6 @@
                                     <td class="bg-light">
                                         <div class="card">
                                             <div>
-
                                                 <div class="text-center">
                                                     tabel tasks
                                                 </div>
