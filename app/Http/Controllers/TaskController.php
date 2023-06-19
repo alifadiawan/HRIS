@@ -21,7 +21,7 @@ class TaskController extends Controller
         $mid = Member::where('user_id', $uid)->value('id');
         // return $mid;
 
-        $task = Task::where('member_id', $mid)->get();
+        $task_member = Task::where('member_id', $mid)->get();
         $task_adm = Task::all();
         $progress = Progress::all();
         // return $task;
@@ -33,16 +33,13 @@ class TaskController extends Controller
         // return $member;
         $tipe = TipeProgress::all();
         $kpi = KPI::where('isActive', true)->get();
-        return view('kpi.goals', compact('task', 'member', 'tipe', 'task_adm', 'mid', 'kpi', 'progress'));
+        return view('kpi.goals', compact('task_member', 'member', 'tipe', 'task_adm', 'mid', 'kpi', 'progress'));
     }
+    
     public function searchData(Request $request)
     {
         $member_id = $request->input('member_id');
-        // $task_id = Task::where('member_id', $member_id)->get();
-        // foreach ($task_id as $t) {
-        //     $task[] = $t->id;
-        // }
-        $task = Task::where('member_id', $member_id)->pluck('id')->toArray();
+        $task = Task::where('member_id', $member_id)->get();
 
         // Mengembalikan respon dalam format JSON
         return response()->json(['task' => $task]);
