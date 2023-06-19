@@ -29,13 +29,12 @@
                 <div class="row ">
                     <div class="col-lg-4">
                         <div class="input-group ms-4 mt-3">
-                            <select class="form-select" id="inputGroupSelect02">
+                            <select class="form-select" id="inputGroupSelect02" onchange="searchData()">
                                 <option selected>Choose...</option>
-                                <option value="1"><span><img
-                                            src="https://assets.entrepreneur.com/content/3x2/2000/20200429211042-GettyImages-1164615296.jpeg"
-                                            alt="Profile" class="rounded-circle"></span>Haffiyyan</option>
-                                <option data-thumbnail="images/icon-chrome.png">Chrome</option>
-                                <option value="3">Three</option>
+                                @foreach ($member as $m)
+                                    <option value="{{ $m->id }}">{{ $m->nama }} - {{ $m->divisi->nama_divisi }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -43,10 +42,10 @@
                         <div class="input-group ms-4 mt-3">
                             <select class="form-select" id="inputGroupSelect02">
                                 <option selected>Ongoing Goals</option>
-                                <option value="1"><img src="assets/img/profile-img.jpg" alt="Profile"
-                                        class="rounded-circle">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                <option value="">Todo</option>
+                                <option value="">Doing</option>
+                                <option value="">Checking</option>
+                                <option value="">Done</option>
                             </select>
                         </div>
                     </div>
@@ -82,8 +81,8 @@
                                             <p>{{ date('d F Y', strtotime($t->created_at)) }} -
                                                 {{ date('d F Y', strtotime($t->tanggal_target)) }}</p>
                                         </span></td>
-                                    <td>{{ $t->owner->nama }}</td>
-                                    {{-- <td>{{ $t->member->nama }}</td> --}}
+                                    {{-- <td>{{ $t->owner->nama }}</td> --}}
+                                    <td>{{ $t->member->nama }}</td>
                                     @if ($t->tipe_progress->nama_tipe == 'idr')
                                         <td>{{ $t->goal_progress }} / Rp. {{ number_format($t->goal_target) }} <div
                                                 class="progress">
@@ -217,8 +216,7 @@
                                                 @if ($t->status == 'doing' || $t->status == 'todo')
                                                     <form action="{{ route('goals.view_prog') }}" method="GET">
                                                         @csrf
-                                                        <input type="hidden" name="task_id"
-                                                            value="{{ $t->id }}">
+                                                        <input type="hidden" name="task_id" value="{{ $t->id }}">
                                                         <li><button type="submit" class="dropdown-item"><i
                                                                     class="fa-solid fa-edit fa-lg"></i>
                                                                 Update Progress</button></li>
@@ -232,32 +230,71 @@
                                     <td class="bg-light">
                                         <div class="card">
                                             <div>
-                                                goal owner : {{ $t->owner->nama }}
+
+                                                <div class="text-center">
+                                                    tabel tasks
+                                                </div>
+                                                <div>
+                                                    goal owner : {{ $t->owner->nama }}
+                                                </div>
+                                                <div>
+                                                    @if ($t->grade == null)
+                                                        grade : belum dinilai
+                                                    @else
+                                                        grade : {{ $t->grade }}
+                                                    @endif
+                                                </div>
+                                                <div>
+                                                    goal target : {{ $t->goal_target }}
+                                                </div>
+                                                <div>
+                                                    tipe tugas : {{ $t->tipe_progress->nama_tipe }}
+                                                </div>
+                                                <div>
+                                                    tanggal target : {{ $t->tanggal_target }}
+                                                </div>
                                             </div>
                                             <div>
-                                                @if ($t->grade == null)
-                                                    grade : belum dinilai
-                                                @else
-                                                    grade : {{ $t->grade }}
-                                                @endif
+                                                <div class="text-center">
+                                                    tabel kpi
+                                                </div>
+
+                                                <div>
+                                                    kpi yang dinilai : {{ $t->kpi->group_name }}
+                                                </div>
+                                                <div>
+                                                    parameter : {{ $t->kpi->parameter }}
+                                                </div>
+                                                <div>
+                                                    weight : {{ $t->kpi->weight }}
+                                                </div>
+
                                             </div>
                                             <div>
-                                                goal target : {{ $t->goal_target }}
+
+                                                <div class="text-center">
+                                                    tabel member
+                                                </div>
+                                                <div>
+                                                    jabatan : {{ $t->member->jabatan }}
+                                                </div>
+                                                <div>
+                                                    divisi : {{ $t->member->divisi->nama_divisi }}
+                                                </div>
                                             </div>
                                             <div>
-                                                tipe tugas : {{ $t->tipe_progress->nama_tipe }}
-                                            </div>
-                                            <div>
-                                                tanggal target : {{ $t->tanggal_target }}
-                                            </div>
-                                            <div>
-                                                kpi yang dinilai : {{ $t->kpi->group_name }}
-                                            </div>
-                                            <div>
-                                                jabatan : {{ $t->member->jabatan }}
-                                            </div>
-                                            <div>
-                                                divisi : {{ $t->member->divisi->nama_divisi }}
+                                                <div class="text-center">
+                                                    tabel progress
+                                                </div>
+
+                                                @foreach ($progress->where('tasks_id', $t->id) as $p)
+                                                    <div>
+                                                        {{ $p->progress }}
+                                                    </div>
+                                                    <div>
+                                                        {{ $p->keterangan }}
+                                                    </div>
+                                                @endforeach
                                             </div>
                                         </div>
                                     </td>
@@ -380,14 +417,250 @@
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    {{-- <script>
-        function updateOutput(taskId) {
-            var slider = document.getElementById("slider_" + taskId);
-            var output = document.getElementById("sliderValue_" + taskId);
+    <script>
+        function searchData() {
+            // Mengambil nilai yang dipilih
+            var memberId = $("#inputGroupSelect02").value();
 
-            output.textContent = slider.value;
+            // Mengirim request AJAX
+            $.ajax({
+                url: "{{ route('api.search.data') }}",
+                type: "POST",
+                data: {
+                    member_id: memberId
+                },
+                dataType: "json",
+                success: function(response) {
+                    // Menghapus isi .card-body
+                    $(".card-body table tbody").empty();
+
+                    response.forEach(function(task) {
+                        var row = '<tr>' +
+                            '<td>' + task.goal_id + '</td>' +
+                            '<td  class="fw-bold">' + task.kpi.group_name + '</td>' +
+                            '<td>' + task.member.nama + '</td>';
+                        // Tambahkan kolom-kolom tambahan
+                        if (task.tipe_progress.nama_tipe == 'idr') {
+                            row += '<td>' + task.goal_progress + ' / Rp. ' + task.goal_target +
+                                '</td>' +
+                                '<td>' +
+                                '<div class="progress">';
+                            if (task.status == 'todo') {
+                                row += '<div class="progress-bar bg-secondary" style="width:' + (task
+                                    .goal_progress / task.goal_target) * 100 + '%"></div>';
+                            }
+                            if (task.status == 'doing') {
+                                row += '<div class="progress-bar bg-primary" style="width:' + (task
+                                    .goal_progress / task.goal_target) * 100 + '%"></div>';
+                            }
+                            if (task.status == 'checking') {
+                                row += '<div class="progress-bar bg-warning" style="width:' + (task
+                                    .goal_progress / task.goal_target) * 100 + '%"></div>';
+                            }
+                            if (task.status == 'done') {
+                                row += '<div class="progress-bar bg-success" style="width:' + (task
+                                    .goal_progress / task.goal_target) * 100 + '%"></div>';
+                            }
+                            row += '</div></td>';
+                        }
+
+                        if (task.tipe_progress.nama_tipe == 'persentase') {
+                            row += '<td>' + task.goal_progress + '% / ' + task.goal_target + '%</td>' +
+                                '<td>' +
+                                '<div class="progress">';
+                            if (task.status == 'todo') {
+                                row += '<div class="progress-bar bg-secondary" style="width:' + (task
+                                    .goal_progress / task.goal_target) * 100 + '%"></div>';
+                            }
+                            if (task.status == 'doing') {
+                                row += '<div class="progress-bar bg-primary" style="width:' + (task
+                                    .goal_progress / task.goal_target) * 100 + '%"></div>';
+                            }
+                            if (task.status == 'checking') {
+                                row += '<div class="progress-bar bg-warning" style="width:' + (task
+                                    .goal_progress / task.goal_target) * 100 + '%"></div>';
+                            }
+                            if (task.status == 'done') {
+                                row += '<div class="progress-bar bg-success" style="width:' + (task
+                                    .goal_progress / task.goal_target) * 100 + '%"></div>';
+                            }
+                            row += '</div></td>';
+                        }
+
+                        if (task.tipe_progress.nama_tipe == 'nominal') {
+                            row += '<td>' + task.goal_progress + ' / ' + task.goal_target + '</td>' +
+                                '<td>' +
+                                '<div class="progress">';
+                            if (task.status == 'todo') {
+                                row += '<div class="progress-bar bg-secondary" style="width:' + (task
+                                    .goal_progress / task.goal_target) * 100 + '%"></div>';
+                            }
+                            if (task.status == 'doing') {
+                                row += '<div class="progress-bar bg-primary" style="width:' + (task
+                                    .goal_progress / task.goal_target) * 100 + '%"></div>';
+                            }
+                            if (task.status == 'checking') {
+                                row += '<div class="progress-bar bg-warning" style="width:' + (task
+                                    .goal_progress / task.goal_target) * 100 + '%"></div>';
+                            }
+                            if (task.status == 'done') {
+                                row += '<div class="progress-bar bg-success" style="width:' + (task
+                                    .goal_progress / task.goal_target) * 100 + '%"></div>';
+                            }
+                            row += '</div></td>';
+                        }
+
+                        // Tambahkan kolom status
+                        if (task.status == 'todo') {
+                            row += '<td class="text-capitalize">' + task.status + '</td>';
+                        }
+                        if (task.status == 'doing') {
+                            row += '<td class="text-capitalize text-primary">' + task.status + '</td>';
+                        }
+                        if (task.status == 'checking') {
+                            row += '<td class="text-capitalize text-warning">' + task.status + '</td>';
+                        }
+                        if (task.status == 'done') {
+                            row += '<td class="text-capitalize text-success">' + task.status + '</td>';
+                        }
+
+                        // Tambahkan kolom aksi
+                        row += '<td>' +
+                            '<a href="" class="btn" data-bs-toggle="dropdown">' +
+                            '<i class="fa-solid fa-ellipsis-vertical"></i>' +
+                            '</a>' +
+                            '<ul class="dropdown-menu">';
+
+                        if (task.status != 'done' && "{{ auth()->user()->role->role }}" == 'admin') {
+                            row += '<form action="{{ route('goals.update_adm') }}" method="POST">' +
+                                '@csrf' +
+                                '<li>' +
+                                '<button class="dropdown-item" name="mark" value="done">' +
+                                '<i class="fa-solid fa-clipboard-check fa-lg"></i>' +
+                                'Mark as done' +
+                                '</button>' +
+                                '<input type="hidden" value="' + task.id + '" name="task_id">' +
+                                '</li>' +
+                                '</form>';
+                        }
+
+                        if (task.status == 'done' && "{{ auth()->user()->role->role }}" == 'admin') {
+                            row += '<form action="{{ route('goals.view_prog') }}" method="GET">' +
+                                '@csrf' +
+                                '<input type="hidden" name="task_id" value="' + task.id + '">' +
+                                '<li>' +
+                                '<button class="dropdown-item" type="submit">' +
+                                '<i class="fa-solid fa-star fa-lg"></i>' +
+                                'Beri Nilai' +
+                                '</button>' +
+                                '</li>' +
+                                '</form>';
+                        }
+
+                        row += '<li>' +
+                            '<button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#hapustugas_' +
+                            task.id + '">' +
+                            '<i class="fa-solid fa-trash fa-lg"></i>' +
+                            'Hapus Tugas' +
+                            '</button>' +
+                            '</li>';
+
+                        if ("{{ auth()->user()->role->role }}" == 'employee' && (task.status ==
+                                'doing' || task.status == 'todo')) {
+                            row += '<form action="{{ route('goals.view_prog') }}" method="GET">' +
+                                '@csrf' +
+                                '<input type="hidden" name="task_id" value="' + task.id + '">' +
+                                '<li>' +
+                                '<button type="submit" class="dropdown-item">' +
+                                '<i class="fa-solid fa-edit fa-lg"></i>' +
+                                'Update Progress' +
+                                '</button>' +
+                                '</li>' +
+                                '</form>';
+                        }
+
+                        row += '</ul>' +
+                            '</td>';
+
+                        row += '<tr id="flush-collapseOne' + task.id +
+                            '" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">' +
+                            '<td class="bg-light">' +
+                            '<div class="card">' +
+                            '<div>' +
+                            '<div class="text-center">' +
+                            'tabel tasks' +
+                            '</div>' +
+                            '<div>' +
+                            'goal owner : ' + task.owner.nama +
+                            '</div>' +
+                            '<div>' +
+                            (task.grade == null ? 'grade : belum dinilai' : 'grade : ' + task.grade) +
+                            '</div>' +
+                            '<div>' +
+                            'goal target : ' + task.goal_target +
+                            '</div>' +
+                            '<div>' +
+                            'tipe tugas : ' + task.tipe_progress.nama_tipe +
+                            '</div>' +
+                            '<div>' +
+                            'tanggal target : ' + task.tanggal_target +
+                            '</div>' +
+                            '</div>' +
+                            '<div>' +
+                            '<div class="text-center">' +
+                            'tabel kpi' +
+                            '</div>' +
+                            '<div>' +
+                            'kpi yang dinilai : ' + task.kpi.group_name +
+                            '</div>' +
+                            '<div>' +
+                            'parameter : ' + task.kpi.parameter +
+                            '</div>' +
+                            '<div>' +
+                            'weight : ' + task.kpi.weight +
+                            '</div>' +
+                            '</div>' +
+                            '<div>' +
+                            '<div class="text-center">' +
+                            'tabel member' +
+                            '</div>' +
+                            '<div>' +
+                            'jabatan : ' + task.member.jabatan +
+                            '</div>' +
+                            '<div>' +
+                            'divisi : ' + task.member.divisi.nama_divisi +
+                            '</div>' +
+                            '</div>' +
+                            '<div>' +
+                            '<div class="text-center">' +
+                            'tabel progress' +
+                            '</div>';
+
+                        var progress = @json($progress);
+
+                        for (var i = 0; i < progress.length; i++) {
+                            var p = progress[i];
+                            if (p.tasks_id == task.id) {
+                                row += '<div>' + p.progress + '</div>';
+                                row += '<div>' + p.keterangan + '</div>';
+                            }
+                        }
+
+                        row += '</div>' +
+                            '</div>' +
+                            '</td>';
+
+
+                    });
+                    // Menambahkan tabel baru ke dalam .card-body
+                    $(".card-body table tbody").append(row);
+                },
+                error: function() {
+                    console.log("Error occurred during AJAX request");
+                }
+            });
         }
-    </script> --}}
+    </script>
     <script>
         $(document).ready(function() {
             $('#kpi_id').change(function() {
