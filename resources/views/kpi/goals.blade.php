@@ -60,11 +60,11 @@
                                 <tr style="text-align: start">
                                     <th>Goal ID</th>
                                     <th>Goal Name</th>
-                                    {{-- <th>Goal Owner</th> --}}
+                                    <th>Goal Owner</th>
                                     <th>To</th>
                                     <th>Goal Progress</th>
                                     <th>Status</th>
-                                    {{-- <th>Grade</th> --}}
+                                    <th>Grade</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -74,16 +74,16 @@
                                     <tr>
                                         <td scope="row">
                                             <button data-bs-toggle="collapse"
-                                                data-bs-target="#flush-collapseOne{{ $t->id }}"><i
+                                                data-bs-target="#flush-collapse{{ $t->id }}"><i
                                                     class="fa-solid fa-chevron-right me-3" aria-expanded="true"
-                                                    aria-controls="flush-collapseOne"></i>
+                                                    aria-controls="flush-collapse{{ $t->id }}"></i>
                                             </button> {{ $t->goal_id }}
                                         </td>
                                         <td class="fw-bold">{{ $t->kpi->group_name }} <span style="font-weight: normal">
                                                 <p>{{ date('d F Y', strtotime($t->created_at)) }} -
                                                     {{ date('d F Y', strtotime($t->tanggal_target)) }}</p>
                                             </span></td>
-                                        {{-- <td>{{ $t->owner->nama }}</td> --}}
+                                        <td>{{ $t->owner->nama }}</td>
                                         <td>{{ $t->member->nama }}</td>
                                         @if ($t->tipe_progress->nama_tipe == 'idr')
                                             <td>{{ $t->goal_progress }} / Rp. {{ number_format($t->goal_target) }} <div
@@ -178,11 +178,11 @@
                                         @if ($t->status == 'done')
                                             <td class="text-capitalize text-success">{{ $t->status }}</td>
                                         @endif
-                                        {{-- @if ($t->grade == null)
-                                        <td>-</td>
-                                    @else
-                                        <td>{{ $t->grade }}</td>
-                                    @endif --}}
+                                        @if ($t->grade == null)
+                                            <td>-</td>
+                                        @else
+                                            <td>{{ $t->grade }}</td>
+                                        @endif
                                         <td>
                                             @if (auth()->user()->role->role == 'admin')
                                                 <a href="" class="btn" data-bs-toggle="dropdown">
@@ -233,106 +233,10 @@
 
                                             </ul>
                                         </td>
-                                    <tr id="flush-collapseOne{{ $t->id }}" class="accordion-collapse collapse "
+                                    <tr id="flush-collapse{{ $t->id }}" class="accordion-collapse collapse"
                                         data-bs-parent="#accordionFlushExample">
                                         <td colspan="6 bg-light">
                                             <div class="row p-3">
-                                                <!-- kiri -->
-                                                <div class="col border-end">
-                                                    <div class="row">
-                                                        <div class="col-lg col-12 text-capitalize fw-bold">
-                                                            kpi yang dinilai
-                                                        </div>
-                                                        <div class="col-lg col-12 text-start">
-                                                            {{ $t->kpi->group_name }}
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-lg col-12 text-capitalize fw-bold">
-                                                            parameter
-                                                        </div>
-                                                        <div class="col-lg col-12 text-start">
-                                                            {{ $t->kpi->parameter }}
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-lg col-12 text-capitalize fw-bold">
-                                                            weight
-                                                        </div>
-                                                        <div class="col-lg col-12 text-start">
-                                                            {{ $t->kpi->weight }}
-                                                        </div>
-                                                    </div>
-                                                    <hr>
-                                                    <div class="row">
-                                                        <div class="col-lg col-12 text-capitalize fw-bold">
-                                                            jabatan
-                                                        </div>
-                                                        <div class="col-lg col-12 text-start text-capitaliz">
-                                                            {{ $t->member->jabatan }}
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-lg col-12 text-capitalize fw-bold">
-                                                            divisi
-                                                        </div>
-                                                        <div class="col-lg col-12 text-start text-capitalize">
-                                                            {{ $t->member->divisi->nama_divisi }}
-                                                        </div>
-                                                    </div>
-                                                    <hr>
-                                                    <div class="row">
-                                                        <div class="col-lg col-12 text-capitalize fw-bold">
-                                                            Goal Owner
-                                                        </div>
-                                                        <div class="col-lg col-12 text-start">
-                                                            {{ $t->owner->nama }}
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row">
-                                                        <div class="col-lg col-12 text-capitalize fw-bold">
-                                                            Grade
-                                                        </div>
-                                                        <div class="col-lg col-12 text-start text-uppercase text-danger">
-                                                            @if ($t->grade == null)
-                                                                belum dinilai
-                                                            @else
-                                                                {{ $t->grade }}
-                                                            @endif
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row">
-                                                        <div class="col-lg col-12 text-capitalize fw-bold">
-                                                            goal target
-                                                        </div>
-                                                        <div class="col-lg col-12 text-start">
-                                                            {{ $t->goal_target }}
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row">
-                                                        <div class="col-lg col-12 text-capitalize fw-bold">
-                                                            tipe tugas
-                                                        </div>
-                                                        <div class="col-lg col-12 text-start">
-                                                            {{ $t->tipe_progress->nama_tipe }}
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row">
-                                                        <div class="col-lg col-12 text-capitalize fw-bold">
-                                                            Tanggal dibuatnya target
-                                                        </div>
-                                                        <div class="col-lg col-12 text-start">
-                                                            {{ $t->created_at->format('d M Y') }}
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-
-
                                                 <!-- kanan -->
                                                 <div class="col">
                                                     <div class="row p-3">
@@ -541,12 +445,6 @@
                             </select>
                         </div>
                         <div class="form-group mt-2">
-                            <label for="goal_target">Goal Target</label>
-                            <input type="number" name="goal_target" id="goal_target" class="form-control"
-                                placeholder="0" min="1" required>
-
-                        </div>
-                        <div class="form-group mt-2">
                             <label for="" class="fw-bold">Tipe Progress</label>
                             <select name="tipe_id" id="tipe_id" class="form-select text-uppercase" required>
                                 <option value="">Pilih tipe progress</option>
@@ -554,6 +452,12 @@
                                     <option value="{{ $t->id }}">{{ $t->nama_tipe }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="goal_target">Goal Target</label>
+                            <input type="number" name="goal_target" id="goal_target" class="form-control"
+                                placeholder="0" min="1" required>
+
                         </div>
                         <div class="form-group mt-2">
                             <label for="tanggal_target" class="fw-bold">Tenggat</label>

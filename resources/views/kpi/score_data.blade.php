@@ -154,7 +154,7 @@
                                     <div class="form-group mt-2">
                                         <label for="goal_progress">Goal Progress</label>
                                         <div class="input-group align-items-center">
-                                            <input type="range" class="w-75" min="{{ $task->goal_progress }}"
+                                            <input type="range" class="w-75" min="{{ $task->goal_progress + 1 }}"
                                                 max="{{ $task->goal_target }}" value="{{ $task->goal_progress }}"
                                                 name="goal_progress" id="slider" oninput="updateOutput()" />
                                             <input type="number" class="text-center mx-3 my-3 my-lg-0 rounded-4" id="sliderValue"

@@ -83,7 +83,8 @@ class TaskController extends Controller
         $member = $task->member;
         $kpi_id = $task->kpi_id;
         $kpi = KPI::find($kpi_id);
-        $progress = Progress::where('tasks_id', $Request->task_id)->latest('created_at')->first();
+        $progress = Progress::where('tasks_id', $Request->task_id)->latest('created_at')->get();
+        // return $progress;
         // return $progress;
         // return $member;
         // return $kpi;
