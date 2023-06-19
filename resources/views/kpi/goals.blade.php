@@ -29,7 +29,7 @@
                     <div class="row">
                         <div class="col-lg-4 col-12">
                             <div class="input-group mt-3">
-                                <select class="form-select" id="inputGroupSelect02" onchange="searchData()">
+                                <select class="form-select" id="option1" onchange="changeData()">
                                     <option selected>Choose...</option>
                                     @foreach ($member as $m)
                                         <option value="{{ $m->id }}">{{ $m->nama }} -
@@ -41,7 +41,7 @@
                         </div>
                         <div class="col-lg-4 col-12">
                             <div class="input-group mt-3">
-                                <select class="form-select" id="inputGroupSelect02">
+                                <select class="form-select" id="inputGroupSelect03">
                                     <option selected>Ongoing Goals</option>
                                     <option value="">Todo</option>
                                     <option value="">Doing</option>
@@ -55,7 +55,7 @@
 
                     <!-- table -->
                     <div class="table-responsive-lg">
-                        <table class="table mt-3 " style="outline: 2px">
+                        <table class="table mt-3 " style="outline: 2px" id="tabel_tasks">
                             <thead class="table-secondary table-responsive">
                                 <tr style="text-align: start">
                                     <th>Goal ID</th>
@@ -68,9 +68,9 @@
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody>
 
-                                @foreach (auth()->user()->role->role == 'admin' ? $task_adm : $task as $t)
+                            @foreach (auth()->user()->role->role == 'admin' ? $task_adm : $task as $t)
+                                <tbody id="task_{{ $t->id }}" data-task-id="{{ $t->id }}">
                                     <tr>
                                         <td scope="row">
                                             <button data-bs-toggle="collapse"
@@ -394,8 +394,8 @@
                                     </div>
                                     {{-- end modal --}}
                                     </tr>
-                                @endforeach
-                            </tbody>
+                                </tbody>
+                            @endforeach
                         </table>
                     </div>
                 </div>
@@ -488,22 +488,33 @@
     <script>
         $(document).ready(function() {
             $('#inputGroupSelect02').change(function() {
-                changeData();
+                var task_id = $(this).attr('id');
+                changeData(task_id);
             });
         });
 
-        function changeData() {
-            var member_id = $('#inputGroupSelect02').val();
+        function changeData(task_id) {
+            var member_id = $('#option1').val();
+            console.log(member_id);
             $.ajax({
                 url: '{{ route('api.search.data') }}',
                 type: "POST",
                 data: {
-                    member_id: member_id
+                    member_id: member_id,
+                    task_id: task_id
                 },
                 dataType: "json",
                 success: function(response) {
-                    // Lakukan tindakan yang diinginkan dengan data yang diterima
-                    console.log(response);
+                    var tasks = response.task;
+                    console.log(tasks);
+                    $('tbody[id^="task_"]').remove();
+
+                    var newTasksLoop = tasks.map(function(task) {
+                        var tbodyId = 'task_' + task.id;
+                        var tbody = $('<body>').attr('id', tbodyId);
+                        tbody.attr('data-task-id', task.id);
+                    });
+                    $('#tabel_tasks').append(newTasksLoop);
                 },
                 error: function(xhr, status, error) {
                     // Menangani kesalahan jika terjadi

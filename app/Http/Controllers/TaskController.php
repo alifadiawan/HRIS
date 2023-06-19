@@ -33,7 +33,18 @@ class TaskController extends Controller
         // return $member;
         $tipe = TipeProgress::all();
         $kpi = KPI::where('isActive', true)->get();
-        return view('kpi.goals', compact('task', 'member', 'tipe', 'task_adm', 'mid', 'kpi','progress'));
+        return view('kpi.goals', compact('task', 'member', 'tipe', 'task_adm', 'mid', 'kpi', 'progress'));
+    }
+    public function searchData(Request $request)
+    {
+        $member_id = $request->input('member_id');
+        $task_id = Task::where('member_id', $member_id)->get();
+        foreach ($task_id as $t) {
+            $task[] = $t->id;
+        }
+
+        // Mengembalikan respon dalam format JSON
+        return response()->json(['task' => $task]);
     }
 
     public function get_member(Request $request, $kpiId)
@@ -84,21 +95,12 @@ class TaskController extends Controller
         $kpi_id = $task->kpi_id;
         $kpi = KPI::find($kpi_id);
         $progress = Progress::where('tasks_id', $Request->task_id)->latest('created_at')->get();
-        // return $progress;
-        // return $progress;
-        // return $member;
-        // return $kpi;
+
         return view('kpi.score_data', compact('task', 'kpi', 'progress'));
     }
 
-    public function searchData(Request $request)
-    {
-        $memberId = $request->input('member_id');
-        $task_adm = Task::where('member_id', $memberId)->get();
-        
-        return response()->json($task_adm);
-    }
-    
+
+
     public function progress(Request $request)
     {
         $cek = $request->keterangan;
