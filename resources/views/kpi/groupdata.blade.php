@@ -11,7 +11,7 @@
             @endif
             <div class="card text-left">
                 <div class="card-body">
-                    <div class="d-flex flex-row align-items-center my-3">
+                    <!-- <div class="d-flex flex-row align-items-center my-3">
                         <p class="p-0 m-0 text-muted">Show</p>
                         <select class="form-select mx-2" name="" id="" style="width: 70px">
                             <option value="">10</option> Entries
@@ -20,9 +20,9 @@
                             <option value="">10</option> Entries
                         </select>
                         <p class="p-0 m-0 text-muted">Entries</p>
-                    </div>
+                    </div> -->
                     <div class="content">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered mt-4">
                             <thead>
                                 <tr>
                                     <th class="bg-light">NO.</th>
@@ -162,7 +162,7 @@
                     </div>
 
                     <!-- Pagination -->
-                    <div class="d-flex flex-row justify-content-center">
+                    <!-- <div class="d-flex flex-row justify-content-center">
                         <nav aria-label="Page navigation example">
                             <ul class="pagination">
                               <li class="page-item">
@@ -180,7 +180,7 @@
                               </li>
                             </ul>
                           </nav>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

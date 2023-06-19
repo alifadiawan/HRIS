@@ -172,8 +172,12 @@
 
         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
           <li class="dropdown-header">
-            <h6>Nama user</h6>
-            <span>role</span>
+            @if(auth()->user()->hasProfile())
+            <h6>{{auth()->user()->member->nama}}</h6>
+            @else
+            <h6>{{auth()->user()->username}}</h6>
+            @endif
+            <span>{{auth()->user()->role->role}}</span>
           </li>
           <li>
             <hr class="dropdown-divider">

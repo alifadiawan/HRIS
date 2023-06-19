@@ -15,14 +15,16 @@
         </a>
     </li>
     <!-- End Dashboard Nav -->
-
-        {{-- <li class="nav-item">
-            <a class="nav-link " href="/employee-list">
+        @if (auth()->user()->role->role == 'admin')        
+        <li class="nav-item">
+            <a class="nav-link " href="/employee">
                 <i class="fa-solid fa-users"></i>
                 <span>Employee List</span>
             </a>
-        </li> --}}
+        </li>
+        @else
 
+        @endif
     {{-- <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
             <i class="fa-solid fa-wallet fa-lg"></i><span>Payroll</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -46,7 +48,7 @@
         </ul>
     </li> --}}
     <!-- End Charts Nav -->
-
+    @if(auth()->user()->hasProfile())
     <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
             <i class="fa-solid fa-lg fa-square-poll-vertical"></i><span>KPI</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -77,7 +79,9 @@
                 </a>
             </li> --}}
         </ul>
-    </li><!-- End Icons Nav -->
+    </li>
+    @endif
+    <!-- End Icons Nav -->
     {{-- <li class="nav-item">
         <a class="nav-link collapsed" href="/progress">
             <i class="fa-solid fa-circle-info fa-lg"></i>

@@ -28,7 +28,11 @@ class DivisiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $div = new Divisi();
+        $div->nama_divisi = $request->nama_divisi;
+        $div->save();
+
+        return redirect('/employee');
     }
 
     /**
@@ -61,5 +65,13 @@ class DivisiController extends Controller
     public function destroy(Divisi $divisi)
     {
         //
+    }
+
+    public function hapus($id)
+    {
+        $div = Divisi::find($id);
+        $div->delete();
+
+        return redirect('/employee');
     }
 }

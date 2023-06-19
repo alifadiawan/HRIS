@@ -1,10 +1,10 @@
 @extends('layout.body')
-@section('title', 'KPI Profile')
+@section('title', 'User Profile')
 @section('page-title', 'Profile Page')
 @section('content')
 
     <section id="profile" class="container mt-2">
-        <div class="row">
+        <div class="row align-content-center">
             <div class="col-lg-6">
                 <div class="profile card mb-4">
                     <div class="card-body">
@@ -13,7 +13,7 @@
                                 <p class="mb-0 fw-bold"><i class="fa-solid fa-user fa-xl fa-fw"></i> Username</p>
                             </div>
                             <div class="col-sm-7 col-6">
-                                <p class="text mb-0">wwjww</p>
+                                <p class="text mb-0">{{auth()->user()->username}}</p>
                             </div>
                         </div>
                         <hr>
@@ -22,13 +22,12 @@
                                 <p class="mb-0 fw-bold"><i class="fa-solid fa-envelope fa-xl fa-fw"></i> Email</p>
                             </div>
                             <div class="col-sm-7 col-6">
-                                <p class="text mb-0">rafasksi@gmai.com</p>
+                                <p class="text mb-0">{{auth()->user()->email}}</p>
                             </div>
                         </div>
                         <hr>
-                        {{-- @endforeach --}}
 
-                        {{-- @if ($member->isEmpty())
+                        @if (auth()->user()->hasIncompleteProfile())
                             <div class="row">
                                 <div class="col-sm-5">
                                     <p class="mb-0 fw-bold"><i class="fas fa-id-card fa-lg"></i>Nama Lengkap</p>
@@ -64,13 +63,52 @@
                                     <p class="text-muted mb-0">Bay Area, San Francisco, CA</p>
                                 </div>
                             </div>
-                        @endif --}}
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <p class="mb-0 fw-bold">Jenis Kelamin</p>
+                                </div>
+                                <div class="col-sm-7">
+                                    <p class="text-muted mb-0">Laki / Perempuan</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <p class="mb-0 fw-bold">Tanggal Lahir</p>
+                                </div>
+                                <div class="col-sm-7">
+                                    <p class="text-muted mb-0">00-00-0000</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <p class="mb-0 fw-bold">Jabatan</p>
+                                </div>
+                                <div class="col-sm-7">
+                                    <p class="text-muted mb-0">Jabatan Ku</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <p class="mb-0 fw-bold">Divisi</p>
+                                </div>
+                                <div class="col-sm-7">
+                                    <p class="text-muted mb-0">Divisi Ku</p>
+                                </div>
+                            </div>
+                            <div class="d-grid gap-3">
+                                <a href="{{route('employee.create', auth()->user()->member->id)}}" class="btn-edit btn">Add Profile</a>
+                            </div>
+                        @else
                         <div class="row">
                             <div class="col-sm-5 col-6">
                                 <p class="mb-0 fw-bold"><i class="fas fa-id-card fa-xl fa-fw"></i> Nama Lengkap</p>
                             </div>
                             <div class="col-sm-7 col-6">
-                                <p class="text mb-0">Rafli Dwi</p>
+                                <p class="text mb-0">{{auth()->user()->member->nama}}</p>
                             </div>
                         </div>
                         <hr>
@@ -79,7 +117,7 @@
                                 <p class="mb-0 fw-bold"><i class="fa-solid fa-phone-volume fa-xl fa-fw"></i> Nomor Telp</p>
                             </div>
                             <div class="col-sm-7 col-6">
-                                <p class="text mb-0">088291829211</p>
+                                <p class="text mb-0">{{auth()->user()->member->no_hp}}</p>
                             </div>
                         </div>
                         <hr>
@@ -88,7 +126,7 @@
                                 <p class="mb-0 fw-bold"><i class="fa-solid fa-passport fa-xl fa-fw"></i> NIK</span></p>
                             </div>
                             <div class="col-sm-7 col-6">
-                                <p class="text mb-0">0192828172</p>
+                                <p class="text mb-0">{{auth()->user()->member->nik}}</p>
                             </div>
                         </div>
                         <hr>
@@ -97,17 +135,54 @@
                                 <p class="mb-0 fw-bold"><i class="fa-solid fa-map-location-dot fa-xl fa-fw"></i> Alamat</p>
                             </div>
                             <div class="col-sm-7 col-6">
-                                <p class="text mb-0">Rumah ku</p>
+                                <p class="text mb-0">{{auth()->user()->member->alamat}}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-5 col-6">
+                                <p class="mb-0 fw-bold"><i class="fa-solid fa-user fa-xl fa-fw"></i> Jenis Kelamin</p>
+                            </div>
+                            <div class="col-sm-7 col-6">
+                                <p class="text mb-0">{{auth()->user()->member->jk}}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-5 col-6">
+                                <p class="mb-0 fw-bold"><i class="fa-solid fa-location fa-xl fa-fw"></i> Tanggal Lahir</p>
+                            </div>
+                            <div class="col-sm-7 col-6">
+                                <p class="text mb-0">{{auth()->user()->member->tgl_lahir}}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-5 col-6">
+                                <p class="mb-0 fw-bold"><i class="fa-solid fa-bag-shopping fa-xl fa-fw"></i> Jabatan</p>
+                            </div>
+                            <div class="col-sm-7 col-6">
+                                <p class="text mb-0">{{auth()->user()->member->jabatan}}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-5 col-6">
+                                <p class="mb-0 fw-bold"><i class="fa-solid fa-user-gear fa-xl fa-fw"></i> Divisi</p>
+                            </div>
+                            <div class="col-sm-7 col-6">
+                                <p class="text mb-0">{{auth()->user()->member->divisi->nama_divisi}}</p>
                             </div>
                         </div>
                         <div class="d-grid gap-3">
-                            <a href="/edit-profile" class="btn-edit btn">Edit Profile</a>
+                            <a href="{{route('employee.edit', auth()->user()->member->id)}}" class="btn-edit btn">Edit Profile</a>
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
             <!-- Kumpulan Card Riwayat Transaksi User -->
-            <div class="col-lg-6">
+            <!-- <div class="col-lg-6">
                 <div class="row">
                     <div class="col-lg-6 col-md-6 mb-4">
                         <div class="card border-left-primary shadow h-100 ">
@@ -127,10 +202,10 @@
                                 <a href="#" class="btn-sm btn-selengkapnya btn">Selengkapnya</a>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- Earnings (Monthly) Card Example -->
-                    <div class="col-lg-6 col-md-6 mb-4">
+                    <!-- <div class="col-lg-6 col-md-6 mb-4">
                         <div class="card border-left-success shadow h-100">
                             <div class="card-body">
                                 <div class="row align-items-center">
@@ -150,10 +225,10 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Earnings (Monthly) Card Example -->
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-lg-6 col-md-6 mb-4">
                         <div class="card border-left-success shadow h-100">
                             <div class="card-body">
@@ -173,10 +248,10 @@
 
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- Pending Requests Card Example -->
-                    <div class="col-lg-6 col-md-6 mb-4">
+                    <!-- <div class="col-lg-6 col-md-6 mb-4">
                         <div class="card border-left-success shadow h-100">
                             <div class="card-body">
                                 <div class="row align-items-center">
@@ -196,7 +271,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </section>
 

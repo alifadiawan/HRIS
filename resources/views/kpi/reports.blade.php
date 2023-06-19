@@ -1,5 +1,5 @@
 @extends('layout.body')
-@section('title', 'Sales Reports')
+@section('title', 'KPI Reports')
 @section('content')
     <section class="reports">
         <!-- page title -->
@@ -21,13 +21,13 @@
                         <div class="card-body">
                             <div class="row align-items-center">
                                 <div class="col-10">
-                                    <h4 class="card-title">Sales Reports</h4>
+                                    <h4 class="card-title">KPI Reports</h4>
                                 </div>
-                                <div class="col-2">
+                                <!-- <div class="col-2">
                                     <select name="" class="form-select" id="">
                                         <option value="">Export</option>
                                     </select>
-                                </div>
+                                </div> -->
                             </div>
 
                             <!-- card content -->
@@ -52,7 +52,7 @@
 
             <div class="row">
                 <!-- payroll summary -->
-                <div class="col-lg-8">
+                <!-- <div class="col-lg-8">
                     <div class="card text-left">
                         <div class="card-body">
                             <h4 class="card-title">Profit Margin Analysis</h4>
@@ -67,9 +67,9 @@
                                     <i class="fa-solid fa-square fa-2xl me-2 p-0"
                                         style="color: rgb(255, 159, 64);"></i>Net Profit Margin
                                 </div>
-                            </div>
+                            </div> -->
                             <!-- Bar Chart -->
-                            <canvas id="barChart" style="max-height: 400px;"></canvas>
+                            <!-- <canvas id="barChart" style="max-height: 400px;"></canvas>
                         </div>
                     </div>
                 </div>
@@ -95,7 +95,7 @@
                             <p class="mt-2"><i class="fa-solid fa-arrow-up" style="color: #04e731;"></i>  5% in the last week</p>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <script>
                     document.addEventListener("DOMContentLoaded", () => {
                         new Chart(document.querySelector('#barChart'), {
@@ -147,10 +147,10 @@
                             //     data: [31, 40, 28, 51, 42, 82, 56],
                             // }, 
                             {
-                                name: 'Revenue',
+                                name: 'KPI',
                                 data: [11, 22, 33, 44, 55, 66, 77]
                             }, {
-                                name: 'Customers',
+                                name: 'Employee',
                                 data: [30, 11, 45, 18, 60, 24, 11]
                             }],
                             chart: {
