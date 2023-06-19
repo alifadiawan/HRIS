@@ -116,6 +116,7 @@ h6 {
 /* time off */
 .time-off {
   /* max-height: 16.7rem;  */
+  height: 14rem;
   max-height: 14rem;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -1083,7 +1084,7 @@ input[type="range"] {
 
 /* Track: webkit browsers */
 input[type="range"]::-webkit-slider-runnable-track {
-  height: 15px;
+  height: 16px;
   background: #ccc;
   border-radius: 16px;
 }
