@@ -112,15 +112,15 @@
                     <div class="col-lg-6 col-md-6 mb-4">
                         <div class="card border-left-primary shadow h-100 ">
                             <div class="card-body">
-                                <div class="row no-gutters align-items-center">
+                                <div class="row align-items-center">
                                     <div class="col mr-2">
-                                        {{-- <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        {{-- <div class="text-xs fw-bold text-primary text-uppercase mb-1">
                                             Pesanan Anda</div> --}}
-                                        <div class="h5 mt-3 font-weight-bold text-gray-800">20 Tugas Anda<span
+                                        <div class="h5 mt-5 fw-bold text-gray-800">20 Tugas Anda<span
                                                 class="qty posisition-absolute badge bg-success position-absolute top-0 translate-middle badge">Tugas</span>
                                         </div>
                                     </div>
-                                    <div class="col-auto">
+                                    <div class="col-auto mt-4">
                                         <i class="fa-solid fa-bag-shopping fa-2xl"></i>
                                     </div>
                                 </div>
@@ -133,15 +133,15 @@
                     <div class="col-lg-6 col-md-6 mb-4">
                         <div class="card border-left-success shadow h-100">
                             <div class="card-body">
-                                <div class="row no-gutters align-items-center">
+                                <div class="row align-items-center">
                                     <div class="col mr-2">
-                                        {{-- <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                        {{-- <div class="text-xs fw-bold text-success text-uppercase mb-1">
                                             Riwayat Transaksi</div> --}}
-                                        <div class="h5 mt-3 font-weight-bold text-gray-800">10 Progress Terakhir<span
+                                        <div class="h5 mt-5 fw-bold text-gray-800">10 Progress<span
                                                 class="qty posisition-absolute badge bg-secondary position-absolute top-0 translate-middle badge">Progress
                                                 Tugas</span></div>
                                     </div>
-                                    <div class="col-auto">
+                                    <div class="col-auto mt-4">
                                         <i class="fa-solid fa-clock-rotate-left fa-2xl"></i>
                                     </div>
                                 </div>
@@ -157,15 +157,15 @@
                     <div class="col-lg-6 col-md-6 mb-4">
                         <div class="card border-left-success shadow h-100">
                             <div class="card-body">
-                                <div class="row no-gutters align-items-center">
+                                <div class="row align-items-center">
                                     <div class="col mt-3">
-                                        {{-- <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                        {{-- <div class="text-xs fw-bold text-success text-uppercase mb-1">
                                             Riwayat Transaksi</div> --}}
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">3 Hari Cuti<span
+                                        <div class="h5 mt-4 fw-bold text-gray-800">3 Hari Cuti<span
                                                 class="qty posisition-absolute badge bg-warning position-absolute top-0 translate-middle badge">Jadwal
                                                 Cuti</span></div>
                                     </div>
-                                    <div class="col-auto">
+                                    <div class="col-auto mt-4">
                                         <i class="fa-solid fa-user-gear fa-2xl"></i>
                                     </div>
                                 </div>
@@ -179,15 +179,15 @@
                     <div class="col-lg-6 col-md-6 mb-4">
                         <div class="card border-left-success shadow h-100">
                             <div class="card-body">
-                                <div class="row no-gutters align-items-center">
+                                <div class="row align-items-center">
                                     <div class="col mt-3">
-                                        {{-- <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                        {{-- <div class="text-xs fw-bold text-success text-uppercase mb-1">
                                             Riwayat Transaksi</div> --}}
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">2 Jadwal Meeting<span
+                                        <div class="h5 mt-4 fw-bold text-gray-800">2 Meeting<span
                                                 class="qty posisition-absolute badge bg-info position-absolute top-0 translate-middle badge">Meeting</span>
                                         </div>
                                     </div>
-                                    <div class="col-auto">
+                                    <div class="col-auto mt-3">
                                         <i class="fa-solid fa-cart-shopping fa-2xl"></i>
                                     </div>
                                 </div>
