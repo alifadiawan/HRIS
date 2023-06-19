@@ -352,16 +352,6 @@
                                                                         </div>
                                                                     </div>
                                                                     @endforeach
-                                                                    <div class="row my-2 align-items-center">
-                                                                        <div class="col">
-                                                                            <div class="fw-bold">100</div>
-                                                                            <div class="status text-muted">
-                                                                                ajwoiajdjaoijsidjiaj jaoijwoai ijoaw iaijo ioj joijo i</div>
-                                                                        </div>
-                                                                        <div class="col-3">
-                                                                            <div class=" text-end">14 Agustus 2023</div>
-                                                                        </div>
-                                                                    </div>
                                                                     
                                                                 </div>
                                                             </div>
