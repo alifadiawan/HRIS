@@ -24,7 +24,7 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->bigInteger('goal_target');
-            $table->bigIntegerinteger('goal_progress')->default(0);
+            $table->bigInteger('goal_progress')->default(0);
             $table->unsignedBigInteger('tipe_id');
             $table->foreign('tipe_id')->references('id')->on('tipe_progress')
                 ->onDelete('cascade')

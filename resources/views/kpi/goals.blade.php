@@ -1,6 +1,6 @@
 @extends('layout.body')
 @section('title', 'Goals Team')
-@section('page-title', 'Goals Team')
+@section('page-title', 'List Tugas')
 @section('content')
 
     <section class="goals">
@@ -9,6 +9,7 @@
                 @if (auth()->user()->role->role == 'admin')
                     <button class="btn btn-info mb-2 text-white" data-bs-toggle="modal" data-bs-target="#addTask">Tambah
                         Tugas</button>
+                
                 @endif
             </div>
         </div>
