@@ -38,10 +38,11 @@ class TaskController extends Controller
     public function searchData(Request $request)
     {
         $member_id = $request->input('member_id');
-        $task_id = Task::where('member_id', $member_id)->get();
-        foreach ($task_id as $t) {
-            $task[] = $t->id;
-        }
+        // $task_id = Task::where('member_id', $member_id)->get();
+        // foreach ($task_id as $t) {
+        //     $task[] = $t->id;
+        // }
+        $task = Task::where('member_id', $member_id)->pluck('id')->toArray();
 
         // Mengembalikan respon dalam format JSON
         return response()->json(['task' => $task]);
