@@ -74,7 +74,8 @@
                                     <td scope="row">
                                         <button data-bs-toggle="collapse"
                                             data-bs-target="#flush-collapseOne{{ $t->id }}"><i
-                                                class="fa-solid fa-chevron-right me-3"></i>
+                                                class="fa-solid fa-chevron-right me-3" aria-expanded="true"
+                                                aria-controls="flush-collapseOne"></i>
                                         </button> {{ $t->goal_id }}
                                     </td>
                                     <td class="fw-bold">{{ $t->kpi->group_name }} <span style="font-weight: normal">
@@ -87,24 +88,24 @@
                                         <td>{{ $t->goal_progress }} / Rp. {{ number_format($t->goal_target) }} <div
                                                 class="progress">
                                                 @if ($t->status == 'todo')
-                                                    <div class="progress-bar bg-secondary"
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary"
                                                         style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
                                                     </div>
                                                 @endif
                                                 @if ($t->status == 'doing')
-                                                    <div class="progress-bar bg-primary"
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
                                                         style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
                                                     </div>
                                                 @endif
                                                 @if ($t->status == 'checking')
-                                                    <div class="progress-bar bg-warning"
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
                                                         style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
                                                     </div>
                                                 @endif
 
 
                                                 @if ($t->status == 'done')
-                                                    <div class="progress-bar bg-success"
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
                                                         style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
                                                     </div>
                                                 @endif
@@ -114,23 +115,23 @@
                                     @if ($t->tipe_progress->nama_tipe == 'persentase')
                                         <td>{{ $t->goal_progress }}% / {{ $t->goal_target }}% <div class="progress">
                                                 @if ($t->status == 'todo')
-                                                    <div class="progress-bar bg-secondary"
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary"
                                                         style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
                                                     </div>
                                                 @endif
                                                 @if ($t->status == 'doing')
-                                                    <div class="progress-bar bg-primary"
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
                                                         style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
                                                     </div>
                                                 @endif
                                                 @if ($t->status == 'checking')
-                                                    <div class="progress-bar bg-warning"
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
                                                         style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
                                                     </div>
                                                 @endif
 
                                                 @if ($t->status == 'done')
-                                                    <div class="progress-bar bg-success"
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
                                                         style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
                                                     </div>
                                                 @endif
@@ -141,23 +142,23 @@
                                         <td>{{ $t->goal_progress }} / {{ number_format($t->goal_target) }} <div
                                                 class="progress">
                                                 @if ($t->status == 'todo')
-                                                    <div class="progress-bar bg-secondary"
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary"
                                                         style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
                                                     </div>
                                                 @endif
                                                 @if ($t->status == 'doing')
-                                                    <div class="progress-bar bg-primary"
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
                                                         style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
                                                     </div>
                                                 @endif
                                                 @if ($t->status == 'checking')
-                                                    <div class="progress-bar bg-warning"
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
                                                         style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
                                                     </div>
                                                 @endif
 
                                                 @if ($t->status == 'done')
-                                                    <div class="progress-bar bg-success"
+                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
                                                         style="width:{{ ($t->goal_progress / $t->goal_target) * 100 }}%">
                                                     </div>
                                                 @endif
@@ -225,12 +226,165 @@
                                             @endif
                                         </ul>
                                     </td>
-                                <tr id="flush-collapseOne{{ $t->id }}" class="accordion-collapse collapse"
+                                <tr id="flush-collapseOne{{ $t->id }}" class="accordion-collapse collapse "
+                                    data-bs-parent="#accordionFlushExample">
+                                    <td colspan="6 bg-light">
+                                        <div class="row">
+                                            <!-- kiri -->
+                                            <div class="col border-end">
+                                                <div class="row">
+                                                    <div class="col text-capitalize fw-bold">
+                                                        kpi yang dinilai
+                                                    </div>
+                                                    <div class="col text-start">
+                                                        {{ $t->kpi->group_name }}
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col text-capitalize fw-bold">
+                                                        parameter
+                                                    </div>
+                                                    <div class="col text-start">
+                                                        {{ $t->kpi->parameter }}
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col text-capitalize fw-bold">
+                                                        weight
+                                                    </div>
+                                                    <div class="col text-start">
+                                                        {{ $t->kpi->weight }}
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col text-capitalize fw-bold">
+                                                        jabatan
+                                                    </div>
+                                                    <div class="col text-start text-capitaliz">
+                                                        {{ $t->member->jabatan }}
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col text-capitalize fw-bold">
+                                                        divisi
+                                                    </div>
+                                                    <div class="col text-start text-capitalize">
+                                                        {{ $t->member->divisi->nama_divisi }}
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col text-capitalize fw-bold">
+                                                        Goal Owner
+                                                    </div>
+                                                    <div class="col text-start">
+                                                        {{ $t->owner->nama }}
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col text-capitalize fw-bold">
+                                                        Grade
+                                                    </div>
+                                                    <div class="col text-start text-uppercase text-danger">
+                                                        @if ($t->grade == null)
+                                                            belum dinilai
+                                                        @else
+                                                            {{ $t->grade }}
+                                                        @endif
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col text-capitalize fw-bold">
+                                                        goal target
+                                                    </div>
+                                                    <div class="col text-start">
+                                                        {{ $t->goal_target }}
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col text-capitalize fw-bold">
+                                                        tipe tugas
+                                                    </div>
+                                                    <div class="col text-start">
+                                                        {{ $t->tipe_progress->nama_tipe }}
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col text-capitalize fw-bold">
+                                                        Tanggal dibuatnya target
+                                                    </div>
+                                                    <div class="col text-start">
+                                                        {{ $t->created_at->format('d M Y') }}
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+
+
+                                            <!-- kanan -->
+                                            <div class="col">
+                                                <div class="row">
+                                                    <div class="col-12 text-center text-capitalize fw-bold mb-3">
+                                                        List Progress
+                                                    </div>
+                                                    @if ($progress->isEmpty())
+                                                        <div class="col text-center text-capitalize">
+                                                           - Belum ada progress -
+                                                        </div>
+                                                    @else
+                                                        <div class="col text-start text-capitalize">
+                                                            <div class="d-flex flex-column">
+                                                                <div class="content time-off">
+                                                                    @foreach ($progress->where('tasks_id', $t->id) as $p)
+                                                                    <div class="row my-2 align-items-center">
+                                                                        <div class="col">
+                                                                            <div class="fw-bold">{{ $p->progress }}</div>
+                                                                            <div class="status text-muted">
+                                                                                {{ $p->keterangan }}</div>
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <div class=" text-end">{{ $p->created_at->format('d M Y') }}</div>
+                                                                        </div>
+                                                                    </div>
+                                                                    @endforeach
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                            {{-- <table class="table table-borderless">
+                                                                <thead>
+                                                                    <th>Tanggal Submit</th>
+                                                                    <th>Progress</th>
+                                                                    <th>Ket</th>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach ($progress->where('tasks_id', $t->id) as $p)
+                                                                        <tr>
+                                                                            <td>{{ $p->created_at->format('d M Y') }}</td>
+                                                                            <td>{{ $p->progress }}</td>
+                                                                            <td>{{ $p->keterangan }}</td>
+                                                                        </tr>
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table> --}}
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </td>
+                                </tr>
+                                {{-- <tr id="flush-collapseOne{{ $t->id }}" class="accordion-collapse collapse"
                                     data-bs-parent="#accordionFlushExample">
                                     <td class="bg-light">
                                         <div class="card">
                                             <div>
-
                                                 <div class="text-center">
                                                     tabel tasks
                                                 </div>
@@ -286,7 +440,6 @@
                                                 <div class="text-center">
                                                     tabel progress
                                                 </div>
-
                                                 @foreach ($progress->where('tasks_id', $t->id) as $p)
                                                     <div>
                                                         {{ $p->progress }}
@@ -298,7 +451,8 @@
                                             </div>
                                         </div>
                                     </td>
-                                </tr>
+                                </tr> --}}
+
                                 {{-- modal hapus --}}
                                 <div class="modal fade" id="hapustugas_{{ $t->id }}" tabindex="-1"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">

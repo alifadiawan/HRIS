@@ -11,6 +11,11 @@
                 @else
                     {{ auth()->user()->username }}
                 @endif, How are you ? 👋</h4>
+                @if(auth()->user()->hasIncompleteProfile())
+                <div class="alert alert-warning">
+                    Silahkan Lengkapi Profile Terlebih Dahulu. <a href="">Klik Ini.</a>
+                </div>
+                @endif
             <p class="text-muted">See a summary of your employee's progress</p>
         </div>
 
@@ -81,7 +86,7 @@
                                             <h4 class="card-title">Tugas Terbaru</h4>
                                         </div>
                                         <div class="col-3">
-                                            <a href="#" class="text-muted">View all</a>
+                                            <a href="/goals" class="text-muted">View all</a>
                                         </div>
                                     </div>
                                 @endif
@@ -90,47 +95,25 @@
                                 @if (auth()->user()->role->role == 'employee')
                                     <div class="content time-off">
                                         <div class="d-flex flex-column">
+                                            @if($task->isEmpty())
+                                                <p class="h1 text-center">Belum Ada Tugas</p>
+                                            @else
+                                            @foreach($task as $t)
                                             <div class="row my-2 align-items-center">
                                                 <div class="col">
-                                                   <div class="fw-bold">Input Data</div>
-                                                    <div class="status text-muted text-truncate" style="font-size: 13px; max-width:13rem">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, modi. Omnis enim, sapiente impedit odio facere nam harum ex fuga vitae, recusandae est labore illo necessitatibus nostrum amet distinctio mollitia.</div>
+                                                    <div class="fw-bold" style="font-size: 14px;">{{$t->kpi->group_name}}</div>
+                                                    <div class="status text-muted text-truncate text-capitalize"
+                                                        style="font-size: 13px; max-width:13rem">{{$t->status}}</div>
                                                 </div>
                                                 <div class="col">
-                                                    <div class="text-danger text-end">5 - 10 Juni 2021</div>
+                                                    <div class="text-danger text-end" style="font-size: 13px;">{{ date('d F Y', strtotime($t->created_at)) }} -
+                                                {{ date('d F Y', strtotime($t->tanggal_target)) }}</div>
                                                 </div>
                                             </div>
                                             <hr class="my-2 align-content-center text-muted">
-                                            <div class="row my-2 align-items-center">
-                                                <div class="col">
-                                                   <div class="fw-bold">Input Data</div>
-                                                    <div class="status text-muted text-truncate" style="font-size: 13px; max-width:13rem">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, modi. Omnis enim, sapiente impedit odio facere nam harum ex fuga vitae, recusandae est labore illo necessitatibus nostrum amet distinctio mollitia.</div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="text-danger text-end">5 - 10 Juni 2021</div>
-                                                </div>
-                                            </div>
-                                            <hr class="my-2 align-content-center text-muted">
-                                            <div class="row my-2 align-items-center">
-                                                <div class="col">
-                                                   <div class="fw-bold">Input Data</div>
-                                                    <div class="status text-muted text-truncate" style="font-size: 13px; max-width:13rem">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, modi. Omnis enim, sapiente impedit odio facere nam harum ex fuga vitae, recusandae est labore illo necessitatibus nostrum amet distinctio mollitia.</div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="text-danger text-end">5 - 10 Juni 2021</div>
-                                                </div>
-                                            </div>
-                                            <hr class="my-2 align-content-center text-muted">
-                                            <div class="row my-2 align-items-center">
-                                                <div class="col">
-                                                   <div class="fw-bold">Input Data</div>
-                                                    <div class="status text-muted text-truncate" style="font-size: 13px; max-width:13rem">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, modi. Omnis enim, sapiente impedit odio facere nam harum ex fuga vitae, recusandae est labore illo necessitatibus nostrum amet distinctio mollitia.</div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="text-danger text-end">5 - 10 Juni 2021</div>
-                                                </div>
-                                            </div>
-                                            <hr class="my-2 align-content-center text-muted">
-                                                {{-- <div class="accordion accordion-flush" id="accordionFlushExample">
+                                            @endforeach
+                                            @endif
+                                            {{-- <div class="accordion accordion-flush" id="accordionFlushExample">
                                                     <div class="accordion-item">
                                                         <h2 class="accordion-header">
                                                             <button class="accordion-button collapsed" type="button"
@@ -192,7 +175,7 @@
                                     </div>
                                 @else
                                     <div class="content time-off" style="">
-                                        
+
                                         {{-- <div class="d-flex flex-column">
                                             <div class="row my-2 align-items-center">
                                                 <img src="{{ asset('illustration/pp.png') }}" alt=""
@@ -210,52 +193,25 @@
                                         </div> --}}
 
                                         <div class="d-flex flex-column">
-                                            
+                                            @if($task_adm->isEmpty())
+                                                <p class="h1 text-center">Belum Ada Tugas</p>
+                                            @else
+                                            @foreach($task_adm as $t)
                                             <div class="row my-2 align-items-center">
                                                 <div class="col">
-                                                   <div class="fw-bold">Input Data</div>
-                                                    <div class="status text-muted" style="font-size: 13px">Inna Filjannati</div>
+                                                    <div class="fw-bold" style="font-size: 14px;">{{$t->kpi->group_name}}</div>
+                                                    <div class="status text-muted text-truncate text-capitalize"
+                                                        style="font-size: 13px; max-width:13rem">{{$t->member->nama}}</div>
                                                 </div>
                                                 <div class="col">
-                                                    <div class="text-danger text-end">5 - 10 Juni 2021</div>
+                                                    <div class="text-danger text-end" style="font-size: 15px;">{{ date('d F Y', strtotime($t->created_at)) }}</div>
                                                 </div>
                                             </div>
                                             <hr class="my-2 align-content-center text-muted">
-
-                                            <div class="row my-2 align-items-center">
-                                                <div class="col">
-                                                   <div class="fw-bold">UI / UX</div>
-                                                    <div class="status text-muted" style="font-size: 13px">Jaya Raharja</div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="text-danger text-end">15 - 20 Juni 2021</div>
-                                                </div>
-                                            </div>
-                                            <hr class="my-2 align-content-center text-muted">
-
-                                            <div class="row my-2 align-items-center">
-                                                <div class="col">
-                                                   <div class="fw-bold">Input Data</div>
-                                                    <div class="status text-muted" style="font-size: 13px">Inna Filjannati</div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="text-danger text-end">5 - 10 Juni 2021</div>
-                                                </div>
-                                            </div>
-                                            <hr class="my-2 align-content-center text-muted">
-                                                
-                                            <div class="row my-2 align-items-center">
-                                                <div class="col">
-                                                   <div class="fw-bold">Input Data</div>
-                                                    <div class="status text-muted" style="font-size: 13px">Inna Filjannati</div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="text-danger text-end">5 - 10 Juni 2021</div>
-                                                </div>
-                                            </div>
-                                            <hr class="my-2 align-content-center text-muted">
+                                            @endforeach
+                                            @endif
                                         </div>
-                                            
+
                                     </div>
                                 @endif
 
@@ -267,7 +223,7 @@
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col">
-                                        <h4 class="card-title">Payment Status</h4>
+                                        <h4 class="card-title">Task Status</h4>
                                     </div>
                                     <div class="col text-end">
                                         <a href="#" class="btn btn-lg">
@@ -276,30 +232,36 @@
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center">
-                                    <div class="h4 fw-bold">5.000</div>
-                                    <div class="text-muted mx-2" style="font-size: 13px">Employee</div>
+                                    <div class="h4 fw-bold">{{$task_all->count()}}</div>
+                                    <div class="text-muted mx-2" style="font-size: 13px">Tugas</div>
                                 </div>
                                 <div class="bar">
                                     <div class="biru"></div>
                                     <div class="orange"></div>
                                     <div class="ijo"></div>
+                                    <div class="abu"></div>
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-5">
-                                        <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: #0861fd;"></i>68%
+                                    <div class="col-3">
+                                        <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: #0861fd;"></i>{{($task_doing->count() / $task_all->count()) * 100}}%
                                     </div>
                                     <div class="col-3">
-                                        <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: orange;"></i>15%
+                                        <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: orange;"></i>{{($task_checking->count() / $task_all->count()) * 100}}%
                                     </div>
                                     <div class="col-3">
                                         <i class="fa-solid fa-square fa-2xl me-2 p-0"
-                                            style="color: rgb(105, 211, 109);"></i>17%
+                                            style="color: rgb(105, 211, 109);"></i>{{($task_done->count() / $task_all->count()) * 100}}%
+                                    </div>
+                                    <div class="col-3">
+                                        <i class="fa-solid fa-square fa-2xl me-2 p-0"
+                                            style="color: gray;"></i>{{($task_todo->count() / $task_all->count()) * 100}}%
                                     </div>
                                 </div>
                                 <div class="row text-muted" style="font-size: 13px">
-                                    <div class="col-5">Succesfully Paid</div>
-                                    <div class="col-3">Pending</div>
-                                    <div class="col-3">Unpaid</div>
+                                    <div class="col-3">Doing</div>
+                                    <div class="col-3">Checking</div>
+                                    <div class="col-3">Done</div>
+                                    <div class="col-3">To-do</div>
                                 </div>
                             </div>
                         </div>
@@ -528,13 +490,13 @@
             width: 100%;
             height: 30px;
             border-radius: 10px;
-            background-color: #b3b3b3;
+            background-color: #ffffff;
             color: white;
             text-align: center;
         }
 
         .biru {
-            width: 68%;
+            width: {{($task_doing->count() / $task_all->count()) * 100}}%;
             height: 100%;
             background-color: rgb(12, 36, 252);
             float: left;
@@ -543,18 +505,26 @@
         }
 
         .orange {
-            width: 17%;
+            width: {{($task_checking->count() / $task_all->count()) * 100}}%;
             height: 100%;
             background-color: orange;
             float: left;
         }
 
         .ijo {
-            width: 15%;
+            width: {{($task_done->count() / $task_all->count()) * 100}}%;
             height: 100%;
             background-color: rgb(105, 211, 109);
             float: left;
-            border-radius: 10px;
+        }
+
+        .abu {
+            width: {{($task_todo->count() / $task_all->count()) * 100}}%;
+            height: 100%;
+            background-color: gray;
+            float: left;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
         }
 
         /* text truncate override */
