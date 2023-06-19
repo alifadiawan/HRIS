@@ -112,22 +112,17 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            @if ($progress == null)
+                                            @if ($progress->isEmpty())
                                                 <td>0</td>
                                                 <td>-</td>
                                                 <td>{{ $task->goal_target }}</td>
                                             @else
-                                                <td>{{ $progress->progress }}</td>
-                                                <td>{{ $progress->keterangan }}</td>
-                                                <td>{{ $task->goal_target }}</td>
+                                                @foreach ($progress as $p)
+                                                    <td>{{ $p->progress }}</td>
+                                                    <td>{{ $p->keterangan }}</td>
+                                                    <td>{{ $task->goal_target }}</td>
+                                                @endforeach
                                             @endif
-                                            {{-- <td>
-                                                <input type="range" class="w-75" value="0" min="1" max="100"
-                                                    id="range" oninput="rangenumber.value=value" readonly/>
-                                                <input type="number" class="text-center rounded-4" id="rangenumber" min="1"
-                                                    max="100" value="{{ $task->grade }}" oninput="range.value=value"
-                                                    style="background-color: #e6e6e6" readonly>
-                                            </td> --}}
                                         </tr>
                                     </tbody>
                                 </table>
@@ -154,9 +149,10 @@
                                     </div>
                                     <div class="form-group mt-2">
                                         <label for="goal_progress">Goal Progress</label>
+                                        {{-- <label for="goal_progress">{{ $task->goal_progress }}</label> --}}
                                         <div class="input-group">
 
-                                            <input type="range" class="w-75" min="{{ $task->goal_progress }}"
+                                            <input type="range" class="w-75" min="{{ $task->goal_progress + 1 }}"
                                                 max="{{ $task->goal_target }}" value="{{ $task->goal_progress }}"
                                                 name="goal_progress" id="slider" oninput="updateOutput()" />
                                             <input type="number" class="text-center rounded-4" id="sliderValue"
