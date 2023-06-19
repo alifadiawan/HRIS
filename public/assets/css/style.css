@@ -820,9 +820,9 @@ background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/s
   align-items: center;
   font-size: 15px;
   font-weight: 600;
-  color: #4154f1;
+  /* color: #4154f1; */
   transition: 0.3;
-  background: #f6f9ff;
+  /* background: #f6f9ff; */
   padding: 10px 15px;
   border-radius: 4px;
 }
@@ -830,7 +830,7 @@ background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/s
 .sidebar-nav .nav-link i {
   font-size: 16px;
   margin-right: 10px;
-  color: #4154f1;
+  /* color: #4154f1; */
 }
 
 .sidebar-nav .nav-link.collapsed {
