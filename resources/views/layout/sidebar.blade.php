@@ -23,7 +23,7 @@
             </a>
         </li> --}}
 
-    <li class="nav-item">
+    {{-- <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
             <i class="fa-solid fa-wallet fa-lg"></i><span>Payroll</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -44,7 +44,8 @@
                 </a>
             </li>
         </ul>
-    </li><!-- End Charts Nav -->
+    </li> --}}
+    <!-- End Charts Nav -->
 
     <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
@@ -52,19 +53,23 @@
         </a>
         <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
             <li>
+                <li>
+                    <a href="/reports">
+                        <i class="bi bi-circle"></i><span>Summary</span>
+                    </a>
+                </li>
                 <a href="{{route('goals.index')}}">
-                    <i class="bi bi-circle"></i><span>Goals Team</span>
+                    <i class="bi bi-circle"></i><span>List Tugas</span>
                 </a>
             </li>
             <li>
+                @if (auth()->user()->role->role == 'admin')
                 <a href="{{route('kpi.index')}}">
                     <i class="bi bi-circle"></i><span>Group Data</span>
                 </a>
-            </li>
-            <li>
-                <a href="/reports">
-                    <i class="bi bi-circle"></i><span>Sales Reports</span>
-                </a>
+                @else
+                
+                @endif
             </li>
             {{-- <li>
                 <a href="/index-employe">
@@ -73,12 +78,12 @@
             </li> --}}
         </ul>
     </li><!-- End Icons Nav -->
-    <li class="nav-item">
+    {{-- <li class="nav-item">
         <a class="nav-link collapsed" href="/progress">
             <i class="fa-solid fa-circle-info fa-lg"></i>
             <span>Show Progress</span>
         </a>
-    </li>
+    </li> --}}
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
             <i class="fa-solid fa-right-from-bracket fa-lg"></i>

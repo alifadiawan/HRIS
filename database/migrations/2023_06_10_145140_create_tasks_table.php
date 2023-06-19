@@ -17,14 +17,14 @@ return new class extends Migration
             // $table->string('goal_name');
             $table->unsignedBigInteger('kpi_id');
             $table->foreign('kpi_id')->references('id')->on('k_p_i_s')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->unsignedBigInteger('owner_id');
             $table->foreign('owner_id')->references('id')->on('members')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->bigInteger('goal_target');
-            $table->integer('goal_progress')->default(0);
+            $table->bigInteger('goal_progress')->default(0);
             $table->unsignedBigInteger('tipe_id');
             $table->foreign('tipe_id')->references('id')->on('tipe_progress')
                 ->onDelete('cascade')

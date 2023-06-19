@@ -116,7 +116,16 @@ h6 {
 /* time off */
 .time-off {
   /* max-height: 16.7rem;  */
+  height: 14rem;
   max-height: 14rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.list-progress {
+  /* max-height: 16.7rem;  */
+  height: 15rem;
+  max-height: 15rem;
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -136,8 +145,20 @@ h6 {
   background: #555;
 }
 
-.num-list{
+.num-list {
   list-style-type: decimal;
+}
+
+.form-check-input:checked {
+  background-color: rgb(17, 255, 0);
+  border-color: rgb(255, 255, 255);
+}
+
+.form-switch .form-check-input {
+background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='red'/%3e%3c/svg%3e");
+}
+.form-switch .form-check-input:focus {
+background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='pink'/%3e%3c/svg%3e");
 }
 
 /*--------------------------------------------------------------
@@ -498,17 +519,18 @@ h6 {
 /*--------------------------------------------------------------
 # Profile Page End User
 --------------------------------------------------------------*/
-#profile .card{
+#profile .card {
   border-radius: 10px;
 }
-#profile h1{
+
+#profile h1 {
   font-family: "Nunito", sans-serif;
   font-weight: bold;
   color: #000;
   margin-bottom: 25px;
 }
 
-#profile p{
+#profile p {
   color: #000;
 }
 
@@ -531,7 +553,7 @@ h6 {
   color: #fff;
 }
 
-#profile .btn-selengkapnya{
+#profile .btn-selengkapnya {
   background: #37517e;
   /* box-shadow: 0px 5px 30px #37517e; */
   border: 0;
@@ -552,12 +574,12 @@ h6 {
 }
 
 @media (max-width: 576px) {
-  #profile .profile{
-      max-width: 500px;
+  #profile .profile {
+    max-width: 500px;
   }
 
-  #profile .profile p{
-      text-align:start;
+  #profile .profile p {
+    text-align: start;
   }
 }
 
@@ -1080,12 +1102,13 @@ input[type="range"] {
   outline: none;
   /*  slider progress trick  */
   overflow: hidden;
+  height: 16px;
   border-radius: 16px;
 }
 
 /* Track: webkit browsers */
 input[type="range"]::-webkit-slider-runnable-track {
-  height: 15px;
+  height: 16px;
   background: #ccc;
   border-radius: 16px;
 }

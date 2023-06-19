@@ -101,7 +101,7 @@
                             </div>
                         </div>
                         <div class="d-grid gap-3">
-                            <a href="#" class="btn-edit btn">Edit Profile</a>
+                            <a href="/edit-profile" class="btn-edit btn">Edit Profile</a>
                         </div>
                     </div>
                 </div>
