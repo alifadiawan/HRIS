@@ -6,7 +6,9 @@
 
     <section class="group_data">
         <div class="content">
+            @if(auth()->user()->role->role == 'admin')
             <a href="{{route('kpi.create')}}" class="btn btn-info text-white mb-3">Add Data</a>
+            @endif
             <div class="card text-left">
                 <div class="card-body">
                     <div class="d-flex flex-row align-items-center my-3">
@@ -29,38 +31,43 @@
                                     <th class="bg-light">FOR POSITION</th>
                                     <th class="bg-light">DESCRIPTION</th>
                                     <th class="bg-light">IS ACTIVE</th>
+                                    @if(auth()->user()->role->role == 'admin')
                                     <th class="bg-light">ACTION</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>
                                         <input type="text" class="form-control" placeholder="Search KPI No..."
-                                            name="" id="">
+                                            name="searchNo" id="searchNo">
                                     </td>
                                     <td>
                                         <input type="text" class="form-control" placeholder="Search KPI Group..."
-                                            name="" id="">
+                                            name="searchName" id="searchName">
                                     </td>
                                     <td>
                                         <input type="text" class="form-control" placeholder="Search for Division..."
-                                            name="" id="">
+                                            name="searchDivision" id="searchDivision">
                                     </td>
                                     <td>
                                         <input type="text" class="form-control" placeholder="Search for Position..."
-                                            name="" id="">
+                                            name="searchPosition" id="searchPosition">
                                     </td>
                                     <td>
                                         <input type="text" class="form-control" placeholder="Search Description..."
-                                            name="" id="">
+                                            name="searchDescription" id="searchDescription">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" placeholder="Search is Active"
-                                            name="" id="">
+                                        <select class="form-control form-select" id="filterKPI">
+                                            <option value="all">All</option>
+                                            <option value="active">Active</option>
+                                            <option value="non-active">Non-active</option>
+                                        </select>
                                     </td>
                                 </tr>
                                 @foreach($kpis as $kpi)
-                                <tr class="text-center" style="vertical-align: middle; ">
+                                <tr class="text-center kpi-row" style="vertical-align: middle; ">
                                     <td class="fw-bold">{{$kpi->sort_no}}</td>
                                     <td class="fw-bold">{{$kpi->group_name}}</td>
                                     @php
@@ -98,6 +105,7 @@
                                                 id="flexSwitchCheckDefault" onclick="toggleIsActive({{ $kpi->id }})" style="height: 30px; width: 70px" {{ $kpi->isActive ? 'checked' : '' }}>
                                         </div>
                                     </td>
+                                    @if(auth()->user()->role->role == 'admin')
                                     <td>
                                         <div class="d-flex flex-column">
                                             <a href="{{route('kpi.edit', $kpi->id)}}" class="btn btn-success mb-4"><i
@@ -106,6 +114,7 @@
                                                     class="fa-solid fa-trash"></i>Delete</a>
                                         </div>
                                     </td>
+                                    @endif
                                 </tr>
                                 @endforeach
                                 <!-- <tr class="text-center" style="vertical-align: middle; ">
@@ -198,5 +207,59 @@
             }
         });
     }
+
+    $(document).ready(function() {
+        $('#filterKPI').change(function() {
+            applyFilters();
+        });
+
+        $('#searchDescription').on('input', function() {
+            applyFilters();
+        });
+
+        $('#searchPosition').on('input', function() {
+            applyFilters();
+        });
+
+        $('#searchDivision').on('input', function() {
+            applyFilters();
+        });
+
+        $('#searchName').on('input', function() {
+            applyFilters();
+        });
+
+        $('#searchNo').on('input', function() {
+            applyFilters();
+        });
+    });
+
+    function applyFilters() {
+        var selectedValue = $('#filterKPI').val().toLowerCase();
+        var descriptionFilter = $('#searchDescription').val().toLowerCase();
+        var positionFilter = $('#searchPosition').val().toLowerCase();
+        var divisionFilter = $('#searchDivision').val().toLowerCase();
+        var nameFilter = $('#searchName').val().toLowerCase();
+        var noFilter = $('#searchNo').val().toLowerCase();
+
+        $('.kpi-row').hide().filter(function() {
+            var isActive = $(this).find('.form-check-input').is(':checked');
+            var description = $(this).find('td:eq(4)').text().toLowerCase();
+            var position = $(this).find('td:eq(3)').text().toLowerCase();
+            var division = $(this).find('td:eq(2)').text().toLowerCase();
+            var name = $(this).find('td:eq(1)').text().toLowerCase();
+            var no = $(this).find('td:eq(0)').text().toLowerCase();
+
+            var matchesFilterKPI = selectedValue === 'all' || (selectedValue === 'active' && isActive) || (selectedValue === 'non-active' && !isActive);
+            var matchesDescriptionFilter = description.includes(descriptionFilter);
+            var matchesPositionFilter = position.includes(positionFilter);
+            var matchesDivisionFilter = division.includes(divisionFilter);
+            var matchesNameFilter = name.includes(nameFilter);
+            var matchesNoFilter = no.includes(noFilter);
+
+            return matchesFilterKPI && matchesDescriptionFilter && matchesPositionFilter && matchesDivisionFilter && matchesNameFilter && matchesNoFilter;
+        }).show();
+    }
 </script>
+
 @endsection
