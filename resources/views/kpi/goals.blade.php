@@ -229,7 +229,7 @@
                                 <tr id="flush-collapseOne{{ $t->id }}" class="accordion-collapse collapse "
                                     data-bs-parent="#accordionFlushExample">
                                     <td colspan="6 bg-light">
-                                        <div class="row">
+                                        <div class="row p-3">
                                             <!-- kiri -->
                                             <div class="col border-end">
                                                 <div class="row">
@@ -328,7 +328,7 @@
 
                                             <!-- kanan -->
                                             <div class="col">
-                                                <div class="row">
+                                                <div class="row p-3">
                                                     <div class="col-12 text-center text-capitalize fw-bold mb-3">
                                                         List Progress
                                                     </div>

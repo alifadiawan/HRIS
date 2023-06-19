@@ -1084,7 +1084,7 @@ input[type="range"] {
 
 /* Track: webkit browsers */
 input[type="range"]::-webkit-slider-runnable-track {
-  height: 15px;
+  height: 16px;
   background: #ccc;
   border-radius: 16px;
 }
