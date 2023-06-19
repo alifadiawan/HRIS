@@ -486,245 +486,28 @@
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        function searchData() {
-            // Mengambil nilai yang dipilih
-            var memberId = $("#inputGroupSelect02").value();
+        $(document).ready(function() {
+            $('#inputGroupSelect02').change(function() {
+                changeData();
+            });
+        });
 
-            // Mengirim request AJAX
+        function changeData() {
+            var member_id = $('#inputGroupSelect02').val();
             $.ajax({
-                url: "{{ route('api.search.data') }}",
+                url: '{{ route('api.search.data') }}',
                 type: "POST",
                 data: {
-                    member_id: memberId
+                    member_id: member_id
                 },
                 dataType: "json",
                 success: function(response) {
-                    // Menghapus isi .card-body
-                    $(".card-body table tbody").empty();
-
-                    response.forEach(function(task) {
-                        var row = '<tr>' +
-                            '<td>' + task.goal_id + '</td>' +
-                            '<td  class="fw-bold">' + task.kpi.group_name + '</td>' +
-                            '<td>' + task.member.nama + '</td>';
-                        // Tambahkan kolom-kolom tambahan
-                        if (task.tipe_progress.nama_tipe == 'idr') {
-                            row += '<td>' + task.goal_progress + ' / Rp. ' + task.goal_target +
-                                '</td>' +
-                                '<td>' +
-                                '<div class="progress">';
-                            if (task.status == 'todo') {
-                                row += '<div class="progress-bar bg-secondary" style="width:' + (task
-                                    .goal_progress / task.goal_target) * 100 + '%"></div>';
-                            }
-                            if (task.status == 'doing') {
-                                row += '<div class="progress-bar bg-primary" style="width:' + (task
-                                    .goal_progress / task.goal_target) * 100 + '%"></div>';
-                            }
-                            if (task.status == 'checking') {
-                                row += '<div class="progress-bar bg-warning" style="width:' + (task
-                                    .goal_progress / task.goal_target) * 100 + '%"></div>';
-                            }
-                            if (task.status == 'done') {
-                                row += '<div class="progress-bar bg-success" style="width:' + (task
-                                    .goal_progress / task.goal_target) * 100 + '%"></div>';
-                            }
-                            row += '</div></td>';
-                        }
-
-                        if (task.tipe_progress.nama_tipe == 'persentase') {
-                            row += '<td>' + task.goal_progress + '% / ' + task.goal_target + '%</td>' +
-                                '<td>' +
-                                '<div class="progress">';
-                            if (task.status == 'todo') {
-                                row += '<div class="progress-bar bg-secondary" style="width:' + (task
-                                    .goal_progress / task.goal_target) * 100 + '%"></div>';
-                            }
-                            if (task.status == 'doing') {
-                                row += '<div class="progress-bar bg-primary" style="width:' + (task
-                                    .goal_progress / task.goal_target) * 100 + '%"></div>';
-                            }
-                            if (task.status == 'checking') {
-                                row += '<div class="progress-bar bg-warning" style="width:' + (task
-                                    .goal_progress / task.goal_target) * 100 + '%"></div>';
-                            }
-                            if (task.status == 'done') {
-                                row += '<div class="progress-bar bg-success" style="width:' + (task
-                                    .goal_progress / task.goal_target) * 100 + '%"></div>';
-                            }
-                            row += '</div></td>';
-                        }
-
-                        if (task.tipe_progress.nama_tipe == 'nominal') {
-                            row += '<td>' + task.goal_progress + ' / ' + task.goal_target + '</td>' +
-                                '<td>' +
-                                '<div class="progress">';
-                            if (task.status == 'todo') {
-                                row += '<div class="progress-bar bg-secondary" style="width:' + (task
-                                    .goal_progress / task.goal_target) * 100 + '%"></div>';
-                            }
-                            if (task.status == 'doing') {
-                                row += '<div class="progress-bar bg-primary" style="width:' + (task
-                                    .goal_progress / task.goal_target) * 100 + '%"></div>';
-                            }
-                            if (task.status == 'checking') {
-                                row += '<div class="progress-bar bg-warning" style="width:' + (task
-                                    .goal_progress / task.goal_target) * 100 + '%"></div>';
-                            }
-                            if (task.status == 'done') {
-                                row += '<div class="progress-bar bg-success" style="width:' + (task
-                                    .goal_progress / task.goal_target) * 100 + '%"></div>';
-                            }
-                            row += '</div></td>';
-                        }
-
-                        // Tambahkan kolom status
-                        if (task.status == 'todo') {
-                            row += '<td class="text-capitalize">' + task.status + '</td>';
-                        }
-                        if (task.status == 'doing') {
-                            row += '<td class="text-capitalize text-primary">' + task.status + '</td>';
-                        }
-                        if (task.status == 'checking') {
-                            row += '<td class="text-capitalize text-warning">' + task.status + '</td>';
-                        }
-                        if (task.status == 'done') {
-                            row += '<td class="text-capitalize text-success">' + task.status + '</td>';
-                        }
-
-                        // Tambahkan kolom aksi
-                        row += '<td>' +
-                            '<a href="" class="btn" data-bs-toggle="dropdown">' +
-                            '<i class="fa-solid fa-ellipsis-vertical"></i>' +
-                            '</a>' +
-                            '<ul class="dropdown-menu">';
-
-                        if (task.status != 'done' && "{{ auth()->user()->role->role }}" == 'admin') {
-                            row += '<form action="{{ route('goals.update_adm') }}" method="POST">' +
-                                '@csrf' +
-                                '<li>' +
-                                '<button class="dropdown-item" name="mark" value="done">' +
-                                '<i class="fa-solid fa-clipboard-check fa-lg"></i>' +
-                                'Mark as done' +
-                                '</button>' +
-                                '<input type="hidden" value="' + task.id + '" name="task_id">' +
-                                '</li>' +
-                                '</form>';
-                        }
-
-                        if (task.status == 'done' && "{{ auth()->user()->role->role }}" == 'admin') {
-                            row += '<form action="{{ route('goals.view_prog') }}" method="GET">' +
-                                '@csrf' +
-                                '<input type="hidden" name="task_id" value="' + task.id + '">' +
-                                '<li>' +
-                                '<button class="dropdown-item" type="submit">' +
-                                '<i class="fa-solid fa-star fa-lg"></i>' +
-                                'Beri Nilai' +
-                                '</button>' +
-                                '</li>' +
-                                '</form>';
-                        }
-
-                        row += '<li>' +
-                            '<button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#hapustugas_' +
-                            task.id + '">' +
-                            '<i class="fa-solid fa-trash fa-lg"></i>' +
-                            'Hapus Tugas' +
-                            '</button>' +
-                            '</li>';
-
-                        if ("{{ auth()->user()->role->role }}" == 'employee' && (task.status ==
-                                'doing' || task.status == 'todo')) {
-                            row += '<form action="{{ route('goals.view_prog') }}" method="GET">' +
-                                '@csrf' +
-                                '<input type="hidden" name="task_id" value="' + task.id + '">' +
-                                '<li>' +
-                                '<button type="submit" class="dropdown-item">' +
-                                '<i class="fa-solid fa-edit fa-lg"></i>' +
-                                'Update Progress' +
-                                '</button>' +
-                                '</li>' +
-                                '</form>';
-                        }
-
-                        row += '</ul>' +
-                            '</td>';
-
-                        row += '<tr id="flush-collapseOne' + task.id +
-                            '" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">' +
-                            '<td class="bg-light">' +
-                            '<div class="card">' +
-                            '<div>' +
-                            '<div class="text-center">' +
-                            'tabel tasks' +
-                            '</div>' +
-                            '<div>' +
-                            'goal owner : ' + task.owner.nama +
-                            '</div>' +
-                            '<div>' +
-                            (task.grade == null ? 'grade : belum dinilai' : 'grade : ' + task.grade) +
-                            '</div>' +
-                            '<div>' +
-                            'goal target : ' + task.goal_target +
-                            '</div>' +
-                            '<div>' +
-                            'tipe tugas : ' + task.tipe_progress.nama_tipe +
-                            '</div>' +
-                            '<div>' +
-                            'tanggal target : ' + task.tanggal_target +
-                            '</div>' +
-                            '</div>' +
-                            '<div>' +
-                            '<div class="text-center">' +
-                            'tabel kpi' +
-                            '</div>' +
-                            '<div>' +
-                            'kpi yang dinilai : ' + task.kpi.group_name +
-                            '</div>' +
-                            '<div>' +
-                            'parameter : ' + task.kpi.parameter +
-                            '</div>' +
-                            '<div>' +
-                            'weight : ' + task.kpi.weight +
-                            '</div>' +
-                            '</div>' +
-                            '<div>' +
-                            '<div class="text-center">' +
-                            'tabel member' +
-                            '</div>' +
-                            '<div>' +
-                            'jabatan : ' + task.member.jabatan +
-                            '</div>' +
-                            '<div>' +
-                            'divisi : ' + task.member.divisi.nama_divisi +
-                            '</div>' +
-                            '</div>' +
-                            '<div>' +
-                            '<div class="text-center">' +
-                            'tabel progress' +
-                            '</div>';
-
-                        var progress = @json($progress);
-
-                        for (var i = 0; i < progress.length; i++) {
-                            var p = progress[i];
-                            if (p.tasks_id == task.id) {
-                                row += '<div>' + p.progress + '</div>';
-                                row += '<div>' + p.keterangan + '</div>';
-                            }
-                        }
-
-                        row += '</div>' +
-                            '</div>' +
-                            '</td>';
-
-
-                    });
-                    // Menambahkan tabel baru ke dalam .card-body
-                    $(".card-body table tbody").append(row);
+                    // Lakukan tindakan yang diinginkan dengan data yang diterima
+                    console.log(response);
                 },
-                error: function() {
-                    console.log("Error occurred during AJAX request");
+                error: function(xhr, status, error) {
+                    // Menangani kesalahan jika terjadi
+                    console.log(error);
                 }
             });
         }

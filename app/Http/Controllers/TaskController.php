@@ -94,9 +94,9 @@ class TaskController extends Controller
     public function searchData(Request $request)
     {
         $memberId = $request->input('member_id');
-        $tasks = Task::where('member_id', $memberId)->get();
+        $task_adm = Task::where('member_id', $memberId)->get();
         
-        return response()->json($tasks);
+        return response()->json($task_adm);
     }
     
     public function progress(Request $request)
