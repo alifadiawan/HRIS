@@ -23,6 +23,7 @@ class TaskController extends Controller
 
         $task = Task::where('member_id', $mid)->get();
         $task_adm = Task::all();
+        $progress = Progress::all();
         // return $task;
         $member = Member::whereHas('user', function ($query) {
             $query->whereHas('role', function ($user) {
@@ -32,7 +33,7 @@ class TaskController extends Controller
         // return $member;
         $tipe = TipeProgress::all();
         $kpi = KPI::where('isActive', true)->get();
-        return view('kpi.goals', compact('task', 'member', 'tipe', 'task_adm', 'mid', 'kpi'));
+        return view('kpi.goals', compact('task', 'member', 'tipe', 'task_adm', 'mid', 'kpi','progress'));
     }
 
     public function get_member(Request $request, $kpiId)
@@ -89,6 +90,14 @@ class TaskController extends Controller
         return view('kpi.score_data', compact('task', 'kpi', 'progress'));
     }
 
+    public function searchData(Request $request)
+    {
+        $memberId = $request->input('member_id');
+        $tasks = Task::where('member_id', $memberId)->get();
+        
+        return response()->json($tasks);
+    }
+    
     public function progress(Request $request)
     {
         $cek = $request->keterangan;

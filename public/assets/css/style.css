@@ -136,6 +136,10 @@ h6 {
   background: #555;
 }
 
+.num-list{
+  list-style-type: decimal;
+}
+
 /*--------------------------------------------------------------
 # Override some default Bootstrap stylings
 --------------------------------------------------------------*/
