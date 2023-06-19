@@ -5,20 +5,19 @@
 
 
     <section class="score_data">
-        < class="content">
+        <div class="content">
             <div class="card text-left">
-                <img class="card-img-top" src="holder.js/100px180/" alt="">
                 <div class="card-body">
                     <div class="row mt-2">
-                        <div class="col">
+                        <div class="col-lg col-6">
                             <p class="p-0 m-0 fw-bold">Period</p>
                             <p class="text-muted m-0 p-0">July 2023</p>
                         </div>
-                        <div class="col">
+                        <div class="col-lg col-6">
                             <div class="d-flex flex-column">
                                 <p class="my-0 fw-bold">To Employee</p>
                                 <p class="text-info my-2">{{ $task->member->nama }}</p>
-                                <div class="d-flex flex-row gap-2">
+                                <div class="d-flex flex-column flex-lg-row gap-2">
                                     <a href="#"
                                         class="btn btn-success px-3">{{ $task->member->divisi->nama_divisi }}</a>
                                     <a href="#" class="btn btn-info px-3">{{ $task->member->jabatan }}</a>
@@ -102,35 +101,37 @@
                             <img class="card-img-top" src="holder.js/100px180/" alt="">
                             <div class="card-body">
                                 <p class="text-muted mt-3">Previous Progress</p>
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th class="bg-light">Progress</th>
-                                            <th class="bg-light">keterangan</th>
-                                            <th class="bg-light">Goal target</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            @if ($progress == null)
-                                                <td>0</td>
-                                                <td>-</td>
-                                                <td>{{ $task->goal_target }}</td>
-                                            @else
-                                                <td>{{ $progress->progress }}</td>
-                                                <td>{{ $progress->keterangan }}</td>
-                                                <td>{{ $task->goal_target }}</td>
-                                            @endif
-                                            {{-- <td>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th class="bg-light">Progress</th>
+                                                <th class="bg-light">keterangan</th>
+                                                <th class="bg-light">Goal target</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                @if ($progress == null)
+                                                    <td>0</td>
+                                                    <td>-</td>
+                                                    <td>{{ $task->goal_target }}</td>
+                                                @else
+                                                    <td>{{ $progress->progress }}</td>
+                                                    <td>{{ $progress->keterangan }}</td>
+                                                    <td>{{ $task->goal_target }}</td>
+                                                @endif
+                                                {{-- <td>
                                                 <input type="range" class="w-75" value="0" min="1" max="100"
                                                     id="range" oninput="rangenumber.value=value" readonly/>
                                                 <input type="number" class="text-center rounded-4" id="rangenumber" min="1"
                                                     max="100" value="{{ $task->grade }}" oninput="range.value=value"
                                                     style="background-color: #e6e6e6" readonly>
                                             </td> --}}
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -142,8 +143,6 @@
                             <div class="card-body">
                                 <p class="text-muted mt-3">Upcoming Progress</p>
                                 <form action="{{ route('goals.progress') }}" method="POST">
-
-
                                     @csrf
                                     <div class="form-group">
                                         <label for="goal_target">Goal Target</label>
@@ -154,12 +153,11 @@
                                     </div>
                                     <div class="form-group mt-2">
                                         <label for="goal_progress">Goal Progress</label>
-                                        <div class="input-group">
-
+                                        <div class="input-group align-items-center">
                                             <input type="range" class="w-75" min="{{ $task->goal_progress }}"
                                                 max="{{ $task->goal_target }}" value="{{ $task->goal_progress }}"
                                                 name="goal_progress" id="slider" oninput="updateOutput()" />
-                                            <input type="number" class="text-center rounded-4" id="sliderValue"
+                                            <input type="number" class="text-center mx-3 my-3 my-lg-0 rounded-4" id="sliderValue"
                                                 min="{{ $task->goal_progress + 1 }}" max="{{ $task->goal_target }}"
                                                 value="{{ $task->goal_progress }}" style="background-color: #e6e6e6"
                                                 oninput="updateSlider()" onchange="validateMaxValue()"
@@ -185,7 +183,7 @@
                         </div>
                     </div>
             @endif
-            </div>
+        </div>
     </section>
 
     <script>

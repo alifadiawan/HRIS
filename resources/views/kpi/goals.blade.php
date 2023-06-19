@@ -9,7 +9,6 @@
                 @if (auth()->user()->role->role == 'admin')
                     <button class="btn btn-info mb-2 text-white" data-bs-toggle="modal" data-bs-target="#addTask">Tambah
                         Tugas</button>
-                
                 @endif
             </div>
         </div>
@@ -33,8 +32,9 @@
                                 <select class="form-select" id="inputGroupSelect02" onchange="searchData()">
                                     <option selected>Choose...</option>
                                     @foreach ($member as $m)
-                                    <option value="{{ $m->id }}">{{ $m->nama }} - {{ $m->divisi->nama_divisi }}
-                                    </option>
+                                        <option value="{{ $m->id }}">{{ $m->nama }} -
+                                            {{ $m->divisi->nama_divisi }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -51,8 +51,8 @@
                             </div>
                         </div>
                     </div>
-                    
-                    
+
+
                     <!-- table -->
                     <div class="table-responsive-lg">
                         <table class="table mt-3 " style="outline: 2px">
@@ -184,9 +184,22 @@
                                         <td>{{ $t->grade }}</td>
                                     @endif --}}
                                         <td>
-                                            <a href="" class="btn" data-bs-toggle="dropdown">
-                                                <i class="fa-solid fa-ellipsis-vertical"></i>
-                                            </a>
+                                            @if (auth()->user()->role->role == 'admin')
+                                                <a href="" class="btn" data-bs-toggle="dropdown">
+                                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                                </a>
+                                            @endif
+                                            @if (auth()->user()->role->role == 'employee')
+                                                @if ($t->status == 'doing' || $t->status == 'todo')
+                                                    <form action="{{ route('goals.view_prog') }}" method="GET">
+                                                        @csrf
+                                                        <input type="hidden" name="task_id" value="{{ $t->id }}">
+                                                        <button type="submit" class="btn btn-warning btn-sm"><i
+                                                                class="fa-solid fa-edit fa-lg"></i>
+                                                            Update Progress</button>
+                                                    </form>
+                                                @endif
+                                            @endif
                                             <ul class="dropdown-menu">
                                                 @if (auth()->user()->role->role == 'admin')
                                                     @if ($t->status != 'done')
@@ -216,18 +229,8 @@
                                                             data-bs-target="#hapustugas_{{ $t->id }}"><i
                                                                 class="fa-solid fa-trash fa-lg"></i>Hapus Tugas</button>
                                                     </li>
-                                                @elseif(auth()->user()->role->role == 'employee')
-                                                    @if ($t->status == 'doing' || $t->status == 'todo')
-                                                        <form action="{{ route('goals.view_prog') }}" method="GET">
-                                                            @csrf
-                                                            <input type="hidden" name="task_id"
-                                                                value="{{ $t->id }}">
-                                                            <li><button type="submit" class="dropdown-item"><i
-                                                                        class="fa-solid fa-edit fa-lg"></i>
-                                                                    Update Progress</button></li>
-                                                        </form>
-                                                    @endif
                                                 @endif
+
                                             </ul>
                                         </td>
                                     <tr id="flush-collapseOne{{ $t->id }}" class="accordion-collapse collapse "
