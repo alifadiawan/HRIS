@@ -15,16 +15,28 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+
+    public function searchData(Request $Request)
+    {
+        $member_id = $Request->input('member_id');
+        $task = Task::where('member_id', $member_id)->with(['kpi','member','owner','tipe_progress'])->get();
+
+        // Mengembalikan respon dalam format JSON
+        return response()->json(['task' => $task]);
+    }
+
+    public function index(request $request)
     {
         $uid = auth()->user()->id;
         $mid = Member::where('user_id', $uid)->value('id');
-        // return $mid;
 
         $task_member = Task::where('member_id', $mid)->get();
         $task_adm = Task::all();
         $progress = Progress::all();
+        // $taskResponse = $this->searchData($request);
+        // $task = $taskResponse->getData()->task;
         // return $task;
+        $task = [];
         $member = Member::whereHas('user', function ($query) {
             $query->whereHas('role', function ($user) {
                 $user->where('role', '!=', 'admin');
@@ -33,17 +45,10 @@ class TaskController extends Controller
         // return $member;
         $tipe = TipeProgress::all();
         $kpi = KPI::where('isActive', true)->get();
-        return view('kpi.goals', compact('task_member', 'member', 'tipe', 'task_adm', 'mid', 'kpi', 'progress'));
+        return view('kpi.goals', compact('task', 'task_member', 'member', 'tipe', 'task_adm', 'mid', 'kpi', 'progress'));
     }
-    
-    public function searchData(Request $request)
-    {
-        $member_id = $request->input('member_id');
-        $task = Task::where('member_id', $member_id)->get();
 
-        // Mengembalikan respon dalam format JSON
-        return response()->json(['task' => $task]);
-    }
+
 
     public function get_member(Request $request, $kpiId)
     {
@@ -62,11 +67,11 @@ class TaskController extends Controller
     }
 
 
-    public function update_adm(request $request)
+    public function update_adm(Request $Request)
     {
-        $delete = $request->delete;
-        $mark = $request->mark;
-        $task_id = $request->task_id;
+        $delete = $Request->delete;
+        $mark = $Request->mark;
+        $task_id = $Request->task_id;
         $task = Task::find($task_id);
 
         if ($mark) {
