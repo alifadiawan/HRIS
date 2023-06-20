@@ -101,7 +101,7 @@
                 <div class="row">
 
                     <!-- Previous Progress -->
-                    <div class="col">
+                    <div class="col-lg-7 col-12">
                         <div class="card text-left mt-3">
                             <img class="card-img-top" src="holder.js/100px180/" alt="">
                             <div class="card-body">
@@ -110,6 +110,7 @@
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
+                                                <th class="bg-light">Tanggal Update - Jam</th>
                                                 <th class="bg-light">Progress</th>
                                                 <th class="bg-light">keterangan</th>
                                                 <th class="bg-light">Goal target</th>
@@ -117,16 +118,16 @@
                                         </thead>
                                         <tbody>
                                             @if ($progress->isEmpty())
-                                                <tr>
-                                                    <td colspan="3">Belum ada Progress</td>
+                                                <tr class="text-center">
+                                                    <td colspan="5">- Belum ada Progress -</td>
                                                 </tr>
                                             @else
                                                 @foreach ($progress as $p)
                                                     <tr>
-                                                        <td>{{ $p->goal_target }}</td>
+                                                        <td>{{ date('d F Y', strtotime($p->created_at)) }} - {{ \Carbon\Carbon::parse($p->created_at)->format('H:i') }}</td>
                                                         <td>{{ $p->progress }}</td>
                                                         <td>{{ $p->keterangan }}</td>
-                                                        <td>{{ $p->goal_target }}</td>
+                                                        <td>{{ $p->tasks->goal_target }}</td>
                                                     </tr>
                                                 @endforeach
                                             @endif
@@ -145,7 +146,7 @@
                     </div>
 
                     <!-- Upcoming Progress -->
-                    <div class="col">
+                    <div class="col-lg-5 col-12">
                         <div class="card text-left mt-3">
                             <img class="card-img-top" src="holder.js/100px180/" alt="">
                             <div class="card-body">

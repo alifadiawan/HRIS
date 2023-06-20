@@ -4,8 +4,8 @@
 @section('content')
 
     <section id="profile" class="container mt-2">
-        <div class="row align-content-center">
-            <div class="col-lg-6">
+        <div class="row align-content-center justify-content-center">
+            <div class="col">
                 <div class="profile card mb-4">
                     <div class="card-body">
                         <div class="row mt-4">
