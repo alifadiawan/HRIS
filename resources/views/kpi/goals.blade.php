@@ -491,7 +491,11 @@
 
 
                     if (tasks.length > 0) {
-                        var t = tasks[i];
+                        var isAdmin = ' {{ auth()->user()->role->role }}' === "admin";
+                        var isEmployee = '{{ auth()->user()->role->role }}' === "employee";
+
+                        for (var i = 0; i < tasks.length; i++) {
+                            var t = tasks[i];
                             var createdDate = new Date(t.created_at);
                             var createdDateString = createdDate.toLocaleDateString('en', {
                                 day: 'numeric',
@@ -505,23 +509,6 @@
                                 month: 'long',
                                 year: 'numeric'
                             });
-                        for (var i = 0; i < tasks.length; i++) {
-
-                            // var createdDate = new Date(t.created_at);
-                            // var createdDateString = t.created_at === t.created_at ? createdDate : createdDate
-                            //     .toLocaleDateString('en', {
-                            //         day: 'numeric',
-                            //         month: 'long',
-                            //         year: 'numeric'
-                            //     });
-
-                            // var targetDate = new Date(t.tanggal_target);
-                            // var targetDateString = t.tanggal_target === t.tanggal_target ? targetDate :
-                            //     targetDate.toLocaleDateString('en', {
-                            //         day: 'numeric',
-                            //         month: 'long',
-                            //         year: 'numeric'
-                            //     });
 
                             function getMonthName(month) {
                                 var months = [
@@ -659,6 +646,53 @@
                             } else {
                                 row += '<td>' + t.grade + '</td>';
                             }
+                            var html = '<td>';
+
+                            if (isAdmin) {
+                                html += '<a href="" class="btn" data-bs-toggle="dropdown">' +
+                                    '<i class="fa-solid fa-ellipsis-vertical"></i>' +
+                                    '</a>';
+                            }
+
+                            if (isEmployee) {
+                                if (t.status === 'doing' || t.status === 'todo') {
+                                    html += '<form action="{{ route('goals.view_prog') }}" method="GET">' +
+                                        '@csrf' +
+                                        '<input type="hidden" name="task_id" value="' + t.id + '">' +
+                                        '<button type="submit" class="btn btn-warning btn-sm"><i class="fa-solid fa-edit fa-lg"></i>Update Progress</button>' +
+                                        '</form>';
+                                }
+                            }
+                            html += '<ul class="dropdown-menu">';
+
+                            if (isAdmin) {
+                                if (t.status !== 'done') {
+                                    html += '<form action="{{ route('goals.update_adm') }}" method="POST">' +
+                                        '@csrf' +
+                                        '<li><button class="dropdown-item" name="mark" value="done"><i class="fa-solid fa-clipboard-check fa-lg"></i>Mark as done</button>' +
+                                        '<input type="hidden" value="' + t.id + ' name="task_id">' +
+                                        '</li>' +
+                                        '</form>';
+                                }
+
+                                if (t.status === 'done') {
+                                    html += '<form action="{{ route('goals.view_prog') }}" method="GET">' +
+                                        '@csrf' +
+                                        '<input type="hidden" name="task_id" value="' + t.id + '>' +
+                                        '<li><button class="dropdown-item" type="submit"><i class="fa-solid fa-star fa-lg"></i>Beri Nilai</button></li>' +
+                                        '</form>';
+                                }
+
+                                html +=
+                                    '<li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#hapustugas_' +
+                                    t.id + '"><i class="fa-solid fa-trash fa-lg"></i>Hapus Tugas</button></li>';
+                            }
+
+                            html += '</ul>' +
+                                '</td>';
+
+                            row += html;
+
                             row += '</tr>';
 
                             function formatNumber(number) {
