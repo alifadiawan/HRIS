@@ -711,29 +711,29 @@
     <script>
         // sortir employee 
 
-        // function changeData(task_id) {
-        //     var member_id = $('#option1').val();
-        //     console.log(member_id);
-        //     $.ajax({
-        //         url: '{{ route('api.search.data') }}',
-        //         type: "POST",
-        //         data: {
-        //             member_id: member_id,
-        //             task_id: task_id
-        //         },
-        //         dataType: "json",
-        //         success: function(response) {
-        //             var tasks = response.task;
-        //             console.log(tasks);
-        //             $('tbody').empty();
+        function changeData(task_id) {
+            var member_id = $('#option1').val();
+            console.log(member_id);
+            $.ajax({
+                url: '{{ route('api.search.data') }}',
+                type: "POST",
+                data: {
+                    member_id: member_id,
+                    task_id: task_id
+                },
+                dataType: "json",
+                success: function(response) {
+                    var tasks = response.task;
+                    console.log(tasks);
+                    $('tbody').empty();
 
-        //         },
-        //         error: function(xhr, status, error) {
-        //             // Menangani kesalahan jika terjadi
-        //             console.log(error);
-        //         }
-        //     });
-        // }
+                },
+                error: function(xhr, status, error) {
+                    // Menangani kesalahan jika terjadi
+                    console.log(error);
+                }
+            });
+        }
     </script>
     <script>
         $(document).ready(function() {
