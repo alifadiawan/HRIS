@@ -7,6 +7,11 @@
         <div class="d-flex flex-row">
             <h4 class="fw-bold mb-3">Data Employee</h4>
         </div>
+        @if($new->isNotEmpty())
+            <div class="alert alert-warning">
+                Ada Employee Baru ! <br>Silahkan isi Jabatannya Untuk Memberinya Tugas !
+            </div>
+        @endif
         <!-- <div class="row">
                                         <div class="col">
                                             <button class="btn btn-info mb-2 text-white" data-bs-toggle="modal" data-bs-target="#addTask">Add
