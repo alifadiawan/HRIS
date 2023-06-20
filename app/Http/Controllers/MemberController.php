@@ -15,8 +15,13 @@ class MemberController extends Controller
     public function index()
     {
         $member = Member::all();
+        $new = Member::whereHas('user', function ($query) {
+            $query->whereHas('role', function ($user) {
+                $user->where('role', '!=', 'admin');
+            });
+        })->where('jabatan', null)->get();
         $divisi = Divisi::all();
-        return view('kpi.index', compact('member', 'divisi'));
+        return view('kpi.index', compact('member', 'divisi', 'new'));
     }
 
     public function profile()
@@ -90,12 +95,14 @@ class MemberController extends Controller
         $member->divisi_id = $request->divisi_id;
         $member->save();
 
-        $user->username = $request->username;
-        $user->email = $request->email;
-        if ($request->password != null) {
-            $user->password = bcrypt($request->password);
+        if (auth()->user()->member->id === $member->id) {
+            $user->username = $request->username;
+            $user->email = $request->email;
+            if ($request->password != null) {
+                $user->password = bcrypt($request->password);
+            }
+            $user->save();
         }
-        $user->save();
 
         notify()->success('Data Berhasil Diupdate !!', 'Data Profile');
         if(auth()->user()->role->role == 'admin'){

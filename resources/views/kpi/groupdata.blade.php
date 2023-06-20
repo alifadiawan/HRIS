@@ -6,6 +6,11 @@
 
     <section class="group_data">
         <div class="content">
+            @if($new->isNotEmpty())
+            <div class="alert alert-warning">
+                Ada Employee Tidak Terdaftar KPI ! <br>Silahkan Buat Baru atau Edit dan Submit Ulang Data KPI Untuk Merefresh Data KPI !
+            </div>
+            @endif
             @if(auth()->user()->role->role == 'admin')
             <a href="{{route('kpi.create')}}" class="btn btn-info text-white mb-3">Add Data</a>
             @endif
