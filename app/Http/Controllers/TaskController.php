@@ -16,13 +16,20 @@ class TaskController extends Controller
      * Display a listing of the resource.
      */
 
-    public function searchData(Request $Request)
+    public function searchData($member_id)
     {
-        $member_id = $Request->input('member_id');
-        $task = Task::where('member_id', $member_id)->with(['kpi','member','owner','tipe_progress'])->get();
-
+        // $member_id = $Request->input('member_id');
+        // $task = Task::where('member_id', $member_id)->get('id');
+        $task = Task::where('member_id', $member_id)->with(['kpi', 'member', 'owner', 'tipe_progress'])->get();
+        $progress = Progress::all();
+        return view('kpi.goals_foreach', compact('task', 'progress'));
+        // return view('kpi.goals_foreach',[
+        //     'task' => $task,
+        //     'progress' => $progress,
+        //     // 'member_id' => $member_id,
+        // ]);
         // Mengembalikan respon dalam format JSON
-        return response()->json(['task' => $task]);
+        // return response()->json(['task' => $task]);
     }
 
     public function index(request $request)

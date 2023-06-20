@@ -21,5 +21,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/get-member/{kpiId}', [TaskController::class, 'get_member'])->name('api.goals.getMember');
-Route::post('/search-data', [TaskController::class, 'searchData'])->name('api.search.data');
+// Route::post('/search-data', [TaskController::class, 'searchData'])->name('api.search.data');
+// Route::get('/search-data/{member_id}', [TaskController::class, 'searchData'])->name('api.search.data');
+Route::match(['post', 'get'], '/search-data/{member_id}', [TaskController::class, 'searchData'])->name('api.search.data');
+// Route::match(['post','get'],'/search-data', [TaskController::class, 'searchData'])->name('api.search.data');
 Route::post('/kpi/toggle-is-active', [KPIController::class, 'toggleIsActive'])->name('api.goals.toggleIsActive');
