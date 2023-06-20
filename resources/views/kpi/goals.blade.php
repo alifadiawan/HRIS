@@ -272,7 +272,7 @@
                                                                                 </div>
                                                                                 <div class="col-lg-3 col-12">
                                                                                     <div class=" text-end">
-                                                                                        {{ $p->created_at->format('d M Y') }} - {{ \Carbon\Carbon::parse($p->created_at)->format('H:i') }}
+                                                                                        {{ $p->created_at->format('d M Y') }}
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -500,44 +500,44 @@
 
         }
 
-        {{-- function changeData(task_id) {
-            var member_id = $('#option1').val();
-            console.log(member_id);
-            $.ajax({
-                url: '{{ route('api.search.data') }}',
-                type: "POST",
-                data: {
-                    member_id: member_id,
-                    task_id: task_id
-                },
-                dataType: "json",
-                success: function(response) {
+        // {{-- function changeData(task_id) {
+        //     var member_id = $('#option1').val();
+        //     console.log(member_id);
+        //     $.ajax({
+        //         url: '{{ route('api.search.data') }}',
+        //         type: "POST",
+        //         data: {
+        //             member_id: member_id,
+        //             task_id: task_id
+        //         },
+        //         dataType: "json",
+        //         success: function(response) {
 
-                    var tasks = response.task;
-                    console.log(tasks);
-                    var tbody = $('tbody');
-                    tbody.empty();
+        //             var tasks = response.task;
+        //             console.log(tasks);
+        //             var tbody = $('tbody');
+        //             tbody.empty();
 
-                    $('#task').innerhtml(tasks);
-                    console.log(tasks);
-                    // console.log(task_id);
+        //             $('#task').innerhtml(tasks);
+        //             console.log(tasks);
+        //             // console.log(task_id);
 
-                },
-                error: function(xhr, status, error) {
-                    // Menangani kesalahan jika terjadi
-                    console.log(error);
-                }
-            });
-        } --}}
+        //         },
+        //         error: function(xhr, status, error) {
+        //             // Menangani kesalahan jika terjadi
+        //             console.log(error);
+        //         }
+        //     });
+        // } --}}
 
         function show() {
             var member_id = $('#option1').val();
-            console.log(member_id);
+            // console.log(member_id);
 
             $.post('{{ route('api.search.data', '') }}/' + member_id, function(data) {
                 // var tasks = data.task;
                 $('#div_tasks').html(data);
-                console.log(data);
+                // console.log(data);
             })
         }
 

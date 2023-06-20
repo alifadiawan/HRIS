@@ -294,7 +294,7 @@
                                 r u sure ?
                             </div>
                             <div class="modal-footer">
-                                <form action="{{ route('goals.hapus', $t->id) }}" method="GET">
+                                <form action="{{ route('goals.update_adm') }}" method="GET">
                                     @csrf
                                     <input type="hidden" name="delete" value="delete">
                                     <input type="hidden" name="task_id" value="{{ $t->id }}">
