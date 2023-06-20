@@ -17,6 +17,11 @@
                     Silahkan Lengkapi Profile Terlebih Dahulu. <a href="{{ route('employee.create') }}">Klik Ini.</a>
                 </div>
             @endif
+            @if(auth()->user()->role->role == 'admin' && $new->isNotEmpty())
+                <div class="alert alert-warning">
+                    Ada Employee Baru ! <br>Silahkan isi Jabatannya Untuk Memberinya Tugas ! <a href="/employee">Klik ini.</a>
+                </div>
+            @endif
             <p class="text-muted">See a summary of your employee's progress</p>
         </div>
 
