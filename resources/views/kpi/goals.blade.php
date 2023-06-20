@@ -27,18 +27,20 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-4 col-12">
-                            <div class="input-group mt-3">
-                                <select class="form-select" id="option1" onchange="show()">
-                                    <option selected>Choose...</option>
-                                    @foreach ($member as $m)
-                                        <option value="{{ $m->id }}">{{ $m->nama }} -
-                                            {{ $m->divisi->nama_divisi }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                        @if (auth()->user()->role->role == 'admin')
+                            <div class="col-lg-4 col-12">
+                                <div class="input-group mt-3">
+                                    <select class="form-select" id="option1" onchange="show()">
+                                        <option selected>Choose...</option>
+                                        @foreach ($member as $m)
+                                            <option value="{{ $m->id }}">{{ $m->nama }} -
+                                                {{ $m->divisi->nama_divisi }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                         <div class="col-lg-4 col-12">
                             <div class="input-group mt-3">
                                 <select class="form-select" id="inputGroupSelect03">
@@ -223,11 +225,20 @@
                                                                     Nilai</button></li>
                                                         </form>
                                                     @endif
-                                                    <li><button class="dropdown-item" data-bs-toggle="modal"
+                                                    {{-- <li><button class="dropdown-item" data-bs-toggle="modal"
                                                             data-bs-target="#hapustugas_{{ $t->id }}"><i
                                                                 class="fa-solid fa-trash fa-lg"></i>Hapus
                                                             Tugas</button>
-                                                    </li>
+                                                    </li> --}}
+                                                    <form action="{{ route('goals.update_adm') }}" method="GET">
+                                                        @csrf
+                                                        <input type="hidden" name="delete" value="delete">
+                                                        <input type="hidden" name="task_id"
+                                                            value="{{ $t->id }}">
+                                                        <button type="submit" class="dropdown-item"><i
+                                                                class="fa-solid fa-trash fa-lg"></i>Hapus
+                                                            Tugas</button>
+                                                    </form>
                                                 @endif
 
                                             </ul>
@@ -483,8 +494,10 @@
             $('.main-row').hide().filter(function() {
                 var description = $(this).find('td:eq(5)').text().toLowerCase();
                 var matchesDescriptionFilter = description.includes(descriptionFilter);
-                return matchesDescriptionFilter;
+                var kosong = !description.includes(descriptionFilter);
             }).show();
+
+
         }
 
         {{-- function changeData(task_id) {

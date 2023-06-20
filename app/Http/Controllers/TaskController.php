@@ -218,13 +218,5 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        
-    }
-    
-    public function hapus(request $id){
-        // return $id;
-        $task = Task::find($id);
-        $task->delete();
-        return redirect()->route('goals.index');
     }
 }
