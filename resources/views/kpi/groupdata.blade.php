@@ -131,6 +131,7 @@
                                         </tr>
                                     @endforeach
                                     <!-- <tr class="text-center" style="vertical-align: middle; ">
+
                                         <td class="fw-bold">Computer Skill KPI</td>
                                         <td>Information Technology</td>
                                         <td>- Semua Jabatan -</td>
@@ -170,9 +171,11 @@
                                             </div>
                                         </td>
                                     </tr> -->
+
                                 </tbody>
                             </table>
                         </div>
+
 
                     </div>
 
@@ -223,8 +226,10 @@
             });
         }
 
-        $(document).ready(function() {
-            $('#filterKPI').change(function() {
+
+            $(document).ready(function() {
+                $('#filterKPI').change(function() {
+
                 applyFilters();
             });
 

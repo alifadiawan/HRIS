@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             DivisiSeeder::class,
             UserSeeder::class,
             MemberSeeder::class,
+            // UserKwSeeder::class,
+            // memberKwSeeder::class,
             TipeSeeder::class,
 
             // BankSeeder::class,
