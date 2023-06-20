@@ -42,11 +42,11 @@
                         <div class="col-lg-4 col-12">
                             <div class="input-group mt-3">
                                 <select class="form-select" id="inputGroupSelect03">
-                                    <option selected>Ongoing Goals</option>
-                                    <option value="">Todo</option>
-                                    <option value="">Doing</option>
-                                    <option value="">Checking</option>
-                                    <option value="">Done</option>
+                                    <option selected>Select Status</option>
+                                    <option value="todo">Todo</option>
+                                    <option value="doing">Doing</option>
+                                    <option value="checking">Checking</option>
+                                    <option value="done">Done</option>
                                 </select>
                             </div>
                         </div>
@@ -54,7 +54,7 @@
 
 
                     <!-- table -->
-                    <div class="table-responsive-lg" id="ria_anjeng">
+                    <div class="table-responsive-lg" id="div_tasks">
                         <table class="table mt-3 " style="outline: 2px" id="tabel_tasks">
                             <thead class="table-secondary table-responsive">
                                 <tr style="text-align: start">
@@ -72,7 +72,7 @@
 
                             <tbody>
                                 @foreach (auth()->user()->role->role == 'admin' ? $task_adm : $task_member as $t)
-                                    <tr>
+                                    <tr class="main-row">
                                         <td scope="row">
                                             <button data-bs-toggle="collapse"
                                                 data-bs-target="#flush-collapse{{ $t->id }}" id="button_collapse"><i
@@ -472,6 +472,21 @@
     <script>
         // sortir employee 
 
+        $(document).ready(function() {
+            $('#inputGroupSelect03').on('change', function() {
+                findStatus();
+            });
+        })
+
+        function findStatus() {
+            var descriptionFilter = $('#inputGroupSelect03').val().toLowerCase();
+            $('.main-row').hide().filter(function() {
+                var description = $(this).find('td:eq(5)').text().toLowerCase();
+                var matchesDescriptionFilter = description.includes(descriptionFilter);
+                return matchesDescriptionFilter;
+            }).show();
+        }
+
         {{-- function changeData(task_id) {
             var member_id = $('#option1').val();
             console.log(member_id);
@@ -508,7 +523,7 @@
 
             $.post('{{ route('api.search.data', '') }}/' + member_id, function(data) {
                 // var tasks = data.task;
-                $('#ria_anjeng').html(data);
+                $('#div_tasks').html(data);
                 console.log(data);
             })
         }

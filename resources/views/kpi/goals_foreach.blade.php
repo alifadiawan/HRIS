@@ -1,4 +1,4 @@
-<div class="table-responsive-lg" id="ria_anjeng">
+<div class="table-responsive-lg" id="div_tasks">
     <table class="table mt-3 " style="outline: 2px" id="tabel_tasks">
         <thead class="table-secondary table-responsive">
             <tr style="text-align: start">
@@ -16,7 +16,7 @@
 
         <tbody>
             @foreach ($task as $t)
-                <tr>
+                <tr class="main-row">
                     <td scope="row">
                         <button data-bs-toggle="collapse" data-bs-target="#flush-collapse{{ $t->id }}"
                             id="button_collapse"><i class="fa-solid fa-chevron-right me-3" aria-expanded="true"></i>
@@ -311,3 +311,20 @@
         </tbody>
     </table>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#inputGroupSelect03').on('change', function() {
+            findStatus();
+        });
+    })
+
+    function findStatus() {
+        var descriptionFilter = $('#inputGroupSelect03').val().toLowerCase();
+        $('.main-row').hide().filter(function() {
+            var description = $(this).find('td:eq(5)').text().toLowerCase();
+            var matchesDescriptionFilter = description.includes(descriptionFilter);
+            return matchesDescriptionFilter;
+        }).show();
+    }
+</script>
