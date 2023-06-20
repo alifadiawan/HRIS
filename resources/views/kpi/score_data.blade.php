@@ -34,7 +34,6 @@
                     <div class="card-body">
                         <p class="text-muted mt-3">{{ $task->goal_id }} - {{ $kpi->group_name }}</p>
                         <div class="table-resonsive">
-
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
