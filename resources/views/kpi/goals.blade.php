@@ -272,7 +272,7 @@
                                                                                 </div>
                                                                                 <div class="col-lg-3 col-12">
                                                                                     <div class=" text-end">
-                                                                                        {{ $p->created_at->format('d M Y') }}
+                                                                                        {{ $p->created_at->format('d M Y') }} - {{ \Carbon\Carbon::parse($p->created_at)->format('H:i') }}
                                                                                     </div>
                                                                                 </div>
                                                                             </div>

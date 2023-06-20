@@ -28,105 +28,110 @@
                             <p class="p-0 m-0 text-muted">Entries</p>
                         </div> -->
                     <div class="content">
-                        <table class="table table-bordered mt-4">
-                            <thead>
-                                <tr>
-                                    <th class="bg-light">NO.</th>
-                                    <th class="bg-light">KPI Group Name</th>
-                                    <th class="bg-light">FOR DIVISION</th>
-                                    <th class="bg-light">FOR POSITION</th>
-                                    <th class="bg-light">DESCRIPTION</th>
-                                    <th class="bg-light">IS ACTIVE</th>
-                                    @if (auth()->user()->role->role == 'admin')
-                                        <th class="bg-light">ACTION</th>
-                                    @endif
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="Search KPI No..."
-                                            name="searchNo" id="searchNo">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="Search KPI Group..."
-                                            name="searchName" id="searchName">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="Search for Division..."
-                                            name="searchDivision" id="searchDivision">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="Search for Position..."
-                                            name="searchPosition" id="searchPosition">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" placeholder="Search Description..."
-                                            name="searchDescription" id="searchDescription">
-                                    </td>
-                                    <td>
-                                        <select class="form-control form-select" id="filterKPI">
-                                            <option value="all">All</option>
-                                            <option value="active">Active</option>
-                                            <option value="non-active">Non-active</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                @foreach ($kpis as $kpi)
-                                    <tr class="text-center kpi-row" style="vertical-align: middle; ">
-                                        <td class="fw-bold">{{ $kpi->sort_no }}</td>
-                                        <td class="fw-bold">{{ $kpi->group_name }}</td>
-                                        @php
-                                            $mappingCount = $kpi->mapping->count();
-                                            $memberCount = $member->count();
-                                        @endphp
-                                        @if ($mappingCount === $memberCount)
-                                            <td>- Semua Divisi -</td>
-                                            <td>- Semua Jabatan -</td>
-                                        @else
-                                            @php
-                                                $divisiNames = $kpi->mapping->pluck('divisi.nama_divisi')->unique();
-                                                $jabatanNames = $kpi->mapping->pluck('jabatan')->unique();
-                                            @endphp
-                                            <td class="text-capitalize">
-                                                @if ($divisiNames->count() === 1)
-                                                    {{ $divisiNames->first() }}
-                                                @else
-                                                    - Semua Divisi -
-                                                @endif
-                                            </td>
+                        <div class="table-responsive">
 
-                                            <td class="text-capitalize">
-                                                @if ($jabatanNames->count() === 1)
-                                                    {{ $jabatanNames->first() }}
-                                                @else
-                                                    - Semua Jabatan -
-                                                @endif
-                                            </td>
-                                        @endif
-                                        <td>{{ $kpi->deskripsi }}</td>
-                                        <td>
-                                            <div class="form-check form-switch"style="width: 0px">
-                                                <input class="form-check-input" type="checkbox" role="switch"
-                                                    id="flexSwitchCheckDefault"
-                                                    onclick="toggleIsActive({{ $kpi->id }})"
-                                                    style="height: 30px; width: 70px" {{ $kpi->isActive ? 'checked' : '' }}>
-                                            </div>
-                                        </td>
+                            <table class="table table-bordered mt-4">
+                                <thead>
+                                    <tr>
+                                        <th class="bg-light">NO.</th>
+                                        <th class="bg-light">KPI Group Name</th>
+                                        <th class="bg-light">FOR DIVISION</th>
+                                        <th class="bg-light">FOR POSITION</th>
+                                        <th class="bg-light">DESCRIPTION</th>
+                                        <th class="bg-light">IS ACTIVE</th>
                                         @if (auth()->user()->role->role == 'admin')
-                                            <td>
-                                                <div class="d-flex flex-column">
-                                                    <a href="{{ route('kpi.edit', $kpi->id) }}"
-                                                        class="btn btn-success mb-4"><i
-                                                            class="fa-solid fa-pen-to-square me-2"></i>Edit</a>
-                                                    <a href="{{ route('kpi.hapus', $kpi->id) }}" class="btn btn-danger"><i
-                                                            class="fa-solid fa-trash"></i>Delete</a>
-                                                </div>
-                                            </td>
+                                            <th class="bg-light">ACTION</th>
                                         @endif
                                     </tr>
-                                @endforeach
-                                <!-- <tr class="text-center" style="vertical-align: middle; ">
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" placeholder="Search KPI No..."
+                                                name="searchNo" id="searchNo">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" placeholder="Search KPI Group..."
+                                                name="searchName" id="searchName">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" placeholder="Search for Division..."
+                                                name="searchDivision" id="searchDivision">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" placeholder="Search for Position..."
+                                                name="searchPosition" id="searchPosition">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" placeholder="Search Description..."
+                                                name="searchDescription" id="searchDescription">
+                                        </td>
+                                        <td>
+                                            <select class="form-control form-select" id="filterKPI">
+                                                <option value="all">All</option>
+                                                <option value="active">Active</option>
+                                                <option value="non-active">Non-active</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    @foreach ($kpis as $kpi)
+                                        <tr class="text-center kpi-row" style="vertical-align: middle; ">
+                                            <td class="fw-bold">{{ $kpi->sort_no }}</td>
+                                            <td class="fw-bold">{{ $kpi->group_name }}</td>
+                                            @php
+                                                $mappingCount = $kpi->mapping->count();
+                                                $memberCount = $member->count();
+                                            @endphp
+                                            @if ($mappingCount === $memberCount)
+                                                <td>- Semua Divisi -</td>
+                                                <td>- Semua Jabatan -</td>
+                                            @else
+                                                @php
+                                                    $divisiNames = $kpi->mapping->pluck('divisi.nama_divisi')->unique();
+                                                    $jabatanNames = $kpi->mapping->pluck('jabatan')->unique();
+                                                @endphp
+                                                <td class="text-capitalize">
+                                                    @if ($divisiNames->count() === 1)
+                                                        {{ $divisiNames->first() }}
+                                                    @else
+                                                        - Semua Divisi -
+                                                    @endif
+                                                </td>
+
+                                                <td class="text-capitalize">
+                                                    @if ($jabatanNames->count() === 1)
+                                                        {{ $jabatanNames->first() }}
+                                                    @else
+                                                        - Semua Jabatan -
+                                                    @endif
+                                                </td>
+                                            @endif
+                                            <td>{{ $kpi->deskripsi }}</td>
+                                            <td>
+                                                <div class="form-check form-switch"style="width: 0px">
+                                                    <input class="form-check-input" type="checkbox" role="switch"
+                                                        id="flexSwitchCheckDefault"
+                                                        onclick="toggleIsActive({{ $kpi->id }})"
+                                                        style="height: 30px; width: 70px"
+                                                        {{ $kpi->isActive ? 'checked' : '' }}>
+                                                </div>
+                                            </td>
+                                            @if (auth()->user()->role->role == 'admin')
+                                                <td>
+                                                    <div class="d-flex flex-column">
+                                                        <a href="{{ route('kpi.edit', $kpi->id) }}"
+                                                            class="btn btn-success mb-4"><i
+                                                                class="fa-solid fa-pen-to-square me-2"></i>Edit</a>
+                                                        <a href="{{ route('kpi.hapus', $kpi->id) }}"
+                                                            class="btn btn-danger"><i
+                                                                class="fa-solid fa-trash"></i>Delete</a>
+                                                    </div>
+                                                </td>
+                                            @endif
+                                        </tr>
+                                    @endforeach
+                                    <!-- <tr class="text-center" style="vertical-align: middle; ">
+
                                         <td class="fw-bold">Computer Skill KPI</td>
                                         <td>Information Technology</td>
                                         <td>- Semua Jabatan -</td>
@@ -166,8 +171,12 @@
                                             </div>
                                         </td>
                                     </tr> -->
-                            </tbody>
-                        </table>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
                     </div>
 
                     <!-- Pagination -->
@@ -217,8 +226,10 @@
             });
         }
 
+
             $(document).ready(function() {
                 $('#filterKPI').change(function() {
+
                 applyFilters();
             });
 
