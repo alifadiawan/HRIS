@@ -27,7 +27,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-4 col-12">
+                        {{-- <div class="col-lg-4 col-12">
                             <div class="input-group mt-3">
                                 <select class="form-select" id="option1" onchange="changeData()">
                                     <option selected>Choose...</option>
@@ -38,7 +38,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-lg-4 col-12">
                             <div class="input-group mt-3">
                                 <select class="form-select" id="inputGroupSelect03">
@@ -474,10 +474,10 @@
                                         </td>
                                     <tr id="flush-collapse{{ $t->id }}" class="accordion-collapse collapse"
                                         data-bs-parent="#accordionFlushExample">
-                                        <td colspan="6 bg-light">
-                                            <div class="row p-3">
+                                        <td colspan="8 bg-light">
+                                            <div class="row p-3 justify-content-center">
                                                 <!-- kanan -->
-                                                <div class="col">
+                                                <div class="col-8">
                                                     <div class="row p-3">
                                                         <div class="col-12 text-center text-capitalize fw-bold mb-3">
                                                             List Progress

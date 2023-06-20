@@ -124,7 +124,7 @@ class KPIController extends Controller
 
         //notif
         notify()->success('KPI Berhasil Ditambahkan !!', 'KPI');
-        return redirect('/group-data');
+        return redirect('/kpi');
     }
 
     /**

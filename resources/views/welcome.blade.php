@@ -12,374 +12,220 @@
                 @else
                     {{ auth()->user()->username }}
                 @endif, How are you ? 👋</h4>
-                @if(auth()->user()->hasIncompleteProfile())
+            @if (auth()->user()->hasIncompleteProfile())
                 <div class="alert alert-warning">
-                    Silahkan Lengkapi Profile Terlebih Dahulu. <a href="{{route('employee.create')}}">Klik Ini.</a>
+                    Silahkan Lengkapi Profile Terlebih Dahulu. <a href="{{ route('employee.create') }}">Klik Ini.</a>
                 </div>
-                @endif
+            @endif
             <p class="text-muted">See a summary of your employee's progress</p>
         </div>
 
-        @if(auth()->user()->hasProfile())
-        <div class="content">
-            <div class="row">
 
-                <!-- payroll summary -->
-                <div class="col-lg-8">
-                    <div class="card" style="height: 34.8rem">
-                        {{-- <div class="card"> --}}
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col-10">
-                                    <h4 class="card-title">KPI Task Summary</h4>
-                                </div>
-                                <div class="col-lg-2 col-5">
-                                    <select name="" class="form-select" id="">
-                                        <option value="">Yearly</option>
-                                        <option value="">Monthly</option>
-                                        <option value="">Daily</option>
-                                    </select>
-                                </div>
-                            </div>
+        @if (auth()->user()->hasProfile())
+            <div class="content">
+                <div class="row">
 
-                            <!-- card content -->
-                            <div class="row mt-3">
-                                <div class="col">
-                                    <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: #0861fd;"></i>Doing
-                                </div>
-                                <div class="col">
-                                    <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: orange;"></i>Checking
-                                </div>
-                                <div class="col">
-                                    <i class="fa-solid fa-square fa-2xl me-2 p-0"
-                                        style="color: rgb(105, 211, 109);"></i>Done
-                                </div>
-                            </div>
-
-                            <!-- Line Chart -->
-                            <div id="reportsChart"></div>
-                            <!-- End Line Chart -->
-
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- employee's time off -->
-                <div class="col-lg-4">
-                    <div class="d-flex flex-column mt-2">
-                        <div class="card">
-                            <div class="card-body">
-
-                                <!-- card title -->
-                                @if (auth()->user()->role->role == 'employee')
-                                    <div class="row align-items-center">
-                                        <div class="col-lg-9 col-8">
-                                            <h4 class="card-title">Daftar Tugas</h4>
-                                        </div>
-                                        <div class="col-lg-3 col-4">
-                                            <a href="/goals" class="text-muted">View all</a>
-                                        </div>
-                                    </div>
-                                @else
-                                    <div class="row align-items-center">
-                                        <div class="col-lg-9 col-8">
-                                            <h4 class="card-title">Tugas Terbaru</h4>
-                                        </div>
-                                        <div class="col-lg-3 col-4">
-                                            <a href="/goals" class="text-muted">View all</a>
-                                        </div>
-                                    </div>
-                                @endif
-
-                                <!-- card-content -->
-                                @if (auth()->user()->role->role == 'employee')
-                                    <div class="content time-off">
-                                        <div class="d-flex flex-column">
-                                            @if($task->isEmpty())
-                                                <p class="h1 text-center">Belum Ada Tugas</p>
-                                            @else
-                                            @foreach($task as $t)
-                                            <div class="row my-2 align-items-center">
-                                                <div class="col">
-                                                    <div class="fw-bold" style="font-size: 14px;">{{$t->kpi->group_name}}</div>
-                                                    <div class="status text-muted text-truncate text-capitalize"
-                                                        style="font-size: 13px; max-width:13rem">{{$t->status}}</div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="text-danger text-end" style="font-size: 13px;">{{ date('d F Y', strtotime($t->created_at)) }} -
-                                                {{ date('d F Y', strtotime($t->tanggal_target)) }}</div>
-                                                </div>
-                                            </div>
-                                            <hr class="my-2 align-content-center text-muted">
-                                            @endforeach
-                                            @endif
-                                            {{-- <div class="accordion accordion-flush" id="accordionFlushExample">
-                                                    <div class="accordion-item">
-                                                        <h2 class="accordion-header">
-                                                            <button class="accordion-button collapsed" type="button"
-                                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
-                                                                aria-expanded="false" aria-controls="flush-collapseOne">
-                                                                Tugas 1
-                                                            </button>
-                                                        </h2>
-                                                        <div id="flush-collapseOne" class="accordion-collapse collapse"
-                                                            data-bs-parent="#accordionFlushExample">
-                                                            <div class="accordion-body">
-                                                                <p class="pepek">Lorem ipsum dolor sit, amet consectetur
-                                                                    adipisicing elit. Consectetur earum cupiditate expedita
-                                                                    dolorum doloremque, iste optio molestias sunt quod dolores
-                                                                    est rerum neque id laborum natus harum eligendi perferendis
-                                                                    consequuntur?</p>
-                                                                    <a href="/progress">Show More</a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="accordion-item">
-                                                            <h2 class="accordion-header">
-                                                                <button class="accordion-button collapsed" type="button"
-                                                                    data-bs-toggle="collapse"
-                                                                    data-bs-target="#flush-collapseOne2" aria-expanded="false"
-                                                                    aria-controls="flush-collapseOne">
-                                                                    Tugas 2
-                                                                </button>
-                                                            </h2>
-                                                            <div id="flush-collapseOne2" class="accordion-collapse collapse"
-                                                                data-bs-parent="#accordionFlushExample">
-                                                                <div class="accordion-body">
-                                                                    <p class="pepek">Lorem ipsum dolor sit, amet consectetur
-                                                                        adipisicing elit. Consectetur earum cupiditate expedita
-                                                                        dolorum dolor</p>
-                                                                        <a href="/progress">Show More</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="accordion-item">
-                                                            <h2 class="accordion-header">
-                                                                <button class="accordion-button collapsed" type="button"
-                                                                    data-bs-toggle="collapse"
-                                                                    data-bs-target="#flush-collapseOne3" aria-expanded="false"
-                                                                    aria-controls="flush-collapseOne">
-                                                                    Tugas 3
-                                                                </button>
-                                                            </h2>
-                                                            <div id="flush-collapseOne3" class="accordion-collapse collapse"
-                                                                data-bs-parent="#accordionFlushExample">
-                                                                <div class="accordion-body">
-                                                                    <p class="pepek">Lorem </p>
-                                                                        <a href="/progress">Show More</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div> --}}
-                                        </div>
-                                    </div>
-                                @else
-                                    <div class="content time-off" style="">
-
-                                        {{-- <div class="d-flex flex-column">
-                                            <div class="row my-2 align-items-center">
-                                                <img src="{{ asset('illustration/pp.png') }}" alt=""
-                                                    style="max-width: 70px">
-                                                <div class="col">
-                                                    Haffiyan
-                                                    <br>
-                                                    <div class="status text-muted" style="font-size: 13px">Ijin</div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="text-danger text-end">5 - 10 Juni 2021</div>
-                                                </div>
-                                            </div>
-                                            <hr class="my-2 align-content-center text-muted">
-                                        </div> --}}
-
-                                        <div class="d-flex flex-column">
-                                            @if($task_adm->isEmpty())
-                                                <p class="h1 text-center">Belum Ada Tugas</p>
-                                            @else
-                                            @foreach($task_adm as $t)
-                                            <div class="row my-2 align-items-center">
-                                                <div class="col">
-                                                    <div class="fw-bold" style="font-size: 14px;">{{$t->kpi->group_name}}</div>
-                                                    <div class="status text-muted text-truncate text-capitalize"
-                                                        style="font-size: 13px; max-width:13rem">{{$t->member->nama}}</div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="text-danger text-end" style="font-size: 15px;">{{ date('d F Y', strtotime($t->created_at)) }}</div>
-                                                </div>
-                                            </div>
-                                            <hr class="my-2 align-content-center text-muted">
-                                            @endforeach
-                                            @endif
-                                        </div>
-
-                                    </div>
-                                @endif
-
-                            </div>
-                        </div>
-
-                        <!-- payment status -->
-                        @if($task_all->count() > 0 && $task_doing->count() > 0 &&$task_checking->count() > 0 && $task_done->count() > 0 && $task_todo->count() > 0)
-                        <div class="card">
+                    <!-- payroll summary -->
+                    <div class="col-lg-8">
+                        <div class="card" style="height: 34.8rem">
+                            {{-- <div class="card"> --}}
                             <div class="card-body">
                                 <div class="row align-items-center">
-                                    <div class="col">
-                                        <h4 class="card-title">Task Status</h4>
+                                    <div class="col-10">
+                                        <h4 class="card-title">KPI Task Summary</h4>
                                     </div>
-                                    <div class="col text-end">
-                                        <a href="#" class="btn btn-lg">
-                                            <i class="bi bi-three-dots"></i>
-                                        </a>
+                                    <div class="col-lg-2 col-5">
+                                        <select name="" class="form-select" id="">
+                                            <option value="">Yearly</option>
+                                            <option value="">Monthly</option>
+                                            <option value="">Daily</option>
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="d-flex align-items-center">
-                                    <div class="h4 fw-bold">{{$task_all->count()}}</div>
-                                    <div class="text-muted mx-2" style="font-size: 13px">Tugas</div>
-                                </div>
-                                <div class="bar">
-                                    <div class="biru"></div>
-                                    <div class="orange"></div>
-                                    <div class="ijo"></div>
-                                    <div class="abu"></div>
-                                </div>
+
+                                <!-- card content -->
                                 <div class="row mt-3">
-                                    <div class="col-3">
-                                        <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: #0861fd;"></i>{{($task_doing->count() / $task_all->count()) * 100}}%
+                                    <div class="col">
+                                        <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: #0861fd;"></i>Doing
                                     </div>
-                                    <div class="col-3">
-                                        <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: orange;"></i>{{($task_checking->count() / $task_all->count()) * 100}}%
+                                    <div class="col">
+                                        <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: orange;"></i>Checking
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col">
                                         <i class="fa-solid fa-square fa-2xl me-2 p-0"
-                                            style="color: rgb(105, 211, 109);"></i>{{($task_done->count() / $task_all->count()) * 100}}%
-                                    </div>
-                                    <div class="col-3">
-                                        <i class="fa-solid fa-square fa-2xl me-2 p-0"
-                                            style="color: gray;"></i>{{($task_todo->count() / $task_all->count()) * 100}}%
+                                            style="color: rgb(105, 211, 109);"></i>Done
                                     </div>
                                 </div>
-                                <div class="row text-muted" style="font-size: 13px">
-                                    <div class="col-3">Doing</div>
-                                    <div class="col-3">Checking</div>
-                                    <div class="col-3">Done</div>
-                                    <div class="col-3">To-do</div>
-                                </div>
+
+                                <!-- Line Chart -->
+                                <div id="reportsChart"></div>
+                                <!-- End Line Chart -->
+
                             </div>
                         </div>
-                        @endif
                     </div>
-                </div>
-            </div>
 
 
-            <!-- second row -->
-            <!-- <div class="row">
-                <div class="col-lg-8">
-                    <div class="card text-left">
-                        <div class="card-body">
-                            <h4 class="card-title">Profit Margin Analysis</h4> -->
+                    <!-- employee's time off -->
+                    <div class="col-lg-4">
+                        <div class="d-flex flex-column mt-2">
+                            <div class="card">
+                                <div class="card-body">
 
-                            <!-- Bar Chart -->
-                            <!-- <canvas id="barChart" style="max-height: 400px;"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="card text-left">
-                        <img class="card-img-top" src="holder.js/100px180/" alt="">
-                        {{-- <div class="card-body m-0 p-0">
-                            <div class="content">
-                                <div class="month">
-                                    <ul>
-                                        <li class="prev">&#10094;</li>
-                                        <li class="next">&#10095;</li>
-                                        <li>
-                                            August<br>
-                                            <span style="font-size:18px">2021</span>
-                                        </li>
-                                    </ul>
+                                    <!-- card title -->
+                                    @if (auth()->user()->role->role == 'employee')
+                                        <div class="row align-items-center">
+                                            <div class="col-lg-9 col-8">
+                                                <h4 class="card-title">Daftar Tugas</h4>
+                                            </div>
+                                            <div class="col-lg-3 col-4">
+                                                <a href="/goals" class="text-muted">View all</a>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row align-items-center">
+                                            <div class="col-lg-9 col-8">
+                                                <h4 class="card-title">Tugas Terbaru</h4>
+                                            </div>
+                                            <div class="col-lg-3 col-4">
+                                                <a href="/goals" class="text-muted">View all</a>
+                                            </div>
+                                        </div>
+                                    @endif
+
+                                    <!-- card-content -->
+                                    @if (auth()->user()->role->role == 'employee')
+                                        <div class="content time-off">
+                                            <div class="d-flex flex-column">
+                                                @if ($task->isEmpty())
+                                                    <div class="col text-center">
+                                                        - Belum ada Tugas -
+                                                    </div>
+                                                @else
+                                                    @foreach ($task as $t)
+                                                        <div class="row my-2 align-items-center">
+                                                            <div class="col">
+                                                                <div class="fw-bold" style="font-size: 14px;">
+                                                                    {{ $t->kpi->group_name }}</div>
+                                                                <div class="status text-muted text-truncate text-capitalize"
+                                                                    style="font-size: 13px; max-width:13rem">
+                                                                    {{ $t->status }}</div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="text-danger text-end" style="font-size: 13px;">
+                                                                    {{ date('d F Y', strtotime($t->created_at)) }} -
+                                                                    {{ date('d F Y', strtotime($t->tanggal_target)) }}</div>
+                                                            </div>
+                                                        </div>
+                                                        <hr class="my-2 align-content-center text-muted">
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="content time-off" style="">
+                                            <div class="d-flex flex-column">
+                                                @if ($task_adm->isEmpty())
+
+                                                    <div class="col text-center">
+                                                        - Belum ada Tugas -
+                                                    </div>
+                                                @else
+                                                    @foreach ($task_adm as $t)
+                                                        <div class="row my-2 align-items-center">
+                                                            <div class="col">
+                                                                <div class="fw-bold" style="font-size: 14px;">
+                                                                    {{ $t->kpi->group_name }}</div>
+                                                                <div class="status text-muted text-truncate text-capitalize"
+                                                                    style="font-size: 13px; max-width:13rem">
+                                                                    {{ $t->member->nama }}</div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="text-danger text-end" style="font-size: 15px;">
+                                                                    {{ date('d F Y', strtotime($t->created_at)) }}</div>
+                                                            </div>
+                                                        </div>
+                                                        <hr class="my-2 align-content-center text-muted">
+                                                    @endforeach
+                                                @endif
+                                            </div>
+
+                                        </div>
+                                    @endif
+
                                 </div>
-    
-                                <ul class="weekdays">
-                                    <li>Mo</li>
-                                    <li>Tu</li>
-                                    <li>We</li>
-                                    <li>Th</li>
-                                    <li>Fr</li>
-                                    <li>Sa</li>
-                                    <li>Su</li>
-                                </ul>
-    
-                                <ul class="days">
-                                    <li>1</li>
-                                    <li>2</li>
-                                    <li>3</li>
-                                    <li>4</li>
-                                    <li>5</li>
-                                    <li>6</li>
-                                    <li>7</li>
-                                    <li>8</li>
-                                    <li>9</li>
-                                    <li><span class="active">10</span></li>
-                                    <li>11</li>
-                                    <li>12</li>
-                                    <li>13</li>
-                                    <li>14</li>
-                                    <li>15</li>
-                                    <li>16</li>
-                                    <li>17</li>
-                                    <li>18</li>
-                                    <li>19</li>
-                                    <li>20</li>
-                                    <li>21</li>
-                                    <li>22</li>
-                                    <li>23</li>
-                                    <li>24</li>
-                                    <li>25</li>
-                                    <li>26</li>
-                                    <li>27</li>
-                                    <li>28</li>
-                                    <li>29</li>
-                                    <li>30</li>
-                                    <li>31</li>
-                                </ul>
                             </div>
-                        </div> --}}
-                        <div class="card-body m-0 p-0">
-                            <div class="content mt-3">
-                                <div class="calendar calendar-first" id="calendar_first">
-                                    <div class="calendar_header">
-                                        <button class="switch-month switch-left"> <i
-                                                class="fa fa-chevron-left"></i></button>
-                                        <h2></h2>
-                                        <button class="switch-month switch-right"> <i
-                                                class="fa fa-chevron-right"></i></button>
+
+
+                            <!-- payment status -->
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row align-items-center">
+                                        <div class="col">
+                                            <h4 class="card-title">Task Status</h4>
+                                        </div>
+                                        <div class="col text-end">
+                                            <a href="#" class="btn btn-lg">
+                                                <i class="bi bi-three-dots"></i>
+                                            </a>
+                                        </div>
                                     </div>
-                                    <div class="calendar_weekdays"></div>
-                                    <div class="calendar_content"></div>
+                                    @if (
+                                        $task_all->count() > 0 &&
+                                            $task_doing->count() > 0 &&
+                                            $task_checking->count() > 0 &&
+                                            $task_done->count() > 0 &&
+                                            $task_todo->count() > 0)
+                                        <div class="d-flex align-items-center">
+                                            <div class="h4 fw-bold">{{ $task_all->count() }}</div>
+                                            <div class="text-muted mx-2" style="font-size: 13px">Tugas</div>
+                                        </div>
+                                        <div class="bar">
+                                            <div class="biru"></div>
+                                            <div class="orange"></div>
+                                            <div class="ijo"></div>
+                                            <div class="abu"></div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-3">
+                                                <i class="fa-solid fa-square fa-2xl me-2 p-0"
+                                                    style="color: #0861fd;"></i>{{ ($task_doing->count() / $task_all->count()) * 100 }}%
+                                            </div>
+                                            <div class="col-3">
+                                                <i class="fa-solid fa-square fa-2xl me-2 p-0"
+                                                    style="color: orange;"></i>{{ ($task_checking->count() / $task_all->count()) * 100 }}%
+                                            </div>
+                                            <div class="col-3">
+                                                <i class="fa-solid fa-square fa-2xl me-2 p-0"
+                                                    style="color: rgb(105, 211, 109);"></i>{{ ($task_done->count() / $task_all->count()) * 100 }}%
+                                            </div>
+                                            <div class="col-3">
+                                                <i class="fa-solid fa-square fa-2xl me-2 p-0"
+                                                    style="color: gray;"></i>{{ ($task_todo->count() / $task_all->count()) * 100 }}%
+                                            </div>
+                                        </div>
+                                        <div class="row text-muted" style="font-size: 13px">
+                                            <div class="col-3">Doing</div>
+                                            <div class="col-3">Checking</div>
+                                            <div class="col-3">Done</div>
+                                            <div class="col-3">To-do</div>
+                                        </div>
                                 </div>
                             </div>
-                        </div>
-                        {{-- <b-row>
-                            <b-col md="auto">
-                                <b-calendar v-model="value" @context="onContext" locale="en-US"></b-calendar>
-                            </b-col>
-                            <b-col>
-                                <p>Value: <b>'{{ value }}'</b></p>
-                                <p class="mb-0">Context:</p>
-                                <pre class="small">{{ context }}</pre>
-                            </b-col>
-                        </b-row> --}}
-                    </div>
-                </div>
-            </div> -->
+        @endif
+        </div>
+        </div>
+        </div>
+
+
+
         </div>
         @endif
 
 
     </section>
 
+    
     <style>
         * {
             box-sizing: border-box;
@@ -492,43 +338,49 @@
             width: 100%;
             height: 30px;
             border-radius: 10px;
-            background-color: #ffffff;
+            background-color: #c4c4c4;
             color: white;
             text-align: center;
         }
-        @if(auth()->user()->hasProfile() && $task_all->count() > 0 && $task_doing->count() > 0 &&$task_checking->count() > 0 && $task_done->count() > 0 && $task_todo->count() > 0)
 
-        .biru {
-            width: {{($task_doing->count() / $task_all->count()) * 100}}%;
-            height: 100%;
-            background-color: rgb(12, 36, 252);
-            float: left;
-            border-top-left-radius: 10px;
-            border-bottom-left-radius: 10px;
-        }
+        @if (auth()->user()->hasProfile() &&
+                $task_all->count() > 0 &&
+                $task_doing->count() > 0 &&
+                $task_checking->count() > 0 &&
+                $task_done->count() > 0 &&
+                $task_todo->count() > 0)
 
-        .orange {
-            width: {{($task_checking->count() / $task_all->count()) * 100}}%;
-            height: 100%;
-            background-color: orange;
-            float: left;
-        }
+            .biru {
+                width: {{ ($task_doing->count() / $task_all->count()) * 100 }}%;
+                height: 100%;
+                background-color: rgb(12, 36, 252);
+                float: left;
+                border-top-left-radius: 10px;
+                border-bottom-left-radius: 10px;
+            }
 
-        .ijo {
-            width: {{($task_done->count() / $task_all->count()) * 100}}%;
-            height: 100%;
-            background-color: rgb(105, 211, 109);
-            float: left;
-        }
+            .orange {
+                width: {{ ($task_checking->count() / $task_all->count()) * 100 }}%;
+                height: 100%;
+                background-color: orange;
+                float: left;
+            }
 
-        .abu {
-            width: {{($task_todo->count() / $task_all->count()) * 100}}%;
-            height: 100%;
-            background-color: gray;
-            float: left;
-            border-top-right-radius: 10px;
-            border-bottom-right-radius: 10px;
-        }
+            .ijo {
+                width: {{ ($task_done->count() / $task_all->count()) * 100 }}%;
+                height: 100%;
+                background-color: rgb(105, 211, 109);
+                float: left;
+            }
+
+            .abu {
+                width: {{ ($task_todo->count() / $task_all->count()) * 100 }}%;
+                height: 100%;
+                background-color: gray;
+                float: left;
+                border-top-right-radius: 10px;
+                border-bottom-right-radius: 10px;
+            }
         @endif
         /* text truncate override */
         .pepek {
