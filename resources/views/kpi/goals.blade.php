@@ -29,7 +29,7 @@
                     <div class="row">
                         <div class="col-lg-4 col-12">
                             <div class="input-group mt-3">
-                                <select class="form-select" id="option1" onchange="changeData()">
+                                <select class="form-select" id="option1" onchange="show()">
                                     <option selected>Choose...</option>
                                     @foreach ($member as $m)
                                         <option value="{{ $m->id }}">{{ $m->nama }} -
@@ -42,11 +42,11 @@
                         <div class="col-lg-4 col-12">
                             <div class="input-group mt-3">
                                 <select class="form-select" id="inputGroupSelect03">
-                                    <option selected>Ongoing Goals</option>
-                                    <option value="">Todo</option>
-                                    <option value="">Doing</option>
-                                    <option value="">Checking</option>
-                                    <option value="">Done</option>
+                                    <option selected>Select Status</option>
+                                    <option value="todo">Todo</option>
+                                    <option value="doing">Doing</option>
+                                    <option value="checking">Checking</option>
+                                    <option value="done">Done</option>
                                 </select>
                             </div>
                         </div>
@@ -54,7 +54,7 @@
 
 
                     <!-- table -->
-                    <div class="table-responsive-lg">
+                    <div class="table-responsive-lg" id="div_tasks">
                         <table class="table mt-3 " style="outline: 2px" id="tabel_tasks">
                             <thead class="table-secondary table-responsive">
                                 <tr style="text-align: start">
@@ -70,23 +70,22 @@
                             </thead>
                             {{-- sort employee --}}
 
-                            @foreach (auth()->user()->role->role == 'admin' ? $task_adm : $task_member as $t)
-                                {{-- <tbody id="task_{{ $t->id }}" data-task-id="{{ $t->id }}"> --}}
-                                <tbody>
-                                    <tr>
+                            <tbody>
+                                @foreach (auth()->user()->role->role == 'admin' ? $task_adm : $task_member as $t)
+                                    <tr class="main-row">
                                         <td scope="row">
                                             <button data-bs-toggle="collapse"
-                                                data-bs-target="#flush-collapse{{ $t->id }}"><i
-                                                    class="fa-solid fa-chevron-right me-3" aria-expanded="true"
-                                                    aria-controls="flush-collapse{{ $t->id }}"></i>
+                                                data-bs-target="#flush-collapse{{ $t->id }}" id="button_collapse"><i
+                                                    class="fa-solid fa-chevron-right me-3" aria-expanded="true"></i>
                                             </button> {{ $t->goal_id }}
                                         </td>
-                                        <td class="fw-bold">{{ $t->kpi->group_name }} <span style="font-weight: normal">
-                                                <p>{{ date('d F Y', strtotime($t->created_at)) }} -
+                                        <td class="fw-bold" id="kpi_groupname">{{ $t->kpi->group_name }} <span
+                                                style="font-weight: normal">
+                                                <p id="range_tanggal">{{ date('d F Y', strtotime($t->created_at)) }} -
                                                     {{ date('d F Y', strtotime($t->tanggal_target)) }}</p>
                                             </span></td>
-                                        <td>{{ $t->owner->nama }}</td>
-                                        <td>{{ $t->member->nama }}</td>
+                                        <td id="owner">{{ $t->owner->nama }}</td>
+                                        <td id="member">{{ $t->member->nama }}</td>
                                         {{-- tipe progress --}}
                                         @if ($t->tipe_progress->nama_tipe == 'idr')
                                             <td>{{ $t->goal_progress }} / Rp. {{ number_format($t->goal_target) }}
@@ -233,6 +232,7 @@
 
                                             </ul>
                                         </td>
+                                    </tr>
                                     <tr id="flush-collapse{{ $t->id }}" class="accordion-collapse collapse"
                                         data-bs-parent="#accordionFlushExample">
                                         <td colspan="8 bg-light">
@@ -347,7 +347,6 @@
                                         </div>
                                     </td>
                                 </tr> --}}
-                                    </tr>
                                     {{-- modal hapus --}}
                                     <div class="modal fade" id="hapustugas_{{ $t->id }}" tabindex="-1"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -377,8 +376,9 @@
                                         </div>
                                     </div>
                                     {{-- end modal --}}
-                                </tbody>
-                            @endforeach
+                                @endforeach
+                            </tbody>
+
 
                         </table>
                     </div>
@@ -472,7 +472,22 @@
     <script>
         // sortir employee 
 
-        function changeData(task_id) {
+        $(document).ready(function() {
+            $('#inputGroupSelect03').on('change', function() {
+                findStatus();
+            });
+        })
+
+        function findStatus() {
+            var descriptionFilter = $('#inputGroupSelect03').val().toLowerCase();
+            $('.main-row').hide().filter(function() {
+                var description = $(this).find('td:eq(5)').text().toLowerCase();
+                var matchesDescriptionFilter = description.includes(descriptionFilter);
+                return matchesDescriptionFilter;
+            }).show();
+        }
+
+        {{-- function changeData(task_id) {
             var member_id = $('#option1').val();
             console.log(member_id);
             $.ajax({
@@ -484,226 +499,15 @@
                 },
                 dataType: "json",
                 success: function(response) {
+
                     var tasks = response.task;
                     console.log(tasks);
                     var tbody = $('tbody');
                     tbody.empty();
 
-
-                    if (tasks.length > 0) {
-                        var isAdmin = ' {{ auth()->user()->role->role }}' === "admin";
-                        var isEmployee = '{{ auth()->user()->role->role }}' === "employee";
-
-                        for (var i = 0; i < tasks.length; i++) {
-                            var t = tasks[i];
-                            var createdDate = new Date(t.created_at);
-                            var createdDateString = createdDate.toLocaleDateString('en', {
-                                day: 'numeric',
-                                month: 'long',
-                                year: 'numeric'
-                            });
-
-                            var targetDate = new Date(t.tanggal_target);
-                            var targetDateString = targetDate.toLocaleDateString('en', {
-                                day: 'numeric',
-                                month: 'long',
-                                year: 'numeric'
-                            });
-
-                            function getMonthName(month) {
-                                var months = [
-                                    'January', 'February', 'March', 'April', 'May', 'June', 'July',
-                                    'August', 'September', 'October', 'November', 'December'
-                                ];
-                                return months[month];
-                            }
-
-                            var row = '<tr>' +
-                                '<td scope="row">' +
-                                '<button data-bs-toggle="collapse" data-bs-target="#flush-collapse' + t.id +
-                                '">' +
-                                '<i class="fa-solid fa-chevron-right me-3" aria-expanded="true" ' +
-                                'aria-controls="flush-collapse' + t.id + '"></i>' +
-                                '</button>' +
-                                t.goal_id +
-                                '</td>' +
-                                '<td class="fw-bold">' +
-                                t.kpi.group_name +
-                                '<span style="font-weight: normal">' +
-                                '<p>' + createdDateString + ' - ' + targetDateString + '</p>' +
-                                '</span>' +
-                                '</td>' +
-                                '<td>' + t.owner.nama + '</td>' +
-                                '<td>' + t.member.nama + '</td>';
-
-                            // Check tipe_progress and generate the progress HTML accordingly
-                            if (t.tipe_progress.nama_tipe === "idr") {
-                                var progressHTML = '<td>' + t.goal_progress + ' / Rp. ' + formatNumber(t
-                                        .goal_target) +
-                                    '<div class="progress">';
-
-                                if (t.status === 'todo') {
-                                    progressHTML +=
-                                        '<div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" style="width: ' +
-                                        (t.goal_progress / t.goal_target) * 100 + '%"></div>';
-                                }
-
-                                if (t.status === 'doing') {
-                                    progressHTML +=
-                                        '<div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" style="width: ' +
-                                        (t.goal_progress / t.goal_target) * 100 + '%"></div>';
-                                }
-
-                                if (t.status === 'checking') {
-                                    progressHTML +=
-                                        '<div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" style="width: ' +
-                                        (t.goal_progress / t.goal_target) * 100 + '%"></div>';
-                                }
-
-                                if (t.status === 'done') {
-                                    progressHTML +=
-                                        '<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: ' +
-                                        (t.goal_progress / t.goal_target) * 100 + '%"></div>';
-                                }
-
-                                progressHTML += '</div></td>';
-
-                                row += progressHTML;
-                            } else if (t.tipe_progress.nama_tipe === "persentase") {
-                                var progressHTML = '<td>' + t.goal_progress + '% / ' + t.goal_target +
-                                    '% <div class="progress">';
-
-                                if (t.status === 'todo') {
-                                    progressHTML +=
-                                        '<div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" style="width: ' +
-                                        (t.goal_progress / t.goal_target) * 100 + '%"></div>';
-                                }
-
-                                if (t.status === 'doing') {
-                                    progressHTML +=
-                                        '<div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" style="width: ' +
-                                        (t.goal_progress / t.goal_target) * 100 + '%"></div>';
-                                }
-
-                                if (t.status === 'checking') {
-                                    progressHTML +=
-                                        '<div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" style="width: ' +
-                                        (t.goal_progress / t.goal_target) * 100 + '%"></div>';
-                                }
-
-                                if (t.status === 'done') {
-                                    progressHTML +=
-                                        '<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: ' +
-                                        (t.goal_progress / t.goal_target) * 100 + '%"></div>';
-                                }
-
-                                progressHTML += '</div></td>';
-
-                                row += progressHTML;
-                            } else if (t.tipe_progress.nama_tipe === "nominal") {
-                                var progressHTML = '<td>' + t.goal_progress + ' / ' + formatNumber(t
-                                    .goal_target) + ' <div class="progress">';
-
-                                if (t.status === 'todo') {
-                                    progressHTML +=
-                                        '<div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" style="width: ' +
-                                        (t.goal_progress / t.goal_target) * 100 + '%"></div>';
-                                }
-
-                                if (t.status === 'doing') {
-                                    progressHTML +=
-                                        '<div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" style="width: ' +
-                                        (t.goal_progress / t.goal_target) * 100 + '%"></div>';
-                                }
-
-                                if (t.status === 'checking') {
-                                    progressHTML +=
-                                        '<div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" style="width: ' +
-                                        (t.goal_progress / t.goal_target) * 100 + '%"></div>';
-                                }
-
-                                if (t.status === 'done') {
-                                    progressHTML +=
-                                        '<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: ' +
-                                        (t.goal_progress / t.goal_target) * 100 + '%"></div>';
-                                }
-                                progressHTML += '</div></td>';
-                                row += progressHTML;
-                            }
-
-                            if (t.status === "todo") {
-                                row += '<td class="text-capitalize">' + t.status + '</td>';
-                            } else if (t.status === "doing") {
-                                row += '<td class="text-capitalize text-primary">' + t.status + '</td>';
-                            } else if (t.status === "checking") {
-                                row += '<td class="text-capitalize text-warning">' + t.status + '</td>';
-                            } else if (t.status === "done") {
-                                row += '<td class="text-capitalize text-success">' + t.status + '</td>';
-                            }
-
-                            if (t.grade === null) {
-                                row += '<td>-</td>';
-                            } else {
-                                row += '<td>' + t.grade + '</td>';
-                            }
-                            var html = '<td>';
-
-                            if (isAdmin) {
-                                html += '<a href="" class="btn" data-bs-toggle="dropdown">' +
-                                    '<i class="fa-solid fa-ellipsis-vertical"></i>' +
-                                    '</a>';
-                            }
-
-                            if (isEmployee) {
-                                if (t.status === 'doing' || t.status === 'todo') {
-                                    html += '<form action="{{ route('goals.view_prog') }}" method="GET">' +
-                                        '@csrf' +
-                                        '<input type="hidden" name="task_id" value="' + t.id + '">' +
-                                        '<button type="submit" class="btn btn-warning btn-sm"><i class="fa-solid fa-edit fa-lg"></i>Update Progress</button>' +
-                                        '</form>';
-                                }
-                            }
-                            html += '<ul class="dropdown-menu">';
-
-                            if (isAdmin) {
-                                if (t.status !== 'done') {
-                                    html += '<form action="{{ route('goals.update_adm') }}" method="POST">' +
-                                        '@csrf' +
-                                        '<li><button class="dropdown-item" name="mark" value="done"><i class="fa-solid fa-clipboard-check fa-lg"></i>Mark as done</button>' +
-                                        '<input type="hidden" value="' + t.id + ' name="task_id">' +
-                                        '</li>' +
-                                        '</form>';
-                                }
-
-                                if (t.status === 'done') {
-                                    html += '<form action="{{ route('goals.view_prog') }}" method="GET">' +
-                                        '@csrf' +
-                                        '<input type="hidden" name="task_id" value="' + t.id + '>' +
-                                        '<li><button class="dropdown-item" type="submit"><i class="fa-solid fa-star fa-lg"></i>Beri Nilai</button></li>' +
-                                        '</form>';
-                                }
-
-                                html +=
-                                    '<li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#hapustugas_' +
-                                    t.id + '"><i class="fa-solid fa-trash fa-lg"></i>Hapus Tugas</button></li>';
-                            }
-
-                            html += '</ul>' +
-                                '</td>';
-
-                            row += html;
-
-                            row += '</tr>';
-
-                            function formatNumber(number) {
-                                // Implement your own number formatting logic here if needed
-                                return number.toLocaleString();
-                            }
-
-                            tbody.append(row);
-                        }
-
-                    }
+                    $('#task').innerhtml(tasks);
+                    console.log(tasks);
+                    // console.log(task_id);
 
                 },
                 error: function(xhr, status, error) {
@@ -711,6 +515,17 @@
                     console.log(error);
                 }
             });
+        } --}}
+
+        function show() {
+            var member_id = $('#option1').val();
+            console.log(member_id);
+
+            $.post('{{ route('api.search.data', '') }}/' + member_id, function(data) {
+                // var tasks = data.task;
+                $('#div_tasks').html(data);
+                console.log(data);
+            })
         }
 
         function formatNumber(number) {
