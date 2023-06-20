@@ -18,18 +18,9 @@ class TaskController extends Controller
 
     public function searchData($member_id)
     {
-        // $member_id = $Request->input('member_id');
-        // $task = Task::where('member_id', $member_id)->get('id');
         $task = Task::where('member_id', $member_id)->with(['kpi', 'member', 'owner', 'tipe_progress'])->get();
         $progress = Progress::all();
         return view('kpi.goals_foreach', compact('task', 'progress'));
-        // return view('kpi.goals_foreach',[
-        //     'task' => $task,
-        //     'progress' => $progress,
-        //     // 'member_id' => $member_id,
-        // ]);
-        // Mengembalikan respon dalam format JSON
-        // return response()->json(['task' => $task]);
     }
 
     public function index(request $request)
@@ -93,7 +84,8 @@ class TaskController extends Controller
             $task->delete();
         }
 
-        return redirect()->back();
+        // return redirect()->back();
+        return redirect()->route('goals.index');
     }
 
     public function view_prog(Request $Request)
@@ -226,6 +218,13 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        
+    }
+    
+    public function hapus(request $id){
+        // return $id;
+        $task = Task::find($id);
+        $task->delete();
+        return redirect()->route('goals.index');
     }
 }

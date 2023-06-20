@@ -504,12 +504,12 @@
 
         function show() {
             var member_id = $('#option1').val();
-            // console.log(member_id);
+            console.log(member_id);
 
-            $.get('{{ route('api.search.data', '') }}/' + member_id, function(data) {
+            $.post('{{ route('api.search.data', '') }}/' + member_id, function(data) {
                 // var tasks = data.task;
                 $('#ria_anjeng').html(data);
-                // console.log(data);
+                console.log(data);
             })
         }
 

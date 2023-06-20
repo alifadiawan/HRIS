@@ -128,13 +128,14 @@
                         </a>
                         <ul class="dropdown-menu">
                             @if ($t->status != 'done')
-                                <form action="{{ route('goals.update_adm') }}" method="POST">
+                                <form action="{{ route('goals.update_adm') }}" method="GET">
                                     @csrf
-                                    <li><button class="dropdown-item" name="mark" value="done"><i
+                                    <input type="hidden" value="{{ $t->id }}" name="task_id">
+                                    <input type="hidden" name="mark" value="done">
+                                    <li><button type="submit" class="dropdown-item"><i
                                                 class="fa-solid fa-clipboard-check fa-lg"></i>Mark
                                             as
                                             done</button>
-                                        <input type="hidden" value="{{ $t->id }}" name="task_id">
                                     </li>
                                 </form>
                             @endif
@@ -147,10 +148,19 @@
                                             Nilai</button></li>
                                 </form>
                             @endif
-                            <li><button class="dropdown-item" data-bs-toggle="modal"
+                            <li>
+                                {{-- <button class="dropdown-item" data-bs-toggle="modal"
                                     data-bs-target="#hapustugas_{{ $t->id }}"><i
                                         class="fa-solid fa-trash fa-lg"></i>Hapus
-                                    Tugas</button>
+                                    Tugas</button> --}}
+                                <form action="{{ route('goals.update_adm') }}" method="GET">
+                                    @csrf
+                                    <input type="hidden" name="delete" value="delete">
+                                    <input type="hidden" name="task_id" value="{{ $t->id }}">
+                                    <button type="submit" class="dropdown-item"><i
+                                            class="fa-solid fa-trash fa-lg"></i>Hapus
+                                        Tugas</button>
+                                </form>
                             </li>
                         </ul>
                     </td>
@@ -281,10 +291,10 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                r u sure ? 
+                                r u sure ?
                             </div>
                             <div class="modal-footer">
-                                <form action="{{ route('goals.update_adm') }}" method="POST">
+                                <form action="{{ route('goals.hapus', $t->id) }}" method="GET">
                                     @csrf
                                     <input type="hidden" name="delete" value="delete">
                                     <input type="hidden" name="task_id" value="{{ $t->id }}">
