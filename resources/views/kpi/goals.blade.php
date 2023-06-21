@@ -1,5 +1,5 @@
 @extends('layout.body')
-@section('title', 'Goals Team')
+@section('title', 'List Tugas')
 @section('page-title', 'List Tugas')
 @section('content')
 
