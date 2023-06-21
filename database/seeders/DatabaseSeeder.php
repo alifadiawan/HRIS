@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
             
             RoleSeeder::class,
             DivisiSeeder::class,
-            // UserSeeder::class,
-            // MemberSeeder::class,
+            UserSeeder::class,
+            MemberSeeder::class,
             // UserKwSeeder::class,
             // memberKwSeeder::class,
             TipeSeeder::class,
