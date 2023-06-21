@@ -322,10 +322,10 @@
 
     function findStatus() {
         var descriptionFilter = $('#inputGroupSelect03').val().toLowerCase();
-        $('.main-row').hide().filter(function() {
+        $('.main-row').hide();
+        $('.main-row').filter(function() {
             var description = $(this).find('td:eq(5)').text().toLowerCase();
             var matchesDescriptionFilter = description.includes(descriptionFilter);
-
             return matchesDescriptionFilter;
         }).show();
     }

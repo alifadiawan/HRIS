@@ -43,8 +43,8 @@
                         @endif
                         <div class="col-lg-4 col-9">
                             <div class="input-group mt-3">
-                                <select class="form-select" id="inputGroupSelect03" onchange="show()">
-                                    <option selected>Select Status</option>
+                                <select class="form-select" id="inputGroupSelect03">
+                                    <option >Select Status</option>
                                     <option value="todo">Todo</option>
                                     <option value="doing">Doing</option>
                                     <option value="checking">Checking</option>
@@ -496,11 +496,11 @@
 
         function findStatus() {
             var descriptionFilter = $('#inputGroupSelect03').val().toLowerCase();
-            $('.main-row').hide().filter(function() {
+            $('.main-row').hide();
+            $('.main-row').filter(function() {
                 var description = $(this).find('td:eq(5)').text().toLowerCase();
                 var matchesDescriptionFilter = description.includes(descriptionFilter);
-                var kosong = !description.includes(descriptionFilter);
-
+                // console.log(matchesDescriptionFilter);
                 return matchesDescriptionFilter;
             }).show();
 
