@@ -1,13 +1,12 @@
 @extends('layout.body')
 @section('title', 'Show Employee')
-@section('page-title', 'Show Employee')
+@section('page-title', Str::html( __('<a class="btn btn-lg text-secondary" href="/employee"><i class="fa-solid fa-arrow-left"></i></a> Show Employee')))
 @section('content')
 
     <section id="profile" class="container">
-        <div class="card mb-4">
+        <div class="card my-3">
             <div class="card-body">
-                <hr>
-                <div class="row">
+                <div class="row mt-3">
                     <div class="col-sm-3">
                         <p class="mb-0">Nama Lengkap</p>
                     </div>
@@ -87,7 +86,34 @@
                 </div>
             </div>
         </div>
-        <a class="btn btn-primary" href="/employee">Back</a>
+    </section>
+
+
+    <!-- nilai employee -->
+    <section id="nilai-employee" class="container">
+        <div class="card" style="border-radius: 10px">
+            <div class="card-body">
+                <h4 class="card-title">Nilai dari {{ $member->nama }}</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Tanggal | Jam </th>
+                                <th>Goals Name</th>
+                                <th>Nilai</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>21 Juni 2023 - 16.50</td>
+                                <td>Backend Developer</td>
+                                <td>50</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </section>
 
 @endsection

@@ -68,6 +68,9 @@
                                                                     href="{{ route('employee.hapus', $m->id) }}"><i
                                                                         class="fa-solid fa-trash fa-lg"></i>Delete Data</a>
                                                             </li>
+                                                            <li><a class="dropdown-item"
+                                                                    href="{{ route('employee.show', $m->id) }}"><i class="fa-solid fa-star fa-lg"></i>Lihat Nilai</a>
+                                                            </li>
                                                         </ul>
                                                     </td>
                                                 </tr>
@@ -83,7 +86,7 @@
             </div>
 
 
-
+            <!-- Divisi -->
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
