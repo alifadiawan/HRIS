@@ -7,17 +7,11 @@
         <div class="d-flex flex-row">
             <h4 class="fw-bold mb-3">Data Employee</h4>
         </div>
-        @if($new->isNotEmpty())
+        @if ($new->isNotEmpty())
             <div class="alert alert-warning">
                 Ada Employee Baru ! <br>Silahkan isi Jabatannya Untuk Memberinya Tugas !
             </div>
         @endif
-        <!-- <div class="row">
-                                        <div class="col">
-                                            <button class="btn btn-info mb-2 text-white" data-bs-toggle="modal" data-bs-target="#addTask">Add
-                                                New Employee</button>
-                                        </div>
-                                    </div> -->
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -69,7 +63,8 @@
                                                                         class="fa-solid fa-trash fa-lg"></i>Delete Data</a>
                                                             </li>
                                                             <li><a class="dropdown-item"
-                                                                    href="{{ route('employee.show', $m->id) }}"><i class="fa-solid fa-star fa-lg"></i>Lihat Nilai</a>
+                                                                    href="{{ route('employee.show', $m->id) }}"><i
+                                                                        class="fa-solid fa-star fa-lg"></i>Lihat Nilai</a>
                                                             </li>
                                                         </ul>
                                                     </td>
@@ -104,8 +99,8 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $d->nama_divisi }}</td>
                                         <td>
-                                            <a href="{{ route('divisi.hapus', $d->id) }}" class="btn btn-danger"><i
-                                                    class="fas fa-trash"></i></a>
+                                            <a href="{{ route('divisi.hapus', $d->id) }}" class="btn btn-danger"
+                                                data-swal-template="#my-template"><i class="fas fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -117,4 +112,8 @@
 
         </div>
 
+
+        <template id='my-template'>
+            <swal-title>Hey!</swal-title>
+        </template>
     @endsection
