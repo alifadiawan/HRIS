@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
             DivisiSeeder::class,
             // UserSeeder::class,
             // MemberSeeder::class,
-            // UserKwSeeder::class,
-            // memberKwSeeder::class,
+            UserKwSeeder::class,
+            memberKwSeeder::class,
             TipeSeeder::class,
 
             // BankSeeder::class,
@@ -29,8 +29,8 @@ class DatabaseSeeder extends Seeder
             // TransaksiSeeder::class,
             // PembayaranSeeder::class,
             // TransaksiDetailSeeder::class,
-            // KPISeeder::class,
-            // TaskSeeder::class,
+            KPISeeder::class,
+            TaskSeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();
 
