@@ -312,6 +312,7 @@
     </table>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
         $('#inputGroupSelect03').on('change', function() {
@@ -321,7 +322,8 @@
 
     function findStatus() {
         var descriptionFilter = $('#inputGroupSelect03').val().toLowerCase();
-        $('.main-row').hide().filter(function() {
+        $('.main-row').hide();
+        $('.main-row').filter(function() {
             var description = $(this).find('td:eq(5)').text().toLowerCase();
             var matchesDescriptionFilter = description.includes(descriptionFilter);
             return matchesDescriptionFilter;

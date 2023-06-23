@@ -23,7 +23,7 @@ use App\Http\Controllers\DivisiController;
 
 //redirect ke view login
 Route::get('/', function () {
-    return redirect('sign-in');
+    return redirect('dashboard');
 });
 
 

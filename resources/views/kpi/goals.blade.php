@@ -1,5 +1,5 @@
 @extends('layout.body')
-@section('title', 'Goals Team')
+@section('title', 'List Tugas')
 @section('page-title', 'List Tugas')
 @section('content')
 
@@ -31,7 +31,7 @@
                             <div class="col-lg-4 col-12">
                                 <div class="input-group mt-3">
                                     <select class="form-select" id="option1" onchange="show()">
-                                        <option selected>Choose...</option>
+                                        <option>Choose...</option>
                                         @foreach ($member as $m)
                                             <option value="{{ $m->id }}">{{ $m->nama }} -
                                                 {{ $m->divisi->nama_divisi }}
@@ -41,15 +41,20 @@
                                 </div>
                             </div>
                         @endif
-                        <div class="col-lg-4 col-12">
+                        <div class="col-lg-4 col-9">
                             <div class="input-group mt-3">
                                 <select class="form-select" id="inputGroupSelect03">
-                                    <option selected>Select Status</option>
+                                    <option >Select Status</option>
                                     <option value="todo">Todo</option>
                                     <option value="doing">Doing</option>
                                     <option value="checking">Checking</option>
                                     <option value="done">Done</option>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="input-group mt-3">
+                                <button onClick="window.location.reload();" class="btn btn-outline-secondary"><i class="fa-solid fa-rotate fa-lg"></i></button>
                             </div>
                         </div>
                     </div>
@@ -419,7 +424,7 @@
                     <form action="{{ route('goals.store') }}" method="post">
                         @csrf
                         <div class="form-group">
-                            <label for="goal_id">Goal ID</label>
+                            <label for="goal_id" class="fw-bold">Goal ID</label>
                             <div class="input-group">
                                 <span class="input-group-text" id="inputGroupPrepend">#</span>
                                 <input type="number" name="goal_id" id="goal_id" class="form-control"
@@ -437,6 +442,12 @@
                             </select>
                         </div>
                         <div class="form-group mt-2">
+                            <label for="member_id" class="fw-bold">Employee</label>
+                            <select name="member_id" id="member_id" class="form-select text-capitalize" required>
+                                <option value="">Choose..</option>
+                            </select>
+                        </div>
+                        <div class="form-group mt-2">
                             <label for="" class="fw-bold">Tipe Progress</label>
                             <select name="tipe_id" id="tipe_id" class="form-select text-uppercase" required>
                                 <option value="">Pilih tipe progress</option>
@@ -446,7 +457,7 @@
                             </select>
                         </div>
                         <div class="form-group mt-2">
-                            <label for="goal_target">Goal Target</label>
+                            <label for="goal_target" class="fw-bold">Goal Target</label>
                             <input type="number" name="goal_target" id="goal_target" class="form-control"
                                 placeholder="0" min="1" required>
 
@@ -455,12 +466,6 @@
                             <label for="tanggal_target" class="fw-bold">Tenggat</label>
                             <input type="date" class="form-control" name="tanggal_target" id="tanggal_target"
                                 min="{{ date('Y-m-d') }}" required>
-                        </div>
-                        <div class="form-group mt-2">
-                            <label for="member_id" class="fw-bold">Employee</label>
-                            <select name="member_id" id="member_id" class="form-select text-capitalize" required>
-                                <option value="">Choose..</option>
-                            </select>
                         </div>
                         <div class="form-group mt-4">
                             <input type="hidden" class="form-control" name="status" value="todo">
@@ -491,10 +496,12 @@
 
         function findStatus() {
             var descriptionFilter = $('#inputGroupSelect03').val().toLowerCase();
-            $('.main-row').hide().filter(function() {
+            $('.main-row').hide();
+            $('.main-row').filter(function() {
                 var description = $(this).find('td:eq(5)').text().toLowerCase();
                 var matchesDescriptionFilter = description.includes(descriptionFilter);
-                var kosong = !description.includes(descriptionFilter);
+                // console.log(matchesDescriptionFilter);
+                return matchesDescriptionFilter;
             }).show();
 
 

@@ -497,7 +497,7 @@
 
         // calendar
         // Mendapatkan elemen-elemen yang diperlukan
-        const calendarHeader = document.querySelector('.calendar_header h2');
+        /* const calendarHeader = document.querySelector('.calendar_header h2');
         const calendarWeekdays = document.querySelector('.calendar_weekdays');
         const calendarContent = document.querySelector('.calendar_content');
         const switchLeft = document.querySelector('.switch-left');
@@ -562,7 +562,7 @@
         switchRight.addEventListener('click', function() {
             const nextMonth = currentMonth + 1;
             populateCalendar(currentYear, nextMonth);
-        });
+        }); */
     </script>
 
 @endsection
