@@ -1,7 +1,18 @@
 @extends('layout.body')
 @section('title', 'KPI Group Data')
-@section('page-title', 'Create Score Data')
+@section('page-title', Str::html(__('<a class="btn btn-lg text-secondary" href="/goals"><i
+            class="fa-solid fa-arrow-left"></i></a>')))
 @section('content')
+
+    @if (auth()->user()->role->role == 'admin')
+        <div class="pagetitle">
+            <h1>Nilai Progress</h1>
+        </div>
+    @elseif(auth()->user()->role->role == 'employee')
+        <div class="pagetitle">
+            <h1>Update Progress</h1>
+        </div>
+    @endif
 
 
     <section class="score_data">
@@ -59,7 +70,7 @@
                                                     onchange="validateMaxValue()" name="grade">
                                             </td>
                                             <td>
-                                                <button class="btn btn-success" type="submit">nilai </button>
+                                                <button class="btn btn-success" type="submit">Submit </button>
                                             </td>
                                         </tr>
                                     </form>
@@ -124,7 +135,8 @@
                                             @else
                                                 @foreach ($progress as $p)
                                                     <tr>
-                                                        <td>{{ date('d F Y', strtotime($p->created_at)) }} - {{ \Carbon\Carbon::parse($p->created_at)->format('H:i') }}</td>
+                                                        <td>{{ date('d F Y', strtotime($p->created_at)) }} -
+                                                            {{ \Carbon\Carbon::parse($p->created_at)->format('H:i') }}</td>
                                                         <td>{{ $p->progress }}</td>
                                                         <td>{{ $p->keterangan }}</td>
                                                         <td>{{ $p->tasks->goal_target }}</td>
