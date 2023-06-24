@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Member;
 use App\Models\User;
 use App\Models\Divisi;
+use App\Models\KPI;
+use App\Models\Progress;
+use App\Models\Task;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller
@@ -26,7 +29,9 @@ class MemberController extends Controller
 
     public function profile()
     {
-        return view('profile');
+        $kpi = KPI::all();
+        $prog = Progress::all();
+        return view('profile',compact('prog','kpi'));
     }
 
     /**
@@ -63,9 +68,13 @@ class MemberController extends Controller
      */
     public function show($id)
     {
-        $member = Member::find($id);
+        // $member = Member::find($id)->with('owner_task')->get();
         // return $member;
-        return view('show-employee', compact('member'));
+        $member = Member::find($id);
+        $task = Task::where('member_id',$member->id)->get();
+        $progress = Progress::all();    
+        $kpi = KPI::all();    
+        return view('show-employee', compact('member','progress','task','kpi'));
     }
 
     /**

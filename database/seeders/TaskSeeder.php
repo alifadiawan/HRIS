@@ -63,10 +63,11 @@ class TaskSeeder extends Seeder
                 'goal_progress'=>200,
                 'tipe_id'=>1,
                 'tanggal_target'=>Carbon::parse('15-08-2023'),
-                'grade'=>'',
+                'grade'=>'69',
                 'status'=>'done',
                 'member_id'=>4,
                 'created_at' => Carbon::parse('14-06-2023'),
+                // 'updated_at' => Carbon::parse('24-06-2023'),
             ],
             [
                 'goal_id'=>'#2321',

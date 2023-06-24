@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             UserKwSeeder::class,
             memberKwSeeder::class,
             TipeSeeder::class,
-
+            
             // BankSeeder::class,
             // EwalletSeeder::class,
             // TransaksiSeeder::class,
@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             // TransaksiDetailSeeder::class,
             KPISeeder::class,
             TaskSeeder::class,
+            ProgressSeeder::class
         ]);
         // \App\Models\User::factory(10)->create();
 

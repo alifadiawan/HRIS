@@ -1,6 +1,9 @@
 @extends('layout.body')
 @section('title', 'Show Employee')
-@section('page-title', Str::html( __('<a class="btn btn-lg text-secondary" href="/employee"><i class="fa-solid fa-arrow-left"></i></a> Show Employee')))
+@section('page-title',
+    Str::html(
+    __('<a class="btn btn-lg text-secondary" href="/employee"><i class="fa-solid fa-arrow-left"></i></a> Show Employee'),
+    ))
 @section('content')
 
     <section id="profile" class="container">
@@ -98,17 +101,72 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>Tanggal | Jam </th>
+                                <th>Action</th>
+                                <th>Tanggal Dibuat</th>
+                                <th>Tanggal Deadline</th>
+                                <th>Tanggal Dinilai</th>
                                 <th>Goals Name</th>
                                 <th>Nilai</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>21 Juni 2023 - 16.50</td>
-                                <td>Backend Developer</td>
-                                <td>50</td>
-                            </tr>
+                            @foreach ($task as $t)
+                                @if ($t->status == 'done')
+                                    <tr>
+                                        <td>
+                                            <div class="accordion" id="accordionExample">
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="headingOne">
+                                                        <button class="accordion-button" type="button"
+                                                            data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                                                            aria-expanded="true" aria-controls="collapseOne">
+                                                            v
+                                                        </button>
+                                                    </h2>
+                                                    <div id="collapseOne" class="accordion-collapse collapse"
+                                                        aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                                        <div class="accordion-body">
+                                                            <table class="table table-bordered">
+                                                                <thead>
+                                                                    <th>progress</th>
+                                                                    <th>keterangan</th>
+                                                                    <th>tanggal</th>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach ($progress as $p)
+                                                                        @if ($p->tasks_id == $t->id)
+                                                                            <tr>
+                                                                                <td>
+                                                                                    {{ $p->progress }}
+                                                                                </td>
+                                                                                <td>
+                                                                                    {{ $p->keterangan }}
+                                                                                </td>
+                                                                                <td>
+                                                                                    {{ $p->created_at }}
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>{{ $t->created_at }}</td>
+                                        <td>{{ $t->tanggal_target }}</td>
+                                        <td>{{ $t->updated_at }}</td>
+                                        @foreach ($kpi as $k)
+                                            @if ($t->kpi_id == $k->id)
+                                                <td>{{ $k->group_name }}</td>
+                                            @endif
+                                        @endforeach
+                                        <td>{{ $t->grade }}</td>
+                                    </tr>
+                                @endif
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
