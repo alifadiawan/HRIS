@@ -34,4 +34,9 @@ class Task extends Model
     {
         return $this->belongsTo(TipeProgress::class, 'tipe_id');
     }
+
+    public function progress()
+    {
+        return $this->hasmany(Progress::class);
+    }
 }

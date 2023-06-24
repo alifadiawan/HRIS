@@ -18,19 +18,20 @@ class DatabaseSeeder extends Seeder
             
             RoleSeeder::class,
             DivisiSeeder::class,
-            UserSeeder::class,
-            MemberSeeder::class,
-            // UserKwSeeder::class,
-            // memberKwSeeder::class,
+            // UserSeeder::class,
+            // MemberSeeder::class,
+            UserKwSeeder::class,
+            memberKwSeeder::class,
             TipeSeeder::class,
-
+            
             // BankSeeder::class,
             // EwalletSeeder::class,
             // TransaksiSeeder::class,
             // PembayaranSeeder::class,
             // TransaksiDetailSeeder::class,
-            // KPISeeder::class,
-            // TaskSeeder::class,
+            KPISeeder::class,
+            TaskSeeder::class,
+            ProgressSeeder::class
         ]);
         // \App\Models\User::factory(10)->create();
 
