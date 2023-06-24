@@ -21,7 +21,13 @@ class KPIController extends Controller
                 $user->where('role', '!=', 'admin');
             });
         })->get();
-        return view('kpi.groupdata', compact('kpis', 'member'));
+        $new = Member::whereHas('user', function ($query) {
+            $query->whereHas('role', function ($user) {
+                $user->where('role', '!=', 'admin');
+            });
+        })->whereDoesntHave('mapping')->get();
+        // return $new;
+        return view('kpi.groupdata', compact('kpis', 'member', 'new'));
     }
 
     /**
@@ -96,35 +102,51 @@ class KPIController extends Controller
                 $q->whereHas('role', function ($u) {
                     $u->where('role', '!=', 'admin');
                 });
-            })->where('divisi_id', $data['divisi_id'])->where('jabatan', $data['jabatan'])->get();
+            })
+            ->where('divisi_id', '!=', null)
+            ->where('jabatan', '!=', null)
+            ->where('divisi_id', $data['divisi_id'])
+            ->where('jabatan', $data['jabatan'])->get();
+            // return 'spesifik';
         }
-        elseif ($data['jabatan'] == null) {
+        elseif ($data['jabatan'] != null) {
             $employee = Member::whereHas('user', function ($q) {
                 $q->whereHas('role', function ($u) {
                     $u->where('role', '!=', 'admin');
                 });
-            })->where('divisi_id', $data['divisi_id'])->get();
+            })
+            ->where('divisi_id', '!=', null)
+            ->where('jabatan', '!=', null)
+            ->where('jabatan', $data['jabatan'])->get();
+            // return 'jabatan';
         }
-        elseif ($data['divisi_id'] == null) {
+        elseif ($data['divisi_id'] != null) {
             $employee = Member::whereHas('user', function ($q) {
                 $q->whereHas('role', function ($u) {
                     $u->where('role', '!=', 'admin');
                 });
-            })->where('jabatan', $data['jabatan'])->get();
+            })
+            ->where('divisi_id', '!=', null)
+            ->where('jabatan', '!=', null)
+            ->where('divisi_id', $data['divisi_id'])->get();
+            // return 'divisi';
         }
         else {
             $employee = Member::whereHas('user', function ($q) {
                 $q->whereHas('role', function ($u) {
                     $u->where('role', '!=', 'admin');
                 });
-            })->get();
+            })
+            ->where('divisi_id', '!=', null)
+            ->where('jabatan', '!=', null)->get();
+            // return 'semua';
         }
-
+        // return $employee;
         $kpi->mapping()->attach($employee);
 
         //notif
         notify()->success('KPI Berhasil Ditambahkan !!', 'KPI');
-        return redirect('/group-data');
+        return redirect('/kpi');
     }
 
     /**
@@ -197,28 +219,44 @@ class KPIController extends Controller
                 $q->whereHas('role', function ($u) {
                     $u->where('role', '!=', 'admin');
                 });
-            })->where('divisi_id', $data['divisi_id'])->where('jabatan', $data['jabatan'])->get();
+            })
+            ->where('divisi_id', '!=', null)
+            ->where('jabatan', '!=', null)
+            ->where('divisi_id', $data['divisi_id'])
+            ->where('jabatan', $data['jabatan'])->get();
+            // return 'spesifik';
         }
         elseif ($data['jabatan'] != null) {
             $employee = Member::whereHas('user', function ($q) {
                 $q->whereHas('role', function ($u) {
                     $u->where('role', '!=', 'admin');
                 });
-            })->where('jabatan', $data['jabatan'])->get();
+            })
+            ->where('divisi_id', '!=', null)
+            ->where('jabatan', '!=', null)
+            ->where('jabatan', $data['jabatan'])->get();
+            // return 'jabatan';
         }
         elseif ($data['divisi_id'] != null) {
             $employee = Member::whereHas('user', function ($q) {
                 $q->whereHas('role', function ($u) {
                     $u->where('role', '!=', 'admin');
                 });
-            })->where('divisi_id', $data['divisi_id'])->get();
+            })
+            ->where('divisi_id', '!=', null)
+            ->where('jabatan', '!=', null)
+            ->where('divisi_id', $data['divisi_id'])->get();
+            // return 'divisi';
         }
         else {
             $employee = Member::whereHas('user', function ($q) {
                 $q->whereHas('role', function ($u) {
                     $u->where('role', '!=', 'admin');
                 });
-            })->get();
+            })
+            ->where('divisi_id', '!=', null)
+            ->where('jabatan', '!=', null)->get();
+            // return 'semua';
         }
         // return $employee;
         $kpi->mapping()->sync($employee);

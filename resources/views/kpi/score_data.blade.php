@@ -1,7 +1,18 @@
 @extends('layout.body')
 @section('title', 'KPI Group Data')
-@section('page-title', 'Create Score Data')
+@section('page-title', Str::html(__('<a class="btn btn-lg text-secondary" href="/goals"><i
+            class="fa-solid fa-arrow-left"></i></a>')))
 @section('content')
+
+    @if (auth()->user()->role->role == 'admin')
+        <div class="pagetitle">
+            <h1>Nilai Progress</h1>
+        </div>
+    @elseif(auth()->user()->role->role == 'employee')
+        <div class="pagetitle">
+            <h1>Update Progress</h1>
+        </div>
+    @endif
 
 
     <section class="score_data">
@@ -33,34 +44,39 @@
                     <img class="card-img-top" src="holder.js/100px180/" alt="">
                     <div class="card-body">
                         <p class="text-muted mt-3">{{ $task->goal_id }} - {{ $kpi->group_name }}</p>
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th class="bg-light">Parameter</th>
-                                    <th class="bg-light">Weight</th>
-                                    <th class="bg-light">Score</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <form action="{{ route('goals.progress') }}" method="POST">
-                                    @csrf
+                        <div class="table-resonsive">
+                            <table class="table table-bordered">
+                                <thead>
                                     <tr>
-                                        <td>{{ $kpi->parameter }}</td>
-                                        <td>{{ $kpi->weight }}</td>
-                                        <td>
-                                            <input type="hidden" name="task_id" value="{{ $task->id }}">
-                                            <input type="range" class="w-75" value="0" min="1"
-                                                max="100" id="slider" oninput="updateOutput()" name="grade" />
-                                            <input type="number" class="text-center rounded-4" id="sliderValue"
-                                                min="1" max="100"value="0"
-                                                style="background-color: #e6e6e6" oninput="updateSlider()"
-                                                onchange="validateMaxValue()" name="grade">
-                                        </td>
+                                        <th class="bg-light">Parameter</th>
+                                        <th class="bg-light">Weight</th>
+                                        <th class="bg-light">Score</th>
+                                        <th class="bg-light"></th>
                                     </tr>
-                                    <button class="btn btn-success" type="submit">nilai </button>
-                                </form>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <form action="{{ route('goals.progress') }}" method="POST">
+                                        @csrf
+                                        <tr>
+                                            <td>{{ $kpi->parameter }}</td>
+                                            <td>{{ $kpi->weight }}</td>
+                                            <td>
+                                                <input type="hidden" name="task_id" value="{{ $task->id }}">
+                                                <input type="range" class="w-75" value="0" min="1"
+                                                    max="100" id="slider" oninput="updateOutput()" name="grade" />
+                                                <input type="number" class="text-center rounded-4" id="sliderValue"
+                                                    min="1" max="100"value="0"
+                                                    style="background-color: #e6e6e6" oninput="updateSlider()"
+                                                    onchange="validateMaxValue()" name="grade">
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-success" type="submit">Submit </button>
+                                            </td>
+                                        </tr>
+                                    </form>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
             @endif
 
@@ -96,7 +112,7 @@
                 <div class="row">
 
                     <!-- Previous Progress -->
-                    <div class="col">
+                    <div class="col-lg-7 col-12">
                         <div class="card text-left mt-3">
                             <img class="card-img-top" src="holder.js/100px180/" alt="">
                             <div class="card-body">
@@ -105,30 +121,35 @@
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
+                                                <th class="bg-light">Tanggal Update - Jam</th>
                                                 <th class="bg-light">Progress</th>
                                                 <th class="bg-light">keterangan</th>
                                                 <th class="bg-light">Goal target</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                @if ($progress == null)
-                                                    <td>0</td>
-                                                    <td>-</td>
-                                                    <td>{{ $task->goal_target }}</td>
-                                                @else
-                                                    <td>{{ $progress->progress }}</td>
-                                                    <td>{{ $progress->keterangan }}</td>
-                                                    <td>{{ $task->goal_target }}</td>
-                                                @endif
-                                                {{-- <td>
-                                                <input type="range" class="w-75" value="0" min="1" max="100"
+                                            @if ($progress->isEmpty())
+                                                <tr class="text-center">
+                                                    <td colspan="5">- Belum ada Progress -</td>
+                                                </tr>
+                                            @else
+                                                @foreach ($progress as $p)
+                                                    <tr>
+                                                        <td>{{ date('d F Y', strtotime($p->created_at)) }} -
+                                                            {{ \Carbon\Carbon::parse($p->created_at)->format('H:i') }}</td>
+                                                        <td>{{ $p->progress }}</td>
+                                                        <td>{{ $p->keterangan }}</td>
+                                                        <td>{{ $p->tasks->goal_target }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
+                                            {{-- <td>
+                                                    <input type="range" class="w-75" value="0" min="1" max="100"
                                                     id="range" oninput="rangenumber.value=value" readonly/>
-                                                <input type="number" class="text-center rounded-4" id="rangenumber" min="1"
+                                                    <input type="number" class="text-center rounded-4" id="rangenumber" min="1"
                                                     max="100" value="{{ $task->grade }}" oninput="range.value=value"
                                                     style="background-color: #e6e6e6" readonly>
-                                            </td> --}}
-                                            </tr>
+                                                </td> --}}
                                         </tbody>
                                     </table>
                                 </div>
@@ -137,7 +158,7 @@
                     </div>
 
                     <!-- Upcoming Progress -->
-                    <div class="col">
+                    <div class="col-lg-5 col-12">
                         <div class="card text-left mt-3">
                             <img class="card-img-top" src="holder.js/100px180/" alt="">
                             <div class="card-body">
@@ -157,11 +178,11 @@
                                             <input type="range" class="w-75" min="{{ $task->goal_progress + 1 }}"
                                                 max="{{ $task->goal_target }}" value="{{ $task->goal_progress }}"
                                                 name="goal_progress" id="slider" oninput="updateOutput()" />
-                                            <input type="number" class="text-center mx-3 my-3 my-lg-0 rounded-4" id="sliderValue"
-                                                min="{{ $task->goal_progress + 1 }}" max="{{ $task->goal_target }}"
-                                                value="{{ $task->goal_progress }}" style="background-color: #e6e6e6"
-                                                oninput="updateSlider()" onchange="validateMaxValue()"
-                                                name="goal_progress">
+                                            <input type="number" class="text-center mx-3 my-3 my-lg-0 rounded-4"
+                                                id="sliderValue" min="{{ $task->goal_progress + 1 }}"
+                                                max="{{ $task->goal_target }}" value="{{ $task->goal_progress }}"
+                                                style="background-color: #e6e6e6" oninput="updateSlider()"
+                                                onchange="validateMaxValue()" name="goal_progress">
                                         </div>
                                     </div>
 

@@ -23,7 +23,7 @@ use App\Http\Controllers\DivisiController;
 
 //redirect ke view login
 Route::get('/', function () {
-    return redirect('sign-in');
+    return redirect('dashboard');
 });
 
 
@@ -57,8 +57,9 @@ Route::middleware('auth')->group(function () {
     // Route::get('group-data', [TaskController::class,'group_data'])->name('goals.group');
     // Route::post('grade', [TaskController::class,'grade'])->name('goals.grade');
     // Route::post('mark', [TaskController::class,'mark'])->name('goals.mark');
-    Route::post('update_adm', [TaskController::class, 'update_adm'])->name('goals.update_adm');
+    Route::match(['post','get'],'update_adm', [TaskController::class, 'update_adm'])->name('goals.update_adm');
     Route::post('progress', [TaskController::class, 'progress'])->name('goals.progress');
+    // Route::post('hapus', [TaskController::class, 'hapus'])->name('goals.hapus');
     Route::get('view_prog', [TaskController::class, 'view_prog'])->name('goals.view_prog');
 
     //employee

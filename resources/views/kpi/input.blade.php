@@ -1,10 +1,10 @@
 @extends('layout.body')
 @section('title', 'Input Item Data')
+@section('page-title', 'Input Item Data')
 @section('content')
+
+
 <section class="input">
-    <div class="d-flex flex-row">
-        <h4 class="fw-bold mb-4">Input Item Data</h4>
-    </div>
     <div class="row">
         <div class="col">
             <a href="{{route('kpi.index')}}" class="btn btn-primary text-white fw-bold"><i class="fa-solid fa-arrow-left"></i> Back</a>
