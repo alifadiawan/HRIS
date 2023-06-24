@@ -106,6 +106,8 @@
                                         <td>
                                             <a href="{{ route('divisi.hapus', $d->id) }}" class="btn btn-danger"><i
                                                     class="fas fa-trash"></i></a>
+                                            <a href="#" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i
+                                                    class="fas fa-pencil"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -118,3 +120,22 @@
         </div>
 
     @endsection
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #4154f1">
+          <h5 class="modal-title text-white fw-bold" id="staticBackdropLabel">Edit Divisi</h5>
+          <button type="button" class="btn-close btn-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <label for="edit-divisi">Nama Divisi</label>
+          <input type="text" name="edit-divisi" id="edit-divisi" class="form-control">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
