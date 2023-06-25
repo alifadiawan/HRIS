@@ -78,13 +78,24 @@ class TaskController extends Controller
                 // 'goal_progress' => $progress,
                 'status' => $mark
             ]);
+
+            sweetalert()
+            ->icon('success')
+            ->confirmButtonColor('#0d6efd')
+            ->addSuccess('Task berhasil diupdate');
         }
 
         if ($delete) {
             $task->delete();
+
+            sweetalert()
+            ->icon('success')
+            ->confirmButtonColor('#0d6efd')
+            ->addSuccess('Task berhasil dihapus');
         }
 
         // return redirect()->back();
+
         return redirect()->route('goals.index');
     }
 
@@ -148,6 +159,11 @@ class TaskController extends Controller
         // nilai admin
 
         // end nilai admin
+        sweetalert()
+            ->icon('success')
+            ->confirmButtonColor('#0d6efd')
+            ->addSuccess('Task berhasil dinilai');
+
         return redirect()->route('goals.index');
     }
 
@@ -185,8 +201,13 @@ class TaskController extends Controller
         $task->status = $data['status'];
         $task->save();
 
-        notify()->success('Tugas Telah Diberikan !', 'Tugas');
-        return redirect('goals');
+
+        sweetalert()
+            ->icon('success')
+            ->confirmButtonColor('#0d6efd')
+            ->addSuccess('Task berhasil diberikan');
+
+        return redirect()->back();
     }
 
     /**

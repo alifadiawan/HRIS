@@ -27,34 +27,49 @@ class LoginController extends Controller
         ], $message);
 
         // return $data;
-        
+
         // jika user telah mengisi data
         if (Auth::attempt($data)) {
             $request->session()->regenerate();
-            
+
             // cek role suatu user
             $user = auth()->user()->role->role;
             // return $user;
             $company = ['admin'];
-            
+
             if (in_array($user, $company)) {
                 // return true;
-                notify()->success('Selamat Datang Admin !!');
+                // notify()->success('Selamat Datang Admin !!');
+                notyf()
+                    ->position('x', 'right')
+                    ->position('y', 'top')
+                    ->dismissible(true)
+                    ->addSuccess('Selamat Datang Admin !!');
                 return redirect()->intended('/dashboard');
-            } 
-            elseif ($user == ["employee"]) {
+            } elseif ($user == ["employee"]) {
                 // return redirect('/');
-                notify()->success('Berhasil Login !!');
-                return redirect()->intended('/dashboard');
-            }
-            else{
-                // return redirect('dashboard');
-                notify()->success('Berhasil Login !!');
-                return redirect()->intended('/dashboard');
-            }
+                // notify()->success('Berhasil Login !!');
+                notyf()
+                    ->position('x', 'right')
+                    ->position('y', 'top')
+                    ->dismissible(true)
+                    ->addSuccess('Berhasil Login');
 
+                return redirect()->intended('/dashboard');
+            } else {
+                // return redirect('dashboard');
+                // notify()->success('Berhasil Login !!');
+                notyf()
+                    ->position('x', 'right')
+                    ->position('y', 'top')
+                    ->dismissible(true)
+                    ->addSuccess('Berhasil Login');
+
+                return redirect()->intended('/dashboard');
+            }
         } else {
-            session()->flash('salah', 'Email atau Password Anda Salah');
+            notyf()
+                ->addError('Email atau Password anda SALAH');
             return redirect('/sign-in');
         }
     }
@@ -64,7 +79,11 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        notify()->success('Berhasil Logout !!');
+        notyf()
+            ->position('x', 'right')
+            ->position('y', 'top')
+            ->dismissible(true)
+            ->addSuccess('Berhasil Logout');
         return redirect('/sign-in');
     }
 }

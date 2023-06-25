@@ -12,12 +12,6 @@
                 Ada Employee Baru ! <br>Silahkan isi Jabatannya Untuk Memberinya Tugas !
             </div>
         @endif
-        <!-- <div class="row">
-                                            <div class="col">
-                                                <button class="btn btn-info mb-2 text-white" data-bs-toggle="modal" data-bs-target="#addTask">Add
-                                                    New Employee</button>
-                                            </div>
-                                        </div> -->
         <div class="row">
             <div class="col-12">
                 <div class="card">

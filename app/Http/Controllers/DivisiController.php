@@ -32,7 +32,10 @@ class DivisiController extends Controller
         $div->nama_divisi = $request->nama_divisi;
         $div->save();
 
-        notify()->success('Divisi Berhasil Ditambah', 'Divisi');
+        sweetalert()
+            ->timerProgressBar(false)
+            ->addSuccess('Divisi Berhasil Ditambahkan');
+
         return redirect('/employee');
     }
 
@@ -79,7 +82,10 @@ class DivisiController extends Controller
         $div = Divisi::find($id);
         $div->delete();
 
-        notify()->success('Divisi Berhasil Dihapus', 'Divisi');
+        sweetalert()
+            ->timerProgressBar(false)
+            ->addSuccess('Divisi Berhasil Dihapus');
+
         return redirect('/employee');
     }
 }

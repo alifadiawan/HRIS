@@ -22,6 +22,11 @@
 <script src="{{ asset('calender/js/bootstrap.min.js') }}"></script> --}}
 <script src="{{ asset('calender/js/main.js') }}"></script>
 
+<!-- Jquery -->
+
+
+<!-- noty and js modal -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- Logout Modal -->
 <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
