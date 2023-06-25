@@ -32,6 +32,7 @@ class DivisiController extends Controller
         $div->nama_divisi = $request->nama_divisi;
         $div->save();
 
+        notify()->success('Divisi Berhasil Ditambah', 'Divisi');
         return redirect('/employee');
     }
 
@@ -46,17 +47,23 @@ class DivisiController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Divisi $divisi)
+    public function edit($id)
     {
-        //
+        $divisiF = Divisi::find($id);
+        return response()->json(['divisiF' => $divisiF]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Divisi $divisi)
+    public function update(Request $request, $id)
     {
-        //
+        $divisi = Divisi::find($id);
+        $divisi->nama_divisi = $request->edit_nama;
+        $divisi->save();
+
+        notify()->success('Divisi Berhasil Diubah', 'Divisi');
+        return redirect()->back();
     }
 
     /**
@@ -72,6 +79,7 @@ class DivisiController extends Controller
         $div = Divisi::find($id);
         $div->delete();
 
+        notify()->success('Divisi Berhasil Dihapus', 'Divisi');
         return redirect('/employee');
     }
 }
