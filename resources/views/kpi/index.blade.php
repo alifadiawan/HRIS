@@ -101,8 +101,8 @@
                                         <td>
                                             <a href="{{ route('divisi.hapus', $d->id) }}" class="btn btn-danger"><i
                                                     class="fas fa-trash"></i></a>
-                                            <a href="#" class="btn btn-warning" data-bs-toggle="modal"
-                                                data-bs-target="#staticBackdrop"><i class="fas fa-pencil"></i></a>
+                                            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editDivisi_{{$d->id}}"><i
+                                                    class="fas fa-pencil"></i></button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -114,27 +114,53 @@
 
         </div>
 
-    @endsection
-   
-   
-    <!--Edit Divisi Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <!-- Modal -->
+      @foreach($divisi as $dm)
+      <div class="modal fade" id="editDivisi_{{$dm->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title text-white fw-bold" id="staticBackdropLabel">Edit Divisi</h5>
-                    <button type="button" class="btn-close btn-white" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-                </div>
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: #4154f1">
+              <h5 class="modal-title text-white fw-bold" id="staticBackdropLabel">Edit Divisi</h5>
+              <button type="button" class="btn-close btn-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{route('divisi.update', $dm->id)}}" class="edit-form" method="post">
+                @csrf
+                @method('PUT')
                 <div class="modal-body">
-                    <label for="edit-divisi">Nama Divisi</label>
-                    <input type="text" name="edit-divisi" id="edit-divisi" class="form-control">
+                  <label for="edit_nama">Nama Divisi</label>
+                  <input type="text" name="edit_nama" id="edit_nama" class="form-control" value="{{$dm->nama_divisi}}">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Save</button>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                  <button type="submit" class="btn btn-primary">Save</button>
                 </div>
-            </div>
+            </form>
+          </div>
         </div>
-    </div>
+      </div>
+      @endforeach
+
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function show(event) {
+            event.preventDefault();
+            var url = $(event.target).attr('href');
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data){
+                    var div = data.divisiF;
+                    // console.log(div);
+                    //divisi
+                    // $('.edit-form').attr('action', `https://127.0.0.1:8000/employee/`+div.id);
+                    $('#edit-nama_'+div.id).val(div.nama_divisi);
+                    $('#editDivisi_'+div.id).modal('show');
+                },
+                error: function(xhr){
+                    console.log(xhr.responseText);
+                }
+            });
+        }
+    </script> -->
+@endsection
