@@ -14,16 +14,16 @@
             <span>Dashboard</span>
         </a>
     </li>
-    <!-- End Dashboard Nav -->
 
-        {{-- <li class="nav-item">
-            <a class="nav-link " href="/employee-list">
+
+        <li class="nav-item">
+            <a class="nav-link " href="/employee">
                 <i class="fa-solid fa-users"></i>
                 <span>Employee List</span>
             </a>
-        </li> --}}
+        </li>
 
-    <li class="nav-item">
+    {{-- <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
             <i class="fa-solid fa-wallet fa-lg"></i><span>Payroll</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -44,7 +44,7 @@
                 </a>
             </li>
         </ul>
-    </li><!-- End Charts Nav -->
+    </li> --}}
 
     <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
@@ -66,19 +66,15 @@
                     <i class="bi bi-circle"></i><span>Sales Reports</span>
                 </a>
             </li>
-            {{-- <li>
-                <a href="/index-employe">
-                    <i class="bi bi-circle"></i><span>Data Employee</span>
-                </a>
-            </li> --}}
         </ul>
-    </li><!-- End Icons Nav -->
-    <li class="nav-item">
+    </li>
+    
+    {{-- <li class="nav-item">
         <a class="nav-link collapsed" href="/progress">
             <i class="fa-solid fa-circle-info fa-lg"></i>
             <span>Show Progress</span>
         </a>
-    </li>
+    </li> --}}
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
             <i class="fa-solid fa-right-from-bracket fa-lg"></i>
