@@ -6,6 +6,7 @@ use App\Models\KPI;
 use App\Models\Member;
 use App\Models\Divisi;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class KPIController extends Controller
 {
@@ -51,13 +52,12 @@ class KPIController extends Controller
         $kpi->isActive = !$kpi->isActive;
         $kpi->save();
         if ($kpi->isActive == false) {
-            $status = 'Non-Aktif';
+            $status = 'nonaktif';
         } else {
-            $status = 'Aktif';
+            $status = 'aktifkan';
         }
         // Respon berhasil
-        // notify()->success('Status Diubah Menjadi '.$status, 'Status KPI');
-        return response()->json(['success' => true, 'message' => 'Status Diubah Menjadi ' . $status]);
+        return response()->json(['success' => true, 'message' => 'KPI berhasil di' . $status]);
     }
 
     public function store(Request $request)
@@ -141,8 +141,11 @@ class KPIController extends Controller
         $kpi->mapping()->attach($employee);
 
         //notif
-        // notify()->success('KPI Berhasil Ditambahkan !!', 'KPI');
-        sweetalert()->addSuccess('KPI Berhasil Ditambahkan !!');
+        sweetalert()
+            ->icon('success')
+            ->confirmButtonColor('#0d6efd')
+            ->addSuccess('KPI Berhasil Ditambahkan !!');
+            
         return redirect('/kpi');
     }
 
@@ -168,6 +171,7 @@ class KPIController extends Controller
         })->get();
         // return $kpi->mapping;
         // return $jabatan;
+
         return view('kpi.edit', compact('divisi', 'jabatan', 'kpi', 'member'));
     }
 
@@ -256,9 +260,10 @@ class KPIController extends Controller
         $kpi->mapping()->sync($employee);
 
         //notif
-        // notify()->success('KPI Berhasil Diupdate !!', 'KPI');
         sweetalert()
-            ->addSuccess('KPI Berhasil Ditambahkan !!');
+            ->icon('success')
+            ->confirmButtonColor('#0d6efd')
+            ->addSuccess('KPI Berhasil diedit !!');
 
         return redirect('/kpi');
     }
@@ -283,9 +288,11 @@ class KPIController extends Controller
 
         $kpi->delete();
 
-        // notify()->success('KPI Berhasil Dihapus !!', 'KPI');
-        sweetalert()->addSuccess('KPI Berhasil DIhapus !!');
-        // noty()->addSuccess('KPI Berhasil DIHAPUS');
+        sweetalert()
+            ->icon('success')
+            ->confirmButtonColor('#0d6efd')
+            ->addSuccess('KPI Berhasil dihapus !!');
+
         return redirect('/kpi');
     }
 }

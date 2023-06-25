@@ -40,23 +40,36 @@ class LoginController extends Controller
             if (in_array($user, $company)) {
                 // return true;
                 // notify()->success('Selamat Datang Admin !!');
-                noty()->addSuccess('Selamat Datang Admin !!');
+                notyf()
+                    ->position('x', 'right')
+                    ->position('y', 'top')
+                    ->dismissible(true)
+                    ->addSuccess('Selamat Datang Admin !!');
                 return redirect()->intended('/dashboard');
             } elseif ($user == ["employee"]) {
                 // return redirect('/');
                 // notify()->success('Berhasil Login !!');
-                noty()->addSuccess('Berhasil Login');
+                notyf()
+                    ->position('x', 'right')
+                    ->position('y', 'top')
+                    ->dismissible(true)
+                    ->addSuccess('Berhasil Login');
 
                 return redirect()->intended('/dashboard');
             } else {
                 // return redirect('dashboard');
                 // notify()->success('Berhasil Login !!');
-                noty()->addSuccess('Berhasil Login');
+                notyf()
+                    ->position('x', 'right')
+                    ->position('y', 'top')
+                    ->dismissible(true)
+                    ->addSuccess('Berhasil Login');
 
                 return redirect()->intended('/dashboard');
             }
         } else {
-            noty()->addError('Email atau Password anda SALAH');
+            notyf()
+                ->addError('Email atau Password anda SALAH');
             return redirect('/sign-in');
         }
     }
@@ -66,7 +79,11 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        noty()->addSuccess('Berhasil Logout');
+        notyf()
+            ->position('x', 'right')
+            ->position('y', 'top')
+            ->dismissible(true)
+            ->addSuccess('Berhasil Logout');
         return redirect('/sign-in');
     }
 }

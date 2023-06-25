@@ -22,6 +22,8 @@
 <script src="{{ asset('calender/js/bootstrap.min.js') }}"></script> --}}
 <script src="{{ asset('calender/js/main.js') }}"></script>
 
+<!-- Jquery -->
+
 
 <!-- noty and js modal -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

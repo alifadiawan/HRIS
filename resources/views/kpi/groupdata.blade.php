@@ -18,15 +18,15 @@
             <div class="card text-left">
                 <div class="card-body">
                     <!-- <div class="d-flex flex-row align-items-center my-3">
-                                <p class="p-0 m-0 text-muted">Show</p>
-                                <select class="form-select mx-2" name="" id="" style="width: 70px">
-                                    <option value="">10</option> Entries
-                                    <option value="">10</option> Entries
-                                    <option value="">10</option> Entries
-                                    <option value="">10</option> Entries
-                                </select>
-                                <p class="p-0 m-0 text-muted">Entries</p>
-                            </div> -->
+                                            <p class="p-0 m-0 text-muted">Show</p>
+                                            <select class="form-select mx-2" name="" id="" style="width: 70px">
+                                                <option value="">10</option> Entries
+                                                <option value="">10</option> Entries
+                                                <option value="">10</option> Entries
+                                                <option value="">10</option> Entries
+                                            </select>
+                                            <p class="p-0 m-0 text-muted">Entries</p>
+                                        </div> -->
                     <div class="content">
                         <div class="table-responsive">
 
@@ -132,45 +132,45 @@
                                     @endforeach
                                     <!-- <tr class="text-center" style="vertical-align: middle; ">
 
-                                            <td class="fw-bold">Computer Skill KPI</td>
-                                            <td>Information Technology</td>
-                                            <td>- Semua Jabatan -</td>
-                                            <td></td>
-                                            <td>
-                                                <div class="form-check form-switch"style="width: 0px">
-                                                    <input class="form-check-input" type="checkbox" role="switch"
-                                                        id="flexSwitchCheckDefault" style="height: 30px; width: 70px">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex flex-column">
-                                                    <a href="" class="btn btn-success mb-4"><i
-                                                            class="fa-solid fa-pen-to-square me-2"></i>Edit</a>
-                                                    <a href="" class="btn btn-danger"><i
-                                                            class="fa-solid fa-trash me-2"></i>Delete</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="text-center" style="vertical-align: middle; ">
-                                            <td class="fw-bold">Communication KPI</td>
-                                            <td>Marketing</td>
-                                            <td>- Semua Jabatan -</td>
-                                            <td>KPI Khusus untuk divisi marketing</td>
-                                            <td>
-                                                <div class="form-check form-switch"style="width: 0px">
-                                                    <input class="form-check-input" type="checkbox" role="switch"
-                                                        id="flexSwitchCheckDefault" style="height: 30px; width: 70px">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex flex-column">
-                                                    <a href="" class="btn btn-success mb-4"><i
-                                                            class="fa-solid fa-pen-to-square me-2"></i>Edit</a>
-                                                    <a href="" class="btn btn-danger"><i
-                                                            class="fa-solid fa-trash me-2"></i>Delete</a>
-                                                </div>
-                                            </td>
-                                        </tr> -->
+                                                        <td class="fw-bold">Computer Skill KPI</td>
+                                                        <td>Information Technology</td>
+                                                        <td>- Semua Jabatan -</td>
+                                                        <td></td>
+                                                        <td>
+                                                            <div class="form-check form-switch"style="width: 0px">
+                                                                <input class="form-check-input" type="checkbox" role="switch"
+                                                                    id="flexSwitchCheckDefault" style="height: 30px; width: 70px">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex flex-column">
+                                                                <a href="" class="btn btn-success mb-4"><i
+                                                                        class="fa-solid fa-pen-to-square me-2"></i>Edit</a>
+                                                                <a href="" class="btn btn-danger"><i
+                                                                        class="fa-solid fa-trash me-2"></i>Delete</a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="text-center" style="vertical-align: middle; ">
+                                                        <td class="fw-bold">Communication KPI</td>
+                                                        <td>Marketing</td>
+                                                        <td>- Semua Jabatan -</td>
+                                                        <td>KPI Khusus untuk divisi marketing</td>
+                                                        <td>
+                                                            <div class="form-check form-switch"style="width: 0px">
+                                                                <input class="form-check-input" type="checkbox" role="switch"
+                                                                    id="flexSwitchCheckDefault" style="height: 30px; width: 70px">
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex flex-column">
+                                                                <a href="" class="btn btn-success mb-4"><i
+                                                                        class="fa-solid fa-pen-to-square me-2"></i>Edit</a>
+                                                                <a href="" class="btn btn-danger"><i
+                                                                        class="fa-solid fa-trash me-2"></i>Delete</a>
+                                                            </div>
+                                                        </td>
+                                                    </tr> -->
 
                                 </tbody>
                             </table>
@@ -181,24 +181,24 @@
 
                     <!-- Pagination -->
                     <!-- <div class="d-flex flex-row justify-content-center">
-                                <nav aria-label="Page navigation example">
-                                    <ul class="pagination">
-                                      <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                          <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                      </li>
-                                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                      <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                      <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                          <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                      </li>
-                                    </ul>
-                                  </nav>
-                            </div> -->
+                                            <nav aria-label="Page navigation example">
+                                                <ul class="pagination">
+                                                  <li class="page-item">
+                                                    <a class="page-link" href="#" aria-label="Previous">
+                                                      <span aria-hidden="true">&laquo;</span>
+                                                    </a>
+                                                  </li>
+                                                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                  <li class="page-item">
+                                                    <a class="page-link" href="#" aria-label="Next">
+                                                      <span aria-hidden="true">&raquo;</span>
+                                                    </a>
+                                                  </li>
+                                                </ul>
+                                              </nav>
+                                        </div> -->
                 </div>
             </div>
         </div>
@@ -206,6 +206,13 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        // function validate() {
+        //     if (document.getElementById('flexSwitchCheckDefault').checked) {
+        //         alert("checked");
+        //     } else {
+        //         alert("You didn't check it! Let me check it for you.");
+        //     }
+        // }
         function toggleIsActive(kpiId) {
             $.ajax({
                 url: '{{ route('api.goals.toggleIsActive') }}',
@@ -216,8 +223,12 @@
                 },
                 success: function(response) {
                     // Berhasil mengubah status isActive
-                    alert(response.message);
-                    console.log(response.success);
+                    Swal.fire({
+                        icon: 'success',
+                        title:  response.message,
+                        confirmButtonColor: '#0d6efd'
+                    })
+
                 },
                 error: function(xhr) {
                     // Gagal mengubah status isActive
