@@ -1,7 +1,9 @@
 @extends('layout.body')
 @section('title', 'KPI Group Data')
-@section('page-title', Str::html(__('<a class="btn btn-lg text-secondary" href="/goals"><i
-            class="fa-solid fa-arrow-left"></i></a>')))
+@section('page-title',
+    Str::html(
+    __('<a class="btn btn-lg text-secondary" href="/goals"><i class="fa-solid fa-arrow-left"></i></a>'),
+    ))
 @section('content')
 
     @if (auth()->user()->role->role == 'admin')
@@ -175,16 +177,58 @@
                                     <div class="form-group mt-2">
                                         <label for="goal_progress">Goal Progress</label>
                                         <div class="input-group align-items-center">
-                                            <input type="range" class="w-75" min="{{ $task->goal_progress + 1 }}"
-                                                max="{{ $task->goal_target }}" value="{{ $task->goal_progress }}"
-                                                name="goal_progress" id="slider" oninput="updateOutput()" />
-                                            <input type="number" class="text-center mx-3 my-3 my-lg-0 rounded-4"
-                                                id="sliderValue" min="{{ $task->goal_progress + 1 }}"
-                                                max="{{ $task->goal_target }}" value="{{ $task->goal_progress }}"
-                                                style="background-color: #e6e6e6" oninput="updateSlider()"
-                                                onchange="validateMaxValue()" name="goal_progress">
+                                            @if ($previous_progress == null)
+                                                <input type="range" class="w-75" min="1"
+                                                    max="{{ $task->goal_target }}" value="1" name="goal_progress"
+                                                    id="slider" oninput="updateOutput()" />
+                                                <input type="number" class="text-center mx-3 my-3 my-lg-0 rounded-4"
+                                                    id="sliderValue" min="{{ $task->goal_progress + 1 }}" value="1"
+                                                    max="{{ $task->goal_target }}" style="background-color: #e6e6e6"
+                                                    oninput="updateSlider()" onchange="validateMaxValue()"
+                                                    name="goal_progress">
+                                            @else
+                                                {{-- <input type="hidden" value="{{ $previous_progress->progress }}"
+                                                    id="previous"> --}}
+                                                @if (count($errors) > 0)
+                                                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                                                    <script>
+                                                        document.addEventListener('DOMContentLoaded', function() {
+                                                            Swal.fire({
+                                                                icon: 'error',
+                                                                title: 'Progress Harus Bertambah',
+                                                                confirmButtonColor: '#0d6efd'
+                                                            });
+                                                        });
+                                                    </script>
+                                                @endif
+                                                <input type="range" class="w-75" min="1"
+                                                    max="{{ $task->goal_target }}"
+                                                    value="{{ $previous_progress->progress }}" name="goal_progress"
+                                                    id="slider" oninput="updateOutput()" />
+                                                <input type="number" class="text-center mx-3 my-3 my-lg-0 rounded-4"
+                                                    id="sliderValue" min="1" max="{{ $task->goal_target }}"
+                                                    value="{{ $previous_progress->progress }}"
+                                                    style="background-color: #e6e6e6" oninput="updateSlider()"
+                                                    onchange="validateMaxValue()" name="goal_progress">
+
+                                                {{-- <input type="range" class="w-75"
+                                                    min="{{ $previous_progress->progress }}"
+                                                    max="{{ $task->goal_target }}"
+                                                    value="{{ $previous_progress->progress }}" name="goal_progress"
+                                                    id="slider" oninput="updateOutput()" />
+                                                <input type="number" class="text-center mx-3 my-3 my-lg-0 rounded-4"
+                                                    id="sliderValue" min="{{ $task->goal_progress + 1 }}"
+                                                    max="{{ $task->goal_target }}"
+                                                    value="{{ $previous_progress->progress }}"
+                                                    style="background-color: #e6e6e6" oninput="updateSlider()"
+                                                    onchange="validateMaxValue()" name="goal_progress"> --}}
+                                            @endif
+
+
+
                                         </div>
                                     </div>
+                                    {{-- <input type="text" class="form-control" value="{{$previous_progress->progress}}" name="" id=""> --}}
 
 
                                     <div class="form-group mt-2">
@@ -206,6 +250,34 @@
             @endif
         </div>
     </section>
+
+
+    {{-- <script>
+        var slider = document.getElementById("slider");
+        var progress = document.getElementById("previous");
+
+        // console.log(slider.value);
+        // console.log(progress.value);
+        
+        slider.addEventListener("input", function() {
+            if (this.value <= progress.value) {
+                this.value = progress.value;
+            }
+        });
+
+        // slider.addEventListener("mousedown", function(event) {
+        //     if (event.target.value <= progress.value) {
+        //         event.preventDefault();
+        //     }
+        // });
+
+        // slider.addEventListener("keydown", function(event) {
+        //     if (event.key === "ArrowDown" && this.value <= progress.value) {
+        //         event.preventDefault();
+        //     }
+        // });
+    </script> --}}
+
 
     <script>
         function updateOutput() {
@@ -233,16 +305,16 @@
             }
         }
 
-        window.onload = function() {
-            var storedValue = localStorage.getItem("sliderValue");
+        // window.onload = function() {
+        //     var storedValue = localStorage.getItem("sliderValue");
 
-            if (storedValue) {
-                var slider = document.getElementById("slider");
-                var sliderVal = document.getElementById("sliderValue");
+        //     if (storedValue) {
+        //         var slider = document.getElementById("slider");
+        //         var sliderVal = document.getElementById("sliderValue");
 
-                slider.value = storedValue;
-                sliderVal.value = storedValue;
-            }
-        }
+        //         slider.value = storedValue;
+        //         sliderVal.value = storedValue;
+        //     }
+        // }
     </script>
 @endsection
