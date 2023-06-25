@@ -102,6 +102,7 @@ class TaskController extends Controller
     public function view_prog(Request $Request)
     {
         $task = Task::find($Request->task_id);
+        $previous_progress = progress::where('tasks_id', $Request->task_id)->latest()->first();
         $mid = $task->member_id;
         $member = Member::find($mid);
         $member = $task->member;
@@ -109,7 +110,7 @@ class TaskController extends Controller
         $kpi = KPI::find($kpi_id);
         $progress = Progress::where('tasks_id', $Request->task_id)->latest('created_at')->get();
 
-        return view('kpi.score_data', compact('task', 'kpi', 'progress'));
+        return view('kpi.score_data', compact('task', 'kpi', 'progress', 'previous_progress'));
     }
 
 
@@ -118,7 +119,8 @@ class TaskController extends Controller
     {
         $cek = $request->keterangan;
         $tid =  $request->task_id;
-        $task = Task::where('id', $tid)->first();
+        // $task = Task::where('id', $tid)->first();
+        $task = Task::find($tid);
         $gp = $request->goal_progress;
 
         if ($cek == null) {
@@ -126,14 +128,22 @@ class TaskController extends Controller
                 'grade' => $request->grade
             ]);
         } else {
+
+            // return $request->range;
+
             // progress karyawan
+            $satu = $task->goal_progress+1;
+            $data = $request->validate([
+                'goal_progress' => "numeric|min:$satu"
+            ]);
+
             Progress::create([
                 'tasks_id' => $request->task_id,
-                'progress' => $gp,
+                'progress' => $data['goal_progress'],
                 'keterangan' => $request->keterangan,
             ]);
             $task->update([
-                'goal_progress' => $gp
+                'goal_progress' => $data['goal_progress']
             ]);
 
             if ($task->goal_progress > 0) {

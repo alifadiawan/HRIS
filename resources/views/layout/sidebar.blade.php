@@ -15,13 +15,14 @@
         </a>
     </li>
 
-
-        <li class="nav-item">
-            <a class="nav-link " href="/employee">
-                <i class="fa-solid fa-users"></i>
-                <span>Employee List</span>
-            </a>
-        </li>
+    @if (auth()->user()->role->role == 'admin')
+    <li class="nav-item">
+        <a class="nav-link " href="/employee">
+            <i class="fa-solid fa-users"></i>
+            <span>Employee List</span>
+        </a>
+    </li>
+    @endif
 
     {{-- <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
@@ -48,27 +49,30 @@
 
     <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-            <i class="fa-solid fa-lg fa-square-poll-vertical"></i><span>KPI</span><i class="bi bi-chevron-down ms-auto"></i>
+            <i class="fa-solid fa-lg fa-square-poll-vertical"></i><span>KPI</span><i
+                class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
             <li>
-                <a href="{{route('goals.index')}}">
+                <a href="/reports">
+                    <i class="bi bi-circle"></i><span>Summary</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('goals.index') }}">
                     <i class="bi bi-circle"></i><span>Goals Team</span>
                 </a>
             </li>
-            <li>
-                <a href="{{route('kpi.index')}}">
-                    <i class="bi bi-circle"></i><span>Group Data</span>
-                </a>
-            </li>
-            <li>
-                <a href="/reports">
-                    <i class="bi bi-circle"></i><span>Sales Reports</span>
-                </a>
-            </li>
+            @if (auth()->user()->role->role == 'admin')
+                <li>
+                    <a href="{{ route('kpi.index') }}">
+                        <i class="bi bi-circle"></i><span>Group Data</span>
+                    </a>
+                </li>
+            @endif
         </ul>
     </li>
-    
+
     {{-- <li class="nav-item">
         <a class="nav-link collapsed" href="/progress">
             <i class="fa-solid fa-circle-info fa-lg"></i>
@@ -82,6 +86,6 @@
         </a>
     </li>
 
-    
+
 
 </ul>
