@@ -59,7 +59,12 @@ class MemberController extends Controller
         $member->user_id = $request->user_id;
         $member->save();
 
-        notify()->success('Profile Berhasil Ditambahkan', 'Data Profile');
+        sweetalert()
+            ->icon('success')
+            ->confirmButtonColor('#0d6efd')
+            ->addSuccess('Profile Berhasil Ditambahkan');
+
+            
         return redirect('/profile');
     }
 
@@ -113,7 +118,11 @@ class MemberController extends Controller
             $user->save();
         }
 
-        notify()->success('Data Berhasil Diupdate !!', 'Data Profile');
+        sweetalert()
+            ->icon('success')
+            ->confirmButtonColor('#0d6efd')
+            ->addSuccess('Data Berhasil Diupdate');
+
         if(auth()->user()->role->role == 'admin'){
             return redirect('/employee');
         } else {
@@ -135,7 +144,12 @@ class MemberController extends Controller
         $user = User::find($member->user->id);
         $user->delete();
 
-        notify()->success('Berhasil Hapus Data !!', 'Data Profile');
+        sweetalert()
+            ->icon('success')
+            ->confirmButtonColor('#0d6efd')
+            ->addSuccess('Data berhasil dihapus');
+
+            
         return redirect('/employee');
     }
 }

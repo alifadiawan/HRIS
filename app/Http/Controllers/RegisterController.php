@@ -29,13 +29,19 @@ class RegisterController extends Controller
 
         $existingUser = User::where('username', $register['username'])->first();
         if ($existingUser) {
-            session()->flash('username', 'Username sudah digunakan.');
+            notyf()
+                ->position('x', 'right')
+                ->position('y', 'top')
+                ->addError('Username sudah digunakan.');
             return redirect('/sign-up');
         }
 
         $existingEmail = User::where('email', $register['email'])->first();
         if ($existingEmail) {
-            session()->flash('email', 'Email sudah digunakan.');
+            notyf()
+                ->position('x', 'right')
+                ->position('y', 'top')
+                ->addError('Email sudah digunakan.');
             return redirect('/sign-up');
         }
 
@@ -46,7 +52,10 @@ class RegisterController extends Controller
         $user->role_id = 2;
         $user->save();
 
-        notify()->success('Akun Berhasil Dibuat !!', 'Berhasil');
+        notyf()
+            ->position('x', 'right')
+            ->position('y', 'top')
+            ->addSuccess('Akun anda BERHASIL dibuat');
         return redirect('/sign-in');
     }
 }

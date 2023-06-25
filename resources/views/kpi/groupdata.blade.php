@@ -206,6 +206,13 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        // function validate() {
+        //     if (document.getElementById('flexSwitchCheckDefault').checked) {
+        //         alert("checked");
+        //     } else {
+        //         alert("You didn't check it! Let me check it for you.");
+        //     }
+        // }
         function toggleIsActive(kpiId) {
             $.ajax({
                 url: '{{ route('api.goals.toggleIsActive') }}',
@@ -216,8 +223,12 @@
                 },
                 success: function(response) {
                     // Berhasil mengubah status isActive
-                    alert(response.message);
-                    console.log(response.success);
+                    Swal.fire({
+                        icon: 'success',
+                        title:  response.message,
+                        confirmButtonColor: '#0d6efd'
+                    })
+
                 },
                 error: function(xhr) {
                     // Gagal mengubah status isActive

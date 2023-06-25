@@ -44,7 +44,7 @@
                         <div class="col-lg-4 col-9">
                             <div class="input-group mt-3">
                                 <select class="form-select" id="inputGroupSelect03">
-                                    <option >Select Status</option>
+                                    <option>Select Status</option>
                                     <option value="todo">Todo</option>
                                     <option value="doing">Doing</option>
                                     <option value="checking">Checking</option>
@@ -54,7 +54,8 @@
                         </div>
                         <div class="col-3">
                             <div class="input-group mt-3">
-                                <button onClick="window.location.reload();" class="btn btn-outline-secondary"><i class="fa-solid fa-rotate fa-lg"></i></button>
+                                <button onClick="window.location.reload();" class="btn btn-outline-secondary"><i
+                                        class="fa-solid fa-rotate fa-lg"></i></button>
                             </div>
                         </div>
                     </div>
@@ -484,10 +485,25 @@
             border: 1px solid;
         }
     </style>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        // sortir employee 
 
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    @if (session('showSweetAlert'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'KPI Berhasil Ditambahkan !!',
+                    confirmButtonColor: '#0d6efd'
+                });
+            });
+        </script>
+    @endif
+
+    {{-- sortir employee  --}}
+    <script>
         $(document).ready(function() {
             $('#inputGroupSelect03').on('change', function() {
                 findStatus();
@@ -553,6 +569,8 @@
             return number.toLocaleString();
         }
     </script>
+
+
     <script>
         $(document).ready(function() {
             $('#kpi_id').change(function() {
