@@ -72,5 +72,27 @@
     </div>
 </div>
 
+<!-- Jabatan Modal -->
+<div class="modal fade" id="addJabatan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-3">
+            <form action="{{ route('jabatan.store') }}" method="post">
+                @csrf
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="text-center">Nama Jabatan</label>
+                    <input type="text" class="form-control" name="nama_jabatan">
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col">
+                        <a href="" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</a>
+                        <button type="submit" class="btn btn-success">Save</button>
+            </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- hapus tugas modal -->

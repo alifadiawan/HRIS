@@ -161,22 +161,35 @@
                                 </div>
                             </div>
                             <hr>
+                            @if(auth()->user()->member->jabatan == null)
                             <div class="row">
                                 <div class="col-sm-5 col-6">
                                     <p class="mb-0 fw-bold"><i class="fa-solid fa-bag-shopping fa-xl fa-fw"></i> Jabatan
                                     </p>
                                 </div>
                                 <div class="col-sm-7 col-6">
-                                    <p class="text mb-0">{{ auth()->user()->member->jabatan }}</p>
+                                    <p class="text-muted mb-0">Jabatan Ku</p>
                                 </div>
                             </div>
                             <hr>
+                            @else
+                            <div class="row">
+                                <div class="col-sm-5 col-6">
+                                    <p class="mb-0 fw-bold"><i class="fa-solid fa-bag-shopping fa-xl fa-fw"></i> Jabatan
+                                    </p>
+                                </div>
+                                <div class="col-sm-7 col-6">
+                                    <p class="text text-capitalize mb-0">{{ auth()->user()->member->jabatan->nama_jabatan }}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            @endif
                             <div class="row">
                                 <div class="col-sm-5 col-6">
                                     <p class="mb-0 fw-bold"><i class="fa-solid fa-user-gear fa-xl fa-fw"></i> Divisi</p>
                                 </div>
                                 <div class="col-sm-7 col-6">
-                                    <p class="text mb-0">{{ auth()->user()->member->divisi->nama_divisi }}</p>
+                                    <p class="text text-capitalize mb-0">{{ auth()->user()->member->divisi->nama_divisi }}</p>
                                 </div>
                             </div>
                             <div class="d-grid gap-3">

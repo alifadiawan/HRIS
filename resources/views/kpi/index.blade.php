@@ -44,7 +44,11 @@
                                                     <td>{{ $m->nama }}</td>
                                                     <td>{{ $m->nik }}</td>
                                                     <td class="text-capitalize">{{ $m->divisi->nama_divisi }}</td>
-                                                    <td class="text-capitalize">{{ $m->jabatan }}</td>
+                                                    @if($m->jabatan === null)
+                                                    <td></td>
+                                                    @else
+                                                    <td class="text-capitalize">{{ $m->jabatan->nama_jabatan }}</td>
+                                                    @endif
                                                     <td>
                                                         <a href="" class="btn" data-bs-toggle="dropdown">
                                                             <i class="fa-solid fa-ellipsis-vertical"></i>
@@ -82,6 +86,9 @@
 
 
             <!-- Divisi -->
+            <div class="d-flex flex-row">
+                <h4 class="fw-bold mb-3">Divisi</h4>
+            </div>
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
@@ -112,9 +119,43 @@
                 </div>
             </div>
 
+            <!-- Jabatan -->
+            <div class="d-flex flex-row">
+                <h4 class="fw-bold mb-3">Jabatan</h4>
+            </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <button class="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target="#addJabatan">Tambah
+                            Jabatan</button>
+                        <table class="table mt-4" style="outline: 2px;">
+                            <thead class="table-secondary">
+                                <th>NO.</th>
+                                <th>Nama Jabatan</th>
+                                <th>Action</th>
+                            </thead>
+                            <tbody>
+                                @foreach ($jabatan as $j)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $j->nama_jabatan }}</td>
+                                        <td>
+                                            <a href="{{ route('jabatan.hapus', $j->id) }}" class="btn btn-danger"><i
+                                                    class="fas fa-trash"></i></a>
+                                            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editJabatan_{{$j->id}}"><i
+                                                    class="fas fa-pencil"></i></button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-      <!-- Modal -->
+      <!-- Divisi Modal -->
       @foreach($divisi as $dm)
       <div class="modal fade" id="editDivisi_{{$dm->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -129,6 +170,32 @@
                 <div class="modal-body">
                   <label for="edit_nama">Nama Divisi</label>
                   <input type="text" name="edit_nama" id="edit_nama" class="form-control" value="{{$dm->nama_divisi}}">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                  <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      @endforeach
+
+      <!-- jabatan Modal -->
+      @foreach($jabatan as $jm)
+      <div class="modal fade" id="editJabatan_{{$jm->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: #4154f1">
+              <h5 class="modal-title text-white fw-bold" id="staticBackdropLabel">Edit Jabatan</h5>
+              <button type="button" class="btn-close btn-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{route('jabatan.update', $jm->id)}}" class="edit-form" method="post">
+                @csrf
+                @method('PUT')
+                <div class="modal-body">
+                  <label for="edit_jabatan">Nama Jabatan</label>
+                  <input type="text" name="edit_jabatan" id="edit_jabatan" class="form-control" value="{{$jm->nama_jabatan}}">
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

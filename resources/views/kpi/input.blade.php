@@ -69,10 +69,10 @@
                                 <div class="col-lg-6">
                                     <label for="jabatan" class="fw-bold mt-4">FOR JABATAN</label>
                                     <div class="input-group">
-                                        <select class="form-select form-control text-capitalize" name="jabatan" id="jabatan">
+                                        <select class="form-select form-control text-capitalize" name="jabatan_id" id="jabatan_id">
                                             <option value="">Semua</option>
                                             @foreach($jabatan as $j)
-                                            <option value="{{$j}}">{{$j}}</option>
+                                            <option value="{{$j->id}}">{{$j->nama_jabatan}}</option>
                                             @endforeach
                                         </select>
                                     </div>

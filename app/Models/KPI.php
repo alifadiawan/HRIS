@@ -10,9 +10,14 @@ class KPI extends Model
     use HasFactory;
     protected $guarded=[];
 
-    public function mapping()
+    public function divisi()
     {
-        return $this->belongsToMany(Member::class, 'kpi_mapping', 'kpi_id', 'employee_id');
+        return $this->belongsTo(Divisi::class);
+    }
+
+    public function jabatan()
+    {
+        return $this->belongsTo(Jabatan::class);
     }
 
     public function task()

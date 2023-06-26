@@ -20,7 +20,11 @@ return new class extends Migration
             $table->string('jk');
             $table->date('tgl_lahir');
             $table->string('foto')->nullable();
-            $table->string('jabatan')->nullable();
+            $table->foreignId('jabatan_id')
+                  ->nullable()
+                  ->constrained('jabatans')
+                  ->cascadeOnUpdate()
+                  ->cascadeOnDelete();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')
                 ->onDelete('cascade')

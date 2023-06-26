@@ -72,10 +72,17 @@
                     <div class="col-sm-3">
                         <p class="mb-0">Jabatan</p>
                     </div>
+                    @if($member->jabatan != null)
                     <div class="col-sm-9">
-                        <input disabled type="text" class="form-control text-capitalize" value="{{ $member->jabatan }}"
+                        <input disabled type="text" class="form-control text-capitalize" value="{{ $member->jabatan->nama_jabatan }}"
                             name="alamat">
                     </div>
+                    @else
+                    <div class="col-sm-9">
+                        <input disabled type="text" class="form-control text-capitalize" value="Tidak Punya Jabatan"
+                            name="alamat">
+                    </div>
+                    @endif
                 </div>
                 <hr>
                 <div class="row">

@@ -34,7 +34,7 @@
                                         <option>Choose...</option>
                                         @foreach ($member as $m)
                                             <option value="{{ $m->id }}">{{ $m->nama }} -
-                                                {{ $m->divisi->nama_divisi }}
+                                                {{ $m->divisi->nama_divisi }} - {{$m->jabatan->nama_jabatan}}
                                             </option>
                                         @endforeach
                                     </select>
@@ -587,7 +587,7 @@
                                 $('#member_id').append(
                                     '<option class="text-capitalize" value="' +
                                     value.id + '">' + value.nama + ' ( ' + value
-                                    .divisi.nama_divisi + ' - ' + value.jabatan +
+                                    .divisi.nama_divisi + ' - ' + value.jabatan.nama_jabatan +
                                     ' )' + '</option>');
                             });
                         }

@@ -21,6 +21,17 @@ return new class extends Migration
             $table->float('min_treshold');
             $table->float('max_treshold');
             $table->boolean('isActive');
+
+            $table->foreignId('divisi_id')
+                  ->nullable()
+                  ->constrained('divisis')
+                  ->cascadeOnUpdate()
+                  ->cascadeOnDelete();
+            $table->foreignId('jabatan_id')
+                  ->nullable()
+                  ->constrained('jabatans')
+                  ->cascadeOnUpdate()
+                  ->cascadeOnDelete();
             $table->timestamps();
         });
     }

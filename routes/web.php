@@ -8,6 +8,7 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\KPIController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\DivisiController;
+use App\Http\Controllers\JabatanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +71,10 @@ Route::middleware('auth')->group(function () {
     //divisi
     Route::resource('divisi', DivisiController::class);
     Route::get('/divisi/{id}/hapus', [DivisiController::class, 'hapus'])->name('divisi.hapus');
+
+    //jabatan
+    Route::resource('jabatan', JabatanController::class);
+    Route::get('/jabatan/{id}/hapus', [JabatanController::class, 'hapus'])->name('jabatan.hapus');
 
     //Sales Reports
     Route::get('/reports', function () {
