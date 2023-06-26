@@ -110,21 +110,77 @@
                             </tr>
                         </thead>
                         <tbody>
+
+
                             @foreach ($task as $t)
-                                @if ($t->status == 'done')
+                                @if ($t->grade != null)
+                                    <tr>
+                                        <th><button class="accordion-button" data-bs-toggle="collapse"
+                                                data-bs-target="#r1{{ $t->id }}" class="accordion-button"
+                                                id="accordion{{ $t->id }}">a</button></th>
+                                        @foreach ($kpi as $k)
+                                            @if ($t->kpi_id == $k->id)
+                                                <td>{{ $k->group_name }}</td>
+                                            @endif
+                                        @endforeach
+                                        <td>{{ $t->created_at->format('d-m-Y') }} - {{ $t->created_at->format('H:i') }}
+                                        </td>
+                                        <td>{{ \Carbon\Carbon::parse($t->tanggal_target)->format('d-m-Y') }}</td>
+                                        <td>{{ $t->updated_at->format('d-m-Y') }}</td>
+                                        <td>{{ $t->grade }}</td>
+                                    </tr>
+                        <tbody class="collapse accordion-collapse" id="r1{{ $t->id }}"
+                            data-bs-parent="#accordion{{ $t->id }}">
+
+                            @foreach ($progress as $p)
+                                @if ($p->tasks_id == $t->id)
+                                    <td colspan="6">
+                                        <table class="table table-borderless table-hover text-center">
+                                            <thead>
+                                                <th>Progress</th>
+                                                <th>Keterangan</th>
+                                                <th>Tanggal</th>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($progress as $p)
+                                                    @if ($p->tasks_id == $t->id)
+                                                        <tr>
+                                                            <td>
+                                                                {{ $p->progress }}
+                                                            </td>
+                                                            <td>
+                                                                {{ $p->keterangan }}
+                                                            </td>
+                                                            <td>
+                                                                {{ $p->created_at }}
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                @endif
+                            @endforeach
+
+                        </tbody>
+                        @endif
+                        @endforeach
+                        {{-- @foreach ($task as $t)
+                                @if ($t->grade != null)
                                     <tr>
                                         <td>
-                                            <div class="accordion" id="accordionExample">
+                                            <div class="accordion" id="accordion{{$t->id}}">
                                                 <div class="accordion-item">
                                                     <h2 class="accordion-header" id="headingOne">
                                                         <button class="accordion-button" type="button"
-                                                            data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                                                            aria-expanded="true" aria-controls="collapseOne">
-                                                            v
+                                                            data-bs-toggle="collapse" data-bs-target="#collapse{{$t->id}}"
+                                                            aria-expanded="true" aria-controls="collapse{{$t->id}}">
+                                                            
                                                         </button>
                                                     </h2>
-                                                    <div id="collapseOne" class="accordion-collapse collapse"
-                                                        aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                                    <div id="collapse{{$t->id}}" class="accordion-collapse collapse"
+                                                        aria-labelledby="headingOne" data-bs-parent="#accordion{{$t->id}}">
                                                         <div class="accordion-body">
                                                             <table class="table table-bordered">
                                                                 <thead>
@@ -166,7 +222,7 @@
                                         <td>{{ $t->grade }}</td>
                                     </tr>
                                 @endif
-                            @endforeach
+                            @endforeach --}}
                         </tbody>
                     </table>
                 </div>
