@@ -117,11 +117,10 @@
       <!-- Modal -->
       @foreach($divisi as $dm)
       <div class="modal fade" id="editDivisi_{{$dm->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header" style="background-color: #4154f1">
               <h5 class="modal-title text-white fw-bold" id="staticBackdropLabel">Edit Divisi</h5>
-              <button type="button" class="btn-close btn-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="{{route('divisi.update', $dm->id)}}" class="edit-form" method="post">
                 @csrf

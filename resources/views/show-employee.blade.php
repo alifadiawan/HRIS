@@ -1,9 +1,7 @@
 @extends('layout.body')
 @section('title', 'Show Employee')
-@section('page-title',
-    Str::html(
-    __('<a class="btn btn-lg text-secondary" href="/employee"><i class="fa-solid fa-arrow-left"></i></a> Show Employee'),
-    ))
+@section('page-title', Str::html(__('<a class="btn btn-lg text-secondary" href="/employee"><i
+            class="fa-solid fa-arrow-left"></i></a> Show Employee')))
 @section('content')
 
     <section id="profile" class="container">
@@ -100,10 +98,9 @@
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
-                            <tr>
-                                <th>Action</th>
-                                <th>Tanggal Dibuat</th>
-                                <th>Tanggal Deadline</th>
+                            <tr class="text-center">
+                                <th>Goals Name</th>
+                                <th colspan="2">Tanggal Deadline - Jam</th>
                                 <th>Tanggal Dinilai</th>
                                 <th>Goals Name</th>
                                 <th>Nilai</th>
@@ -114,17 +111,19 @@
 
                             @foreach ($task as $t)
                                 @if ($t->grade != null)
-                                    <tr>
-                                        <th><button class="accordion-button" data-bs-toggle="collapse"
-                                                data-bs-target="#r1{{ $t->id }}" class="accordion-button"
-                                                id="accordion{{ $t->id }}">a</button></th>
+                                    <tr class="text-center">
                                         @foreach ($kpi as $k)
                                             @if ($t->kpi_id == $k->id)
-                                                <td>{{ $k->group_name }}</td>
+                                                <td class="text-start">
+                                                    <button class="btn text-primary" data-bs-toggle="collapse"
+                                                        data-bs-target="#r1{{ $t->id }}"
+                                                        id="accordion{{ $t->id }}"><i
+                                                            class="fa-solid fa-chevron-down"></i></button>{{ $k->group_name }}
+                                                </td>
                                             @endif
                                         @endforeach
-                                        <td>{{ $t->created_at->format('d-m-Y') }} - {{ $t->created_at->format('H:i') }}
-                                        </td>
+                                        <td>{{ $t->created_at->format('d-m-Y') }} </td>
+                                        <td>{{ $t->created_at->format('H:i') }}</td>
                                         <td>{{ \Carbon\Carbon::parse($t->tanggal_target)->format('d-m-Y') }}</td>
                                         <td>{{ $t->updated_at->format('d-m-Y') }}</td>
                                         <td>{{ $t->grade }}</td>
@@ -132,37 +131,40 @@
                         <tbody class="collapse accordion-collapse" id="r1{{ $t->id }}"
                             data-bs-parent="#accordion{{ $t->id }}">
 
-                            @foreach ($progress as $p)
-                                @if ($p->tasks_id == $t->id)
-                                    <td colspan="6">
-                                        <table class="table table-borderless table-hover text-center">
-                                            <thead>
-                                                <th>Progress</th>
-                                                <th>Keterangan</th>
-                                                <th>Tanggal</th>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($progress as $p)
-                                                    @if ($p->tasks_id == $t->id)
-                                                        <tr>
-                                                            <td>
-                                                                {{ $p->progress }}
-                                                            </td>
-                                                            <td>
-                                                                {{ $p->keterangan }}
-                                                            </td>
-                                                            <td>
-                                                                {{ $p->created_at }}
-                                                            </td>
-                                                        </tr>
-                                                    @endif
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                @endif
-                            @endforeach
-
+                            <td colspan="6" class="text-center">
+                                <div class="table-resonsive">
+                                    <table class="table table-borderless table-hover">
+                                        <thead>
+                                            <th>Tanggal Progress</th>
+                                            <th>Progress</th>
+                                            <th>Keterangan</th>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($progress as $p)
+                                                @if ($p->tasks_id == $t->id)
+                                                    <tr>
+                                                        <td>
+                                                            {{ $p->created_at->format('d M Y') }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $p->progress }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $p->keterangan }}
+                                                        </td>
+                                                    </tr>
+                                                @elseif($p == null)
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            <h4 class="fw-bold">Belum ada progress</h4>
+                                                        </td>
+                                                    </tr>
+                                                @endif
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
                         </tbody>
                         @endif
                         @endforeach
