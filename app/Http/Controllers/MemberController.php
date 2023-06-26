@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Member;
 use App\Models\User;
 use App\Models\Divisi;
+use App\Models\Jabatan;
+use App\Models\Role;
 use App\Models\KPI;
 use App\Models\Progress;
 use App\Models\Task;
@@ -22,9 +24,10 @@ class MemberController extends Controller
             $query->whereHas('role', function ($user) {
                 $user->where('role', '!=', 'admin');
             });
-        })->where('jabatan', null)->get();
+        })->where('jabatan_id', null)->get();
         $divisi = Divisi::all();
-        return view('kpi.index', compact('member', 'divisi', 'new'));
+        $jabatan = Jabatan::all();
+        return view('kpi.index', compact('member', 'divisi', 'new', 'jabatan'));
     }
 
     public function profile()
@@ -40,6 +43,7 @@ class MemberController extends Controller
     public function create()
     {
         $divisi = Divisi::all();
+        $jabatan = Jabatan::all();
         return view('add-profile', compact('divisi'));
     }
 
@@ -88,8 +92,10 @@ class MemberController extends Controller
     public function edit($id)
     {
         $divisi = Divisi::all();
+        $jabatan = Jabatan::all();
+        $role = Role::all();
         $member = Member::find($id);
-        return view('edit-profile', compact('member', 'divisi'));
+        return view('edit-profile', compact('member', 'divisi', 'jabatan', 'role'));
     }
 
     /**
@@ -105,9 +111,18 @@ class MemberController extends Controller
         $member->nik = $request->nik;
         $member->jk = $request->jk;
         $member->tgl_lahir = $request->tgl_lahir;
-        $member->jabatan = $request->jabatan;
+        if ($request->jabatan_id != null) {
+            $member->jabatan_id = $request->jabatan_id;
+        } else {
+            $member->jabatan_id = null;
+        }
         $member->divisi_id = $request->divisi_id;
         $member->save();
+
+        if (auth()->user()->role->role == 'admin') {
+            $user->role_id = $request->role_id;
+            $user->save();
+        }
 
         if (auth()->user()->member->id === $member->id) {
             $user->username = $request->username;

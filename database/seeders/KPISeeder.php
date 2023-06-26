@@ -38,16 +38,18 @@ class KPISeeder extends Seeder
             ],
         ];
 
-        $employeeAll = Member::whereHas('user', function ($query) {
-            $query->whereHas('role', function ($user) {
-                $user->where('role', '!=', 'admin');
-            });
-        })->get();
+        KPI::insert($allKpi);
 
-        foreach ($allKpi as $kpi) {
-            $kpis = KPI::create($kpi);
-            $kpis->mapping()->attach($employeeAll);
-        }
+        // $employeeAll = Member::whereHas('user', function ($query) {
+        //     $query->whereHas('role', function ($user) {
+        //         $user->where('role', '!=', 'admin');
+        //     });
+        // })->get();
+
+        // foreach ($allKpi as $kpi) {
+        //     $kpis = KPI::create($kpi);
+        //     $kpis->mapping()->attach($employeeAll);
+        // }
 
         $kpiIT = [
             [
@@ -59,6 +61,7 @@ class KPISeeder extends Seeder
                 'min_treshold' => 6.5,
                 'max_treshold' => 12.5,
                 'isActive' => true,
+                'divisi_id' => 1,
             ],
             [
                 'group_name' => 'Computer KPI',
@@ -69,21 +72,24 @@ class KPISeeder extends Seeder
                 'min_treshold' => 15,
                 'max_treshold' => 31,
                 'isActive' => false,
+                'divisi_id' => 1,
             ],
         ];
 
-        $employeeIT = Member::whereHas('user', function ($query) {
-            $query->whereHas('role', function ($user) {
-                $user->where('role', '!=', 'admin');
-            });
-        })->whereHas('divisi', function ($divisi) {
-               $divisi->where('nama_divisi', 'information technology'); 
-            })->get();
+        KPI::insert($kpiIT);
 
-        foreach ($kpiIT as $kpi) {
-            $kpis = KPI::create($kpi);
-            $kpis->mapping()->attach($employeeIT);
-        }
+        // $employeeIT = Member::whereHas('user', function ($query) {
+        //     $query->whereHas('role', function ($user) {
+        //         $user->where('role', '!=', 'admin');
+        //     });
+        // })->whereHas('divisi', function ($divisi) {
+        //        $divisi->where('nama_divisi', 'information technology'); 
+        //     })->get();
+
+        // foreach ($kpiIT as $kpi) {
+        //     $kpis = KPI::create($kpi);
+        //     $kpis->mapping()->attach($employeeIT);
+        // }
 
         $kpiM = [
             [
@@ -95,6 +101,7 @@ class KPISeeder extends Seeder
                 'min_treshold' => 6.5,
                 'max_treshold' => 12.5,
                 'isActive' => true,
+                'divisi_id' => 2,
             ],
             [
                 'group_name' => 'Social Media Post KPI',
@@ -105,21 +112,24 @@ class KPISeeder extends Seeder
                 'min_treshold' => 15,
                 'max_treshold' => 31,
                 'isActive' => false,
+                'divisi_id' => 2,
             ],
         ];
 
-        $employeeM = Member::whereHas('user', function ($query) {
-            $query->whereHas('role', function ($user) {
-                $user->where('role', '!=', 'admin');
-            });
-        })->whereHas('divisi', function ($divisi) {
-               $divisi->where('nama_divisi', 'marketing'); 
-            })->get();
+        KPI::insert($kpiM);
 
-        foreach ($kpiM as $kpi) {
-            $kpis = KPI::create($kpi);
-            $kpis->mapping()->attach($employeeM);
-        }
+        // $employeeM = Member::whereHas('user', function ($query) {
+        //     $query->whereHas('role', function ($user) {
+        //         $user->where('role', '!=', 'admin');
+        //     });
+        // })->whereHas('divisi', function ($divisi) {
+        //        $divisi->where('nama_divisi', 'marketing'); 
+        //     })->get();
+
+        // foreach ($kpiM as $kpi) {
+        //     $kpis = KPI::create($kpi);
+        //     $kpis->mapping()->attach($employeeM);
+        // }
 
         $kpiS = [
             [
@@ -131,19 +141,22 @@ class KPISeeder extends Seeder
                 'min_treshold' => 6.5,
                 'max_treshold' => 12.5,
                 'isActive' => true,
+                'jabatan_id' => 2
             ],
         ];
 
-        $employeeS = Member::whereHas('user', function ($query) {
-            $query->whereHas('role', function ($user) {
-                $user->where('role', '!=', 'admin');
-            });
-        })->where('jabatan', 'supervisor')->get();
+        KPI::insert($kpiS);
 
-        foreach ($kpiS as $kpi) {
-            $kpis = KPI::create($kpi);
-            $kpis->mapping()->attach($employeeS);
-        }
+        // $employeeS = Member::whereHas('user', function ($query) {
+        //     $query->whereHas('role', function ($user) {
+        //         $user->where('role', '!=', 'admin');
+        //     });
+        // })->where('jabatan', 'supervisor')->get();
+
+        // foreach ($kpiS as $kpi) {
+        //     $kpis = KPI::create($kpi);
+        //     $kpis->mapping()->attach($employeeS);
+        // }
 
         $kpiIK = [
             [
@@ -155,20 +168,24 @@ class KPISeeder extends Seeder
                 'min_treshold' => 6.5,
                 'max_treshold' => 12.5,
                 'isActive' => true,
+                'divisi_id' => 1,
+                'jabatan_id' => 1,
             ],
         ];
 
-        $employeeIK = Member::whereHas('user', function ($query) {
-            $query->whereHas('role', function ($user) {
-                $user->where('role', '!=', 'admin');
-            });
-        })->where('jabatan', 'karyawan')->whereHas('divisi', function ($divisi) {
-               $divisi->where('nama_divisi', 'information technology'); 
-            })->get();
+        KPI::insert($kpiIK);
 
-        foreach ($kpiIK as $kpi) {
-            $kpis = KPI::create($kpi);
-            $kpis->mapping()->attach($employeeIK);
-        }
+        // $employeeIK = Member::whereHas('user', function ($query) {
+        //     $query->whereHas('role', function ($user) {
+        //         $user->where('role', '!=', 'admin');
+        //     });
+        // })->where('jabatan', 'karyawan')->whereHas('divisi', function ($divisi) {
+        //        $divisi->where('nama_divisi', 'information technology'); 
+        //     })->get();
+
+        // foreach ($kpiIK as $kpi) {
+        //     $kpis = KPI::create($kpi);
+        //     $kpis->mapping()->attach($employeeIK);
+        // }
     }
 }

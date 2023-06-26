@@ -30,8 +30,8 @@ class Member extends Model
         return $this->belongsTo(Divisi::class, 'divisi_id');
     }
 
-    public function mapping()
+    public function jabatan()
     {
-        return $this->belongsToMany(KPI::class, 'kpi_mapping', 'employee_id', 'kpi_id');
+        return $this->belongsTo(Jabatan::class, 'jabatan_id');
     }
 }

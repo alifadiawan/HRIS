@@ -48,10 +48,10 @@ class memberKwSeeder extends Seeder
                 'alamat' => 'hayoo dimana',
                 'jk' => 'laki',
                 'tgl_lahir' => Carbon::parse('18-11-2005'),
-                'jabatan' => 'karyawan',
                 // 'foto'=>'',
                 'user_id' => 5,
                 'divisi_id' => 1,
+                'jabatan_id'=> 1
             ],
             [
                 'nama' => 'employee2',
@@ -60,10 +60,10 @@ class memberKwSeeder extends Seeder
                 'alamat' => 'hayoo dimana',
                 'jk' => 'laki',
                 'tgl_lahir' => Carbon::parse('18-11-2005'),
-                'jabatan' => 'supervisor',
                 // 'foto'=>'',
                 'user_id' => 6,
                 'divisi_id' => 1,
+                'jabatan_id'=> 2
             ],
             [
                 'nama' => 'employee3',
@@ -72,10 +72,10 @@ class memberKwSeeder extends Seeder
                 'alamat' => 'hayoo dimana',
                 'jk' => 'laki',
                 'tgl_lahir' => Carbon::parse('18-11-2005'),
-                'jabatan' => 'karyawan',
                 // 'foto'=>'',
                 'user_id' => 7,
                 'divisi_id' => 2,
+                'jabatan_id'=> 1
             ],
             [
                 'nama' => 'employee4',
@@ -84,10 +84,10 @@ class memberKwSeeder extends Seeder
                 'alamat' => 'hayoo dimana',
                 'jk' => 'laki',
                 'tgl_lahir' => Carbon::parse('18-11-2005'),
-                'jabatan' => 'supervisor',
                 // 'foto'=>'',
                 'user_id' => 8,
                 'divisi_id' => 2,
+                'jabatan_id'=> 2
             ],
         ];
 

@@ -18,8 +18,8 @@ class DashboardController extends Controller
                 $query->whereHas('role', function ($user) {
                     $user->where('role', '!=', 'admin');
                 });
-            })->where('jabatan', null)->get();
-            $task = Task::where('member_id', auth()->user()->member->id)->where('status', '!=', 'done')->where('status', '!=', 'checking')->latest()->take(4)->get();
+            })->where('jabatan_id', null)->get();
+            $task = Task::where('member_id', auth()->user()->member->id)->where('status', '!=', 'done')->latest()->take(4)->get();
             $task_adm = Task::latest()->take(5)->get();
             $task_all = Task::all();
             $task_todo = Task::where('status', 'todo')->get();

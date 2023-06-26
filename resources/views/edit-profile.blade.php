@@ -107,10 +107,29 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
+                                <p class="mb-0">Role</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <select class="form-control form-select text-capitalize" name="role_id">
+                                    <option value="">Pilih Role</option>
+                                    @foreach($role as $r)
+                                    <option value="{{$r->id}}" @if($r->id == $member->user->role_id) selected @endif>{{$r->role}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
                                 <p class="mb-0">Jabatan</p>
                             </div>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" value="{{ $member->jabatan }}" name="jabatan">
+                                <select class="form-control form-select text-capitalize" name="jabatan_id">
+                                    <option value="">Pilih Jabatan</option>
+                                    @foreach($jabatan as $j)
+                                    <option value="{{$j->id}}" @if($j->id == $member->jabatan_id) selected @endif>{{$j->nama_jabatan}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     @endif

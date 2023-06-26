@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\KPI;
 use App\Models\Member;
 use App\Models\Divisi;
+use App\Models\Jabatan;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -15,20 +16,9 @@ class KPIController extends Controller
      */
     public function index()
     {
-        $kpis = KPI::with('mapping')->orderBy('sort_no', 'asc')->get();
+        $kpis = KPI::orderBy('sort_no', 'asc')->get();
         // return $kpis;
-        $member = Member::whereHas('user', function ($query) {
-            $query->whereHas('role', function ($user) {
-                $user->where('role', '!=', 'admin');
-            });
-        })->get();
-        $new = Member::whereHas('user', function ($query) {
-            $query->whereHas('role', function ($user) {
-                $user->where('role', '!=', 'admin');
-            });
-        })->whereDoesntHave('mapping')->get();
-        // return $new;
-        return view('kpi.groupdata', compact('kpis', 'member', 'new'));
+        return view('kpi.groupdata', compact('kpis'));
     }
 
     /**
@@ -37,7 +27,7 @@ class KPIController extends Controller
     public function create()
     {
         $divisi = Divisi::all();
-        $jabatan = Member::where('jabatan', '!=', 'null')->pluck('jabatan')->unique();
+        $jabatan = Jabatan::all();
         // return $jabatan;
         return view('kpi.input', compact('divisi', 'jabatan'));
     }
@@ -52,7 +42,7 @@ class KPIController extends Controller
         $kpi->isActive = !$kpi->isActive;
         $kpi->save();
         if ($kpi->isActive == false) {
-            $status = 'nonaktif';
+            $status = 'non-aktif';
         } else {
             $status = 'aktifkan';
         }
@@ -69,7 +59,7 @@ class KPIController extends Controller
             'deskripsi' => 'required',
             'parameter' => 'required',
             'divisi_id' => 'nullable',
-            'jabatan' => 'nullable',
+            'jabatan_id' => 'nullable',
             'weight' => 'required|numeric|min:1',
             'min_treshold' => 'required|numeric|min:1',
             'max_treshold' => 'required|numeric|min:1',
@@ -94,51 +84,13 @@ class KPIController extends Controller
         $kpi->min_treshold = $data['min_treshold'];
         $kpi->max_treshold = $data['max_treshold'];
         $kpi->isActive = $data['isActive'];
-        $kpi->save();
-
-        if ($data['divisi_id'] != null && $data['jabatan'] != null) {
-            $employee = Member::whereHas('user', function ($q) {
-                $q->whereHas('role', function ($u) {
-                    $u->where('role', '!=', 'admin');
-                });
-            })
-                ->where('divisi_id', '!=', null)
-                ->where('jabatan', '!=', null)
-                ->where('divisi_id', $data['divisi_id'])
-                ->where('jabatan', $data['jabatan'])->get();
-            // return 'spesifik';
-        } elseif ($data['jabatan'] != null) {
-            $employee = Member::whereHas('user', function ($q) {
-                $q->whereHas('role', function ($u) {
-                    $u->where('role', '!=', 'admin');
-                });
-            })
-                ->where('divisi_id', '!=', null)
-                ->where('jabatan', '!=', null)
-                ->where('jabatan', $data['jabatan'])->get();
-            // return 'jabatan';
-        } elseif ($data['divisi_id'] != null) {
-            $employee = Member::whereHas('user', function ($q) {
-                $q->whereHas('role', function ($u) {
-                    $u->where('role', '!=', 'admin');
-                });
-            })
-                ->where('divisi_id', '!=', null)
-                ->where('jabatan', '!=', null)
-                ->where('divisi_id', $data['divisi_id'])->get();
-            // return 'divisi';
-        } else {
-            $employee = Member::whereHas('user', function ($q) {
-                $q->whereHas('role', function ($u) {
-                    $u->where('role', '!=', 'admin');
-                });
-            })
-                ->where('divisi_id', '!=', null)
-                ->where('jabatan', '!=', null)->get();
-            // return 'semua';
+        if ($data['divisi_id'] != null) {
+            $kpi->divisi_id = $data['divisi_id'];
         }
-        // return $employee;
-        $kpi->mapping()->attach($employee);
+        if ($data['jabatan_id'] != null) {
+            $kpi->jabatan_id = $data['jabatan_id'];
+        }
+        $kpi->save();
 
         //notif
         sweetalert()
@@ -163,16 +115,9 @@ class KPIController extends Controller
     public function edit(KPI $kpi)
     {
         $divisi = Divisi::all();
-        $jabatan = Member::where('jabatan', '!=', null)->pluck('jabatan')->unique();
-        $member = Member::whereHas('user', function ($query) {
-            $query->whereHas('role', function ($user) {
-                $user->where('role', '!=', 'admin');
-            });
-        })->get();
-        // return $kpi->mapping;
-        // return $jabatan;
+        $jabatan = Jabatan::all();
 
-        return view('kpi.edit', compact('divisi', 'jabatan', 'kpi', 'member'));
+        return view('kpi.edit', compact('divisi', 'jabatan', 'kpi'));
     }
 
     /**
@@ -187,7 +132,7 @@ class KPIController extends Controller
             'deskripsi' => 'required',
             'parameter' => 'required',
             'divisi_id' => 'nullable',
-            'jabatan' => 'nullable',
+            'jabatan_id' => 'nullable',
             'weight' => 'required|numeric|min:1',
             'min_treshold' => 'required|numeric|min:1',
             'max_treshold' => 'required|numeric|min:1',
@@ -213,57 +158,23 @@ class KPIController extends Controller
         $kpi->min_treshold = $data['min_treshold'];
         $kpi->max_treshold = $data['max_treshold'];
         $kpi->isActive = $data['isActive'];
-        $kpi->save();
-
-        if ($data['divisi_id'] != null && $data['jabatan'] != null) {
-            $employee = Member::whereHas('user', function ($q) {
-                $q->whereHas('role', function ($u) {
-                    $u->where('role', '!=', 'admin');
-                });
-            })
-                ->where('divisi_id', '!=', null)
-                ->where('jabatan', '!=', null)
-                ->where('divisi_id', $data['divisi_id'])
-                ->where('jabatan', $data['jabatan'])->get();
-            // return 'spesifik';
-        } elseif ($data['jabatan'] != null) {
-            $employee = Member::whereHas('user', function ($q) {
-                $q->whereHas('role', function ($u) {
-                    $u->where('role', '!=', 'admin');
-                });
-            })
-                ->where('divisi_id', '!=', null)
-                ->where('jabatan', '!=', null)
-                ->where('jabatan', $data['jabatan'])->get();
-            // return 'jabatan';
-        } elseif ($data['divisi_id'] != null) {
-            $employee = Member::whereHas('user', function ($q) {
-                $q->whereHas('role', function ($u) {
-                    $u->where('role', '!=', 'admin');
-                });
-            })
-                ->where('divisi_id', '!=', null)
-                ->where('jabatan', '!=', null)
-                ->where('divisi_id', $data['divisi_id'])->get();
-            // return 'divisi';
+        if ($data['divisi_id'] == null) {
+            $kpi->divisi_id = null;
         } else {
-            $employee = Member::whereHas('user', function ($q) {
-                $q->whereHas('role', function ($u) {
-                    $u->where('role', '!=', 'admin');
-                });
-            })
-                ->where('divisi_id', '!=', null)
-                ->where('jabatan', '!=', null)->get();
-            // return 'semua';
+            $kpi->divisi_id = $data['divisi_id'];
         }
-        // return $employee;
-        $kpi->mapping()->sync($employee);
+        if ($data['jabatan_id'] == null) {
+            $kpi->jabatan_id = null;
+        } else {
+            $kpi->jabatan_id = $data['jabatan_id'];
+        }
+        $kpi->save();
 
         //notif
         sweetalert()
             ->icon('success')
             ->confirmButtonColor('#0d6efd')
-            ->addSuccess('KPI Berhasil diedit !!');
+            ->addSuccess('KPI Berhasil Diupdate !!');
 
         return redirect('/kpi');
     }
@@ -280,7 +191,7 @@ class KPIController extends Controller
     {
         $kpi = KPI::find($id);
 
-        $sort = KPI::where('id', '!=', $kpi->kpi)->where('sort_no', '>=', $kpi->sort_no)->get();
+        $sort = KPI::where('id', '!=', $kpi->id)->where('sort_no', '>=', $kpi->sort_no)->get();
         foreach ($sort as $s) {
             $s->sort_no = $s->sort_no - 1;
             $s->save();

@@ -6,12 +6,6 @@
 
     <section class="group_data">
         <div class="content">
-            @if ($new->isNotEmpty())
-                <div class="alert alert-warning">
-                    Ada Employee Tidak Terdaftar KPI ! <br>Silahkan Buat Baru atau Edit dan Submit Ulang Data KPI Untuk
-                    Merefresh Data KPI !
-                </div>
-            @endif
             @if (auth()->user()->role->role == 'admin')
                 <a href="{{ route('kpi.create') }}" class="btn btn-info text-white mb-3">Add Data</a>
             @endif
@@ -78,29 +72,21 @@
                                         <tr class="text-center kpi-row" style="vertical-align: middle; ">
                                             <td class="fw-bold">{{ $kpi->sort_no }}</td>
                                             <td class="fw-bold">{{ $kpi->group_name }}</td>
-                                            @php
-                                                $mappingCount = $kpi->mapping->count();
-                                                $memberCount = $member->count();
-                                            @endphp
-                                            @if ($mappingCount === $memberCount)
+                                            @if ($kpi->divisi_id == null && $kpi->jabatan_id == null)
                                                 <td>- Semua Divisi -</td>
                                                 <td>- Semua Jabatan -</td>
                                             @else
-                                                @php
-                                                    $divisiNames = $kpi->mapping->pluck('divisi.nama_divisi')->unique();
-                                                    $jabatanNames = $kpi->mapping->pluck('jabatan')->unique();
-                                                @endphp
                                                 <td class="text-capitalize">
-                                                    @if ($divisiNames->count() === 1)
-                                                        {{ $divisiNames->first() }}
+                                                    @if ($kpi->divisi_id != null)
+                                                        {{ $kpi->divisi->nama_divisi }}
                                                     @else
                                                         - Semua Divisi -
                                                     @endif
                                                 </td>
 
                                                 <td class="text-capitalize">
-                                                    @if ($jabatanNames->count() === 1)
-                                                        {{ $jabatanNames->first() }}
+                                                    @if ($kpi->jabatan_id != null)
+                                                        {{ $kpi->jabatan->nama_jabatan }}
                                                     @else
                                                         - Semua Jabatan -
                                                     @endif

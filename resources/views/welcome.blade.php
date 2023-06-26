@@ -175,12 +175,6 @@
                                             </a>
                                         </div>
                                     </div>
-                                    @if (
-                                        $task_all->count() > 0 &&
-                                            $task_doing->count() > 0 &&
-                                            $task_checking->count() > 0 &&
-                                            $task_done->count() > 0 &&
-                                            $task_todo->count() > 0)
                                         <div class="d-flex align-items-center">
                                             <div class="h4 fw-bold">{{ $task_all->count() }}</div>
                                             <div class="text-muted mx-2" style="font-size: 13px">Tugas</div>
@@ -192,22 +186,50 @@
                                             <div class="abu"></div>
                                         </div>
                                         <div class="row mt-3">
+                                            @if($task_doing->count() > 0)
                                             <div class="col-3">
                                                 <i class="fa-solid fa-square fa-2xl me-2 p-0"
                                                     style="color: #0861fd;"></i>{{ ($task_doing->count() / $task_all->count()) * 100 }}%
                                             </div>
+                                            @else
+                                            <div class="col-3">
+                                                <i class="fa-solid fa-square fa-2xl me-2 p-0"
+                                                    style="color: #0861fd;"></i>0%
+                                            </div>
+                                            @endif
+                                            @if($task_checking->count() > 0)
                                             <div class="col-3">
                                                 <i class="fa-solid fa-square fa-2xl me-2 p-0"
                                                     style="color: orange;"></i>{{ ($task_checking->count() / $task_all->count()) * 100 }}%
                                             </div>
+                                            @else
+                                            <div class="col-3">
+                                                <i class="fa-solid fa-square fa-2xl me-2 p-0"
+                                                    style="color: orange;"></i>0%
+                                            </div>
+                                            @endif
+                                            @if($task_done->count() > 0)
                                             <div class="col-3">
                                                 <i class="fa-solid fa-square fa-2xl me-2 p-0"
                                                     style="color: rgb(105, 211, 109);"></i>{{ ($task_done->count() / $task_all->count()) * 100 }}%
                                             </div>
+                                            @else
+                                            <div class="col-3">
+                                                <i class="fa-solid fa-square fa-2xl me-2 p-0"
+                                                    style="color: rgb(105, 211, 109);"></i>0%
+                                            </div>
+                                            @endif
+                                            @if($task_todo->count() > 0)
                                             <div class="col-3">
                                                 <i class="fa-solid fa-square fa-2xl me-2 p-0"
                                                     style="color: gray;"></i>{{ ($task_todo->count() / $task_all->count()) * 100 }}%
                                             </div>
+                                            @else
+                                            <div class="col-3">
+                                                <i class="fa-solid fa-square fa-2xl me-2 p-0"
+                                                    style="color: gray;"></i>0%
+                                            </div>
+                                            @endif
                                         </div>
                                         <div class="row text-muted" style="font-size: 13px">
                                             <div class="col-3">Doing</div>
@@ -217,7 +239,6 @@
                                         </div>
                                 </div>
                             </div>
-        @endif
         </div>
         </div>
         </div>
@@ -348,13 +369,9 @@
             text-align: center;
         }
 
-        @if (auth()->user()->hasProfile() &&
-                $task_all->count() > 0 &&
-                $task_doing->count() > 0 &&
-                $task_checking->count() > 0 &&
-                $task_done->count() > 0 &&
-                $task_todo->count() > 0)
+        @if (auth()->user()->hasProfile())
 
+            @if($task_doing->count() > 0)
             .biru {
                 width: {{ ($task_doing->count() / $task_all->count()) * 100 }}%;
                 height: 100%;
@@ -363,21 +380,50 @@
                 border-top-left-radius: 10px;
                 border-bottom-left-radius: 10px;
             }
+            @else
+            .biru {
+                width: 0%;
+                height: 100%;
+                background-color: rgb(12, 36, 252);
+                float: left;
+                border-top-left-radius: 10px;
+                border-bottom-left-radius: 10px;
+            }
+            @endif
 
+            @if($task_checking->count() > 0)
             .orange {
                 width: {{ ($task_checking->count() / $task_all->count()) * 100 }}%;
                 height: 100%;
                 background-color: orange;
                 float: left;
             }
+            @else
+            .orange {
+                width: 0%;
+                height: 100%;
+                background-color: orange;
+                float: left;
+            }
+            @endif
 
+            @if($task_done->count() > 0)
             .ijo {
                 width: {{ ($task_done->count() / $task_all->count()) * 100 }}%;
                 height: 100%;
                 background-color: rgb(105, 211, 109);
                 float: left;
             }
+            @else
+            .ijo {
+                width: 0%;
+                height: 100%;
+                background-color: rgb(105, 211, 109);
+                float: left;
+            }
+            @endif
 
+            @if($task_todo->count() > 0)
             .abu {
                 width: {{ ($task_todo->count() / $task_all->count()) * 100 }}%;
                 height: 100%;
@@ -386,6 +432,16 @@
                 border-top-right-radius: 10px;
                 border-bottom-right-radius: 10px;
             }
+            @else
+            .abu {
+                width: 0%;
+                height: 100%;
+                background-color: gray;
+                float: left;
+                border-top-right-radius: 10px;
+                border-bottom-right-radius: 10px;
+            }
+            @endif
         @endif
         /* text truncate override */
         .pepek {

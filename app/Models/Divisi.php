@@ -14,4 +14,9 @@ class Divisi extends Model
     {
         return $this->hasMany(Member::class);
     }
+
+    public function kpi()
+    {
+        return $this->hasMany(KPI::class);
+    }
 }

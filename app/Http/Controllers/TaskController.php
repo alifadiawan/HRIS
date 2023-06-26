@@ -51,7 +51,31 @@ class TaskController extends Controller
     public function get_member(Request $request, $kpiId)
     {
         $kpi = KPI::findOrFail($kpiId);
-        $members = $kpi->mapping()->with('divisi')->get();
+        if ($kpi->divisi_id != null && $kpi->jabatan_id != null) {
+            $members = Member::whereHas('user', function($query) {
+                $query->whereHas('role', function ($user) {
+                    $user->where('role', '!=', 'admin');
+                });
+            })->where('divisi_id', $kpi->divisi_id)->where('jabatan_id', $kpi->jabatan->id)->with('divisi', 'jabatan')->get();
+        } elseif ($kpi->divisi_id != null) {
+            $members = Member::whereHas('user', function($query) {
+                $query->whereHas('role', function ($user) {
+                    $user->where('role', '!=', 'admin');
+                });
+            })->where('divisi_id', $kpi->divisi_id)->with('divisi', 'jabatan')->get();
+        } elseif ($kpi->jabatan_id != null) {
+            $members = Member::whereHas('user', function($query) {
+                $query->whereHas('role', function ($user) {
+                    $user->where('role', '!=', 'admin');
+                });
+            })->where('jabatan_id', $kpi->jabatan_id)->with('divisi', 'jabatan')->get();
+        } else {
+            $members = Member::whereHas('user', function($query) {
+                $query->whereHas('role', function ($user) {
+                    $user->where('role', '!=', 'admin');
+                });
+            })->whereNotNull('jabatan_id')->with('divisi', 'jabatan')->get();
+        }
         return response()->json($members);
     }
 
