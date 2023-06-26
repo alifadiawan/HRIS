@@ -65,7 +65,9 @@ class DivisiController extends Controller
         $divisi->nama_divisi = $request->edit_nama;
         $divisi->save();
 
-        notify()->success('Divisi Berhasil Diubah', 'Divisi');
+        sweetalert()
+            ->timerProgressBar(false)
+            ->addSuccess('Divisi Berhasil Diubah');
         return redirect()->back();
     }
 
