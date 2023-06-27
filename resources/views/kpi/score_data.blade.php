@@ -45,7 +45,7 @@
                 <div class="card text-left mt-3">
                     <img class="card-img-top" src="holder.js/100px180/" alt="">
                     <div class="card-body">
-                        <p class="text-muted mt-3">{{ $task->goal_id }} - {{ $kpi->group_name }}</p>
+                        <p class="mt-3 fw-bold text-dark" style="font-size: 18px">{{ $task->goal_id }} - {{ $kpi->group_name }}</p>
                         <div class="table-resonsive">
                             <table class="table table-bordered">
                                 <thead>
