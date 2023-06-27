@@ -56,13 +56,15 @@
 
                                 <!-- Chart -->
                                 @if (auth()->user()->role->role == 'employee')
-                                    @if ($employee_chart == null)
+                                    {{-- @if ($employee_chart == null)
                                         <h1 class="fw-bold text-center text-uppercase text-danger"> belum ada tugas!! </h1>
-                                    @else
+                                    @else --}}
                                         <div class="chart" id="employee-chart">
-                                            {!! $employee_chart->container() !!}
+                                            {{-- {!! $employee_chart->container() !!} --}}
+                                            <canvas id="employee-canvas"></canvas>
+                                            <h1 style="display: " id="data_kosong">BELUM ADA DATA KONT*L</h1>
                                         </div>
-                                    @endif
+                                    {{-- @endif --}}
                                 @elseif (auth()->user()->role->role == 'admin')
                                     <div class="chart" id="admin-chart">
                                         {{-- {!! $admin_chart->container() !!} --}}
@@ -329,6 +331,34 @@
         // import LarapexChart from 'laravel-larapex-charts';
 
         $(document).ready(function() {
+            // employee-chart
+            var changepie = document.getElementById('employee-canvas');
+            var chart_all = new Chart(changepie, {
+                type: 'pie',
+                data: {
+                    labels: [
+                        'To do',
+                        'Doing',
+                        'Checking',
+                        'Done'
+                    ],
+                    datasets: [{
+                        data: [
+                            {!! $todoCount_employee !!},
+                            {!! $doingCount_employee !!},
+                            {!! $checkingCount_employee !!},
+                            {!! $doneCount_employee !!}
+                        ],
+                        backgroundcolor: [
+                            '#808080',
+                            '#0861fd',
+                            '#ffa500',
+                            '#69d36d'
+                        ]
+                    }]
+                }
+            });
+            //admin-chart
             var changepie = document.getElementById('admin-canvas');
             var chart_all = new Chart(changepie, {
                 type: 'pie',
@@ -421,7 +451,7 @@
 
 
     <!-- Chart -->
-    @if (auth()->user()->role->role == 'employee')
+    {{-- @if (auth()->user()->role->role == 'employee')
         @if ($employee_chart == null)
         @else
             <script src="{{ $employee_chart->cdn() }}"></script>
@@ -430,7 +460,7 @@
     @elseif (auth()->user()->role->role == 'admin')
         <script src="{{ $admin_chart->cdn() }}"></script>
         {{ $admin_chart->script() }}
-    @endif
+    @endif --}}
 
     <style>
         * {

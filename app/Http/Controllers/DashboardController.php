@@ -58,10 +58,10 @@ class DashboardController extends Controller
         $checkingCount = $tasks->where('status', 'checking')->count();
         $doneCount = $tasks->where('status', 'done')->count();
 
-        $admin_chart = $this->chart->pieChart()
-            ->setLabels(['To do', 'Doing', 'Checking', 'Done'])
-            ->setColors(['#808080', '#0861fd', '#ffa500', '#69d36d'])
-            ->setDataset([$todoCount, $doingCount, $checkingCount, $doneCount]);
+        // $admin_chart = $this->chart->pieChart()
+        //     ->setLabels(['To do', 'Doing', 'Checking', 'Done'])
+        //     ->setColors(['#808080', '#0861fd', '#ffa500', '#69d36d'])
+        //     ->setDataset([$todoCount, $doingCount, $checkingCount, $doneCount]);
         // $admin_chart = LarapexChart::setType('pie')
         //     ->setLabels(['To do', 'Doing', 'Checking', 'Done'])
         //     ->setColors(['#808080', '#0861fd', '#ffa500', '#69d36d'])
@@ -89,7 +89,7 @@ class DashboardController extends Controller
 
             $employee_count = ['todoCount_employee', 'doingCount_employee', 'checkingCount_employee', 'doneCount_employee', 'employee'];
             $admin_count = ['todoCount', 'doingCount', 'checkingCount', 'doneCount'];
-            return view('welcome', compact('task', 'task_adm', 'task_all', 'task_todo', 'task_doing', 'task_checking', 'task_done', 'new', 'member', 'admin_chart', $employee_count, $admin_count));
+            return view('welcome', compact('task', 'task_adm', 'task_all', 'task_todo', 'task_doing', 'task_checking', 'task_done', 'new', 'member', $employee_count, $admin_count));
         } else {
             return view('welcome');
         }
