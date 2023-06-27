@@ -2,18 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\Find_Employee_pie;
 use Illuminate\Http\Request;
 use App\Models\Task;
 use App\Models\Member;
 use App\Models\User;
 use ArielMejiaDev\LarapexCharts\Facades\LarapexChart;
+// use ArielMejiaDev\LarapexCharts\LarapexChart;
 
 class DashboardController extends Controller
 {
+    // protected $chart;
+
+    // public function __construct(LarapexChart $chart)
+    // {
+    //     $this->chart = $chart;
+    // }
+
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $Request)
+    public function index()
     {
 
         //employee chart
@@ -25,10 +34,15 @@ class DashboardController extends Controller
         $checkingCount = $employee->where('status', 'checking')->count();
         $doneCount = $employee->where('status', 'done')->count();
 
-        $employee_chart = LarapexChart::setType('pie')
-            ->setLabels(['To do', 'Doing', 'Checking', 'Done'])
-            ->setColors(['#808080', '#0861fd', '#ffa500', '#69d36d'])
-            ->setDataset([$todoCount, $doingCount, $checkingCount, $doneCount]);
+        if ($employee->isEmpty()) {
+            $employee_chart = [];
+        } else {
+
+            $employee_chart = LarapexChart::setType('pie')
+                ->setLabels(['To do', 'Doing', 'Checking', 'Done'])
+                ->setColors(['#808080', '#0861fd', '#ffa500', '#69d36d'])
+                ->setDataset([$todoCount, $doingCount, $checkingCount, $doneCount]);
+        }
 
         //admin chart
         $tasks = Task::all();
@@ -42,7 +56,6 @@ class DashboardController extends Controller
             ->setLabels(['To do', 'Doing', 'Checking', 'Done'])
             ->setColors(['#808080', '#0861fd', '#ffa500', '#69d36d'])
             ->setDataset([$todoCount, $doingCount, $checkingCount, $doneCount]);
-
 
         if (auth()->user()->hasProfile()) {
             $new = Member::whereHas('user', function ($query) {
@@ -62,31 +75,48 @@ class DashboardController extends Controller
                     $user->where('role', '!=', 'admin');
                 });
             })->get();
-            return view('welcome', compact('task', 'task_adm', 'task_all', 'task_todo', 'task_doing', 'task_checking', 'task_done', 'new', 'employee_chart', 'member' ,'admin_chart'));
+
+            return view('welcome', compact('task', 'task_adm', 'task_all', 'task_todo', 'task_doing', 'task_checking', 'task_done', 'new', 'employee_chart', 'member', 'admin_chart'));
         } else {
             return view('welcome');
         }
     }
 
-    public function ria(Request $Request, $id)
+
+
+    public function ria($id)
     {
         //admin chart
-        $tasks = Task::where('member_id',$id);
 
+        $chart = $this->build($id);
 
-        $todoCount = $tasks->where('status', 'todo')->get()->count();
-        $doingCount = $tasks->where('status', 'doing')->get()->count();
-        $checkingCount = $tasks->where('status', 'checking')->get()->count();
-        $doneCount = $tasks->where('status', 'done')->get()->count();
+        // $admin_chart = LarapexChart::setType('pie')
+        //     ->setLabels(['To do', 'Doing', 'Checking', 'Done'])
+        //     ->setDataset([$todoCount, $doingCount, $checkingCount, $doneCount]);
 
-        $admin_chart = LarapexChart::setType('pie')
-            ->setLabels(['To do', 'Doing', 'Checking', 'Done'])
-            ->setDataset([$todoCount, $doingCount, $checkingCount, $doneCount]);
-
-            // return response()->json(['admin_chart'=>$admin_chart]);
-            return view('chart', compact('admin_chart'));
-            // return $admin_chart;
+        // return response()->json(['admin_chart' => $admin_chart]);
+        // return response()->json(['todoCount'=>$todoCount]);
+        return view('chart',  ['chart' => $chart]);
+        // return $admin_chart;
     }
+
+    // public function build($id): \ArielMejiaDev\LarapexCharts\PieChart
+    // {
+    //     $tasks = Task::where('member_id', $id)->get();
+
+    //     $todoCount = $tasks->where('status', 'todo')->count();
+    //     $doingCount = $tasks->where('status', 'doing')->count();
+    //     $checkingCount = $tasks->where('status', 'checking')->count();
+    //     $doneCount = $tasks->where('status', 'done')->count();
+
+    //     return $this->chart->pieChart()
+    //         ->setTitle('Top 3 scorers of the team.')
+    //         ->setSubtitle('Season 2021.')
+    //         ->addData([
+    //             $todoCount, $doingCount, $checkingCount, $doneCount
+    //         ])->setColors(['#808080', '#0861fd', '#ffa500', '#69d36d'])
+    //         ->setLabels(['To do', 'Doing', 'Checking', 'Done']);
+    // }
 
     /**
      * Show the form for creating a new resource.

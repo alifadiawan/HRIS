@@ -42,23 +42,27 @@
                                     </div>
                                     @if (auth()->user()->role->role == 'admin')
                                         <div class="col-lg-2 col-5">
-                                            <select name="member-select" class="form-select" id="member-select">
+                                            {{-- <select name="member-select" class="form-select" id="member-select">
                                                 <option value="">All</option>
                                                 @foreach ($member as $m)
                                                     <option value="{{ $m->id }}">{{ $m->nama }} -
                                                         {{ $m->divisi->nama_divisi }} - {{ $m->jabatan->nama_jabatan }}
                                                     </option>
                                                 @endforeach
-                                            </select>
+                                            </select> --}}
                                         </div>
                                     @endif
                                 </div>
 
                                 <!-- Chart -->
                                 @if (auth()->user()->role->role == 'employee')
-                                    <div class="chart" id="employee-chart">
-                                        {!! $employee_chart->container() !!}
-                                    </div>
+                                    @if ($employee_chart == null)
+                                        <h1 class="fw-bold text-center text-uppercase text-danger"> belum ada tugas!! </h1>
+                                    @else
+                                        <div class="chart" id="employee-chart">
+                                            {!! $employee_chart->container() !!}
+                                        </div>
+                                    @endif
                                 @elseif (auth()->user()->role->role == 'admin')
                                     <div class="chart" id="admin-chart">
                                         {!! $admin_chart->container() !!}
@@ -261,7 +265,6 @@
                     type: 'GET',
                     dataType: 'html',
                     success: function(data) {
-                        
                         $('#admin-chart').html(data);
                     },
                     error: function(xhr) {
@@ -275,8 +278,11 @@
 
     <!-- Chart -->
     @if (auth()->user()->role->role == 'employee')
-        <script src="{{ $employee_chart->cdn() }}"></script>
-        {{ $employee_chart->script() }}
+        @if ($employee_chart == null)
+        @else
+            <script src="{{ $employee_chart->cdn() }}"></script>
+            {{ $employee_chart->script() }}
+        @endif
     @elseif (auth()->user()->role->role == 'admin')
         <script src="{{ $admin_chart->cdn() }}"></script>
         {{ $admin_chart->script() }}

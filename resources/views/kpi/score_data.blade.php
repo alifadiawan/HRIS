@@ -33,7 +33,7 @@
                                 <div class="d-flex flex-column flex-lg-row gap-2">
                                     <a href="#"
                                         class="btn btn-success px-3">{{ $task->member->divisi->nama_divisi }}</a>
-                                    <a href="#" class="btn btn-info px-3">{{ $task->member->jabatan }}</a>
+                                    <a href="#" class="btn btn-info px-3">{{ $task->member->jabatan->nama_jabatan }}</a>
                                 </div>
                             </div>
                         </div>
