@@ -59,17 +59,18 @@
                                     {{-- @if ($employee_chart == null)
                                         <h1 class="fw-bold text-center text-uppercase text-danger"> belum ada tugas!! </h1>
                                     @else --}}
-                                        <div class="chart" id="employee-chart">
-                                            {{-- {!! $employee_chart->container() !!} --}}
-                                            <canvas id="employee-canvas"></canvas>
-                                            <h1 style="display: " id="data_kosong">BELUM ADA DATA KONT*L</h1>
-                                        </div>
+                                    <div class="chart" id="employee-chart">
+                                        {{-- {!! $employee_chart->container() !!} --}}
+                                        <canvas id="employee-canvas"></canvas>
+                                        <h1 style="display: " id="data_kosong">BELUM ADA DATA KONT*L</h1>
+                                    </div>
                                     {{-- @endif --}}
                                 @elseif (auth()->user()->role->role == 'admin')
                                     <div class="chart" id="admin-chart">
                                         {{-- {!! $admin_chart->container() !!} --}}
                                         <canvas id="admin-canvas"></canvas>
-                                        <h1 style="display: " id="data_kosong">BELUM ADA DATA KONT*L</h1>
+                                        <h1 style="display: none" id="data_kosong">BELUM ADA DATA KONT*L</h1>
+                                        {{-- <h1 style="display: " id="role">{{ $role }}</h1> --}}
                                     </div>
                                 @endif
                                 <!-- End Chart -->
@@ -332,63 +333,71 @@
 
         $(document).ready(function() {
             // employee-chart
-            var changepie = document.getElementById('employee-canvas');
-            var chart_all = new Chart(changepie, {
-                type: 'pie',
-                data: {
-                    labels: [
-                        'To do',
-                        'Doing',
-                        'Checking',
-                        'Done'
-                    ],
-                    datasets: [{
-                        data: [
-                            {!! $todoCount_employee !!},
-                            {!! $doingCount_employee !!},
-                            {!! $checkingCount_employee !!},
-                            {!! $doneCount_employee !!}
+            // var role = {!! $role !!};
+            // var role = document.getElementById("role");
+            @if (auth()->user()->role->role == 'admin')
+                //admin-chart
+                var changepie = document.getElementById('admin-canvas');
+                var chart_all = new Chart(changepie, {
+                    type: 'pie',
+                    data: {
+                        labels: [
+                            'To do',
+                            'Doing',
+                            'Checking',
+                            'Done'
                         ],
-                        backgroundcolor: [
-                            '#808080',
-                            '#0861fd',
-                            '#ffa500',
-                            '#69d36d'
-                        ]
-                    }]
-                }
-            });
-            //admin-chart
-            var changepie = document.getElementById('admin-canvas');
-            var chart_all = new Chart(changepie, {
-                type: 'pie',
-                data: {
-                    labels: [
-                        'To do',
-                        'Doing',
-                        'Checking',
-                        'Done'
-                    ],
-                    datasets: [{
-                        data: [
-                            {!! $todoCount !!},
-                            {!! $doingCount !!},
-                            {!! $checkingCount !!},
-                            {!! $doneCount !!}
+                        datasets: [{
+                            data: [
+                                {!! $todoCount !!},
+                                {!! $doingCount !!},
+                                {!! $checkingCount !!},
+                                {!! $doneCount !!}
+                            ],
+                            backgroundcolor: [
+                                '#808080',
+                                '#0861fd',
+                                '#ffa500',
+                                '#69d36d'
+                            ]
+                        }]
+                    }
+                });
+            @else
+                var employee = document.getElementById('employee-canvas');
+                new Chart(employee, {
+                    type: 'pie',
+                    data: {
+                        labels: [
+                            'To do',
+                            'Doing',
+                            'Checking',
+                            'Done'
                         ],
-                        backgroundcolor: [
-                            '#808080',
-                            '#0861fd',
-                            '#ffa500',
-                            '#69d36d'
-                        ]
-                    }]
-                }
-            });
+                        datasets: [{
+                            data: [
+                                {!! $todoCount_employee !!},
+                                {!! $doingCount_employee !!},
+                                {!! $checkingCount_employee !!},
+                                {!! $doneCount_employee !!}
+                            ],
+                            backgroundcolor: [
+                                '#808080',
+                                '#0861fd',
+                                '#ffa500',
+                                '#69d36d'
+                            ]
+                        }]
+                    }
+                });
+            @endif
+
+
+
             $('#member-select').on('change', function() {
                 var id = $('#member-select').val()
                 $.ajax({
-                    url: '{{ route('api.dashboard.ria', '') }}/' + id,
+                    url: '{{ route('api.dashboard.chart', '') }}/' + id,
                     type: 'GET',
                     dataType: 'json',
                     success: function(data) {
@@ -399,12 +408,12 @@
                         var done = data.doneCount;
                         var kosong = data.null;
 
-                        console.log(kosong);
+                        chart_all.destroy();
                         if (kosong == 1) {
                             document.getElementById('data_kosong').style.display = "inline";
                         } else {
                             // $('#admin').html('data kosong');
-                            chart_all.destroy();
+                            document.getElementById('data_kosong').style.display = "none";
                             chart_all = new Chart(changepie, {
                                 type: 'pie',
                                 data: {

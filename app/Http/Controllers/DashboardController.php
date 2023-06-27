@@ -58,6 +58,8 @@ class DashboardController extends Controller
         $checkingCount = $tasks->where('status', 'checking')->count();
         $doneCount = $tasks->where('status', 'done')->count();
 
+        $role = auth()->user()->role->role;
+
         // $admin_chart = $this->chart->pieChart()
         //     ->setLabels(['To do', 'Doing', 'Checking', 'Done'])
         //     ->setColors(['#808080', '#0861fd', '#ffa500', '#69d36d'])
@@ -89,7 +91,7 @@ class DashboardController extends Controller
 
             $employee_count = ['todoCount_employee', 'doingCount_employee', 'checkingCount_employee', 'doneCount_employee', 'employee'];
             $admin_count = ['todoCount', 'doingCount', 'checkingCount', 'doneCount'];
-            return view('welcome', compact('task', 'task_adm', 'task_all', 'task_todo', 'task_doing', 'task_checking', 'task_done', 'new', 'member', $employee_count, $admin_count));
+            return view('welcome', compact('task', 'task_adm', 'task_all', 'task_todo', 'task_doing', 'task_checking', 'task_done', 'new', 'member', $employee_count, $admin_count,'role'));
         } else {
             return view('welcome');
         }
@@ -97,7 +99,7 @@ class DashboardController extends Controller
 
 
 
-    public function ria($id)
+    public function chart($id)
     {
         //admin chart  
 
