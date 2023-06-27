@@ -9,6 +9,7 @@ use App\Http\Controllers\KPIController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\JabatanController;
+use App\Http\Controllers\NotificationController;
 use ArielMejiaDev\LarapexCharts\LarapexChart;
 
 /*
@@ -76,6 +77,10 @@ Route::middleware('auth')->group(function () {
     //jabatan
     Route::resource('jabatan', JabatanController::class);
     Route::get('/jabatan/{id}/hapus', [JabatanController::class, 'hapus'])->name('jabatan.hapus');
+
+    //notif
+    Route::post('/read', [NotificationController::class, 'read'])->name('read');
+    Route::get('/get-notifications', [NotificationController::class, 'get_notif'])->name('notif.get');
 
     //Sales Reports
     Route::get('/reports', function () {

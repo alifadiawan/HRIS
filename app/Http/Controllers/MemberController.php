@@ -10,6 +10,8 @@ use App\Models\Role;
 use App\Models\KPI;
 use App\Models\Progress;
 use App\Models\Task;
+use App\Notifications\NewNotification;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller
@@ -62,6 +64,16 @@ class MemberController extends Controller
         $member->divisi_id = $request->divisi_id;
         $member->user_id = $request->user_id;
         $member->save();
+
+        // mengirim notifikasi ke admin
+        $user = User::whereHas('role', function ($query) {
+            $query->where('role', 'admin');
+        })->get();
+        $judul = "Employee";
+        $message = "Ada Employee Baru !!";
+        $notification = new NewNotification($judul, $message);
+        $notification->setUrl(route('employee.show', ['employee' => $member->id])); // Ganti dengan rute yang sesuai
+        Notification::send($user, $notification);
 
         sweetalert()
             ->icon('success')
@@ -133,6 +145,16 @@ class MemberController extends Controller
             $user->save();
         }
 
+        // mengirim notifikasi ke admin
+        $user = User::whereHas('role', function ($query) {
+            $query->where('role', 'admin');
+        })->get();
+        $judul = "Employee";
+        $message = "Data Employee Berhasil Diupdate !!";
+        $notification = new NewNotification($judul, $message);
+        $notification->setUrl(route('employee.show', ['employee' => $member->id])); // Ganti dengan rute yang sesuai
+        Notification::send($user, $notification);
+
         sweetalert()
             ->icon('success')
             ->confirmButtonColor('#0d6efd')
@@ -158,6 +180,16 @@ class MemberController extends Controller
         $member = Member::find($id);
         $user = User::find($member->user->id);
         $user->delete();
+
+        // mengirim notifikasi ke admin
+        $user = User::whereHas('role', function ($query) {
+            $query->where('role', 'admin');
+        })->get();
+        $judul = "Employee";
+        $message = "Data Employee Berhasil Dihapus !!";
+        $notification = new NewNotification($judul, $message);
+        $notification->setUrl(route('employee.index')); // Ganti dengan rute yang sesuai
+        Notification::send($user, $notification);
 
         sweetalert()
             ->icon('success')

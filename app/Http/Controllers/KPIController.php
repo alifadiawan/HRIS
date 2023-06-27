@@ -8,6 +8,9 @@ use App\Models\Divisi;
 use App\Models\Jabatan;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Models\User;
+use App\Notifications\NewNotification;
+use Illuminate\Support\Facades\Notification;
 
 class KPIController extends Controller
 {
@@ -46,6 +49,17 @@ class KPIController extends Controller
         } else {
             $status = 'aktifkan';
         }
+
+        // mengirim notifikasi ke admin
+        $user = User::whereHas('role', function ($query) {
+            $query->where('role', 'admin');
+        })->get();
+        $judul = "KPI";
+        $message = $judul." ".$kpi->group_name." Telah Di".$status;
+        $notification = new NewNotification($judul, $message);
+        $notification->setUrl(route('kpi.index')); // Ganti dengan rute yang sesuai
+        Notification::send($user, $notification);
+
         // Respon berhasil
         return response()->json(['success' => true, 'message' => 'KPI berhasil di' . $status]);
     }
@@ -91,6 +105,16 @@ class KPIController extends Controller
             $kpi->jabatan_id = $data['jabatan_id'];
         }
         $kpi->save();
+
+        // mengirim notifikasi ke admin
+        $user = User::whereHas('role', function ($query) {
+            $query->where('role', 'admin');
+        })->get();
+        $judul = "KPI";
+        $message = $judul." Baru Berhasil Ditambahkan !!";
+        $notification = new NewNotification($judul, $message);
+        $notification->setUrl(route('kpi.index')); // Ganti dengan rute yang sesuai
+        Notification::send($user, $notification);
 
         //notif
         sweetalert()
@@ -170,6 +194,16 @@ class KPIController extends Controller
         }
         $kpi->save();
 
+        // mengirim notifikasi ke admin
+        $user = User::whereHas('role', function ($query) {
+            $query->where('role', 'admin');
+        })->get();
+        $judul = "Jabatan";
+        $message = $judul." Berhasil Diupdate !!";
+        $notification = new NewNotification($judul, $message);
+        $notification->setUrl(route('kpi.index')); // Ganti dengan rute yang sesuai
+        Notification::send($user, $notification);
+
         //notif
         sweetalert()
             ->icon('success')
@@ -197,12 +231,22 @@ class KPIController extends Controller
             $s->save();
         }
 
+        // mengirim notifikasi ke admin
+        $user = User::whereHas('role', function ($query) {
+            $query->where('role', 'admin');
+        })->get();
+        $judul = "KPI";
+        $message = $judul." Berhasil Dihapus !!";
+        $notification = new NewNotification($judul, $message);
+        $notification->setUrl(route('kpi.index')); // Ganti dengan rute yang sesuai
+        Notification::send($user, $notification);
+
         $kpi->delete();
 
         sweetalert()
             ->icon('success')
             ->confirmButtonColor('#0d6efd')
-            ->addSuccess('KPI Berhasil dihapus !!');
+            ->addSuccess('KPI Berhasil Dihapus !!');
 
         return redirect('/kpi');
     }
