@@ -60,7 +60,7 @@
             </li>
             <li>
                 <a href="{{ route('goals.index') }}">
-                    <i class="bi bi-circle"></i><span>Goals Team</span>
+                    <i class="bi bi-circle"></i><span>List Tugas</span>
                 </a>
             </li>
             @if (auth()->user()->role->role == 'admin')

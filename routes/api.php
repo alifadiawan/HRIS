@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\KPIController;
+use App\Http\Controllers\DashboardController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +28,5 @@ Route::get('/get-member/{kpiId}', [TaskController::class, 'get_member'])->name('
 Route::match(['post', 'get'], '/search-data/{member_id}', [TaskController::class, 'searchData'])->name('api.search.data');
 // Route::match(['post','get'],'/search-data', [TaskController::class, 'searchData'])->name('api.search.data');
 Route::post('/kpi/toggle-is-active', [KPIController::class, 'toggleIsActive'])->name('api.goals.toggleIsActive');
+Route::get('/ria/{id}', [DashboardController::class, 'ria'])->name('api.dashboard.ria');
+
