@@ -558,9 +558,7 @@
             // console.log(member_id);
 
             $.post('{{ route('api.search.data', '') }}/' + member_id, function(data) {
-                // var tasks = data.task;
                 $('#div_tasks').html(data);
-                // console.log(data);
             })
         }
 

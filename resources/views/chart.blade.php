@@ -1,4 +1,1 @@
-{{ 
-public function
-}}
-    {!! $admin_chart->container() !!}
+    {!! $employee_chart->container() !!}

@@ -3,6 +3,8 @@
 namespace App\Charts;
 
 use ArielMejiaDev\LarapexCharts\LarapexChart;
+use App\Http\Controllers\DashboardController;
+use App\Models\Task;
 
 class Find_Employee_pie
 {
@@ -13,12 +15,19 @@ class Find_Employee_pie
         $this->chart = $chart;
     }
 
-    public function build(): \ArielMejiaDev\LarapexCharts\PieChart
+    public function build($id): \ArielMejiaDev\LarapexCharts\PieChart
     {
+        $tasks = Task::where('member_id', $id)->get();
+
+        $todoCount = $tasks->where('status', 'todo')->count();
+        $doingCount = $tasks->where('status', 'doing')->count();
+        $checkingCount = $tasks->where('status', 'checking')->count();
+        $doneCount = $tasks->where('status', 'done')->count();
+
+
         return $this->chart->pieChart()
-            ->setTitle('Top 3 scorers of the team.')
-            ->setSubtitle('Season 2021.')
-            ->addData([40, 50, 30])
-            ->setLabels(['Player 7', 'Player 10', 'Player 9']);
+            ->setColors(['#808080', '#0861fd', '#ffa500', '#69d36d'])
+            ->addData([$todoCount, $doingCount, $checkingCount, $doneCount])
+            ->setLabels(['To do', 'Doing', 'Checking', 'Done']);
     }
 }

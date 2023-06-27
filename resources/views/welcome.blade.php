@@ -42,14 +42,14 @@
                                     </div>
                                     @if (auth()->user()->role->role == 'admin')
                                         <div class="col-lg-2 col-5">
-                                            {{-- <select name="member-select" class="form-select" id="member-select">
+                                            <select name="member-select" class="form-select" id="member-select">
                                                 <option value="">All</option>
                                                 @foreach ($member as $m)
                                                     <option value="{{ $m->id }}">{{ $m->nama }} -
                                                         {{ $m->divisi->nama_divisi }} - {{ $m->jabatan->nama_jabatan }}
                                                     </option>
                                                 @endforeach
-                                            </select> --}}
+                                            </select>
                                         </div>
                                     @endif
                                 </div>
@@ -65,7 +65,9 @@
                                     @endif
                                 @elseif (auth()->user()->role->role == 'admin')
                                     <div class="chart" id="admin-chart">
-                                        {!! $admin_chart->container() !!}
+                                        {{-- {!! $admin_chart->container() !!} --}}
+                                        <canvas id="admin-canvas"></canvas>
+                                        <h1 style="display: " id="data_kosong">BELUM ADA DATA KONT*L</h1>
                                     </div>
                                 @endif
                                 <!-- End Chart -->
@@ -182,7 +184,11 @@
                                         </div>
                                     </div>
                                     <div class="d-flex align-items-center">
-                                        <div class="h4 fw-bold">{{ $task_all->count() }}</div>
+                                        @if (auth()->user()->role->role == 'admin')
+                                            <div class="h4 fw-bold">{{ $task_all->count() }}</div>
+                                        @else
+                                            <div class="h4 fw-bold">{{ $employee->count() }}</div>
+                                        @endif
                                         <div class="text-muted mx-2" style="font-size: 13px">Tugas</div>
                                     </div>
                                     <div class="bar">
@@ -191,49 +197,101 @@
                                         <div class="ijo"></div>
                                         <div class="abu"></div>
                                     </div>
-                                    <div class="row mt-3">
-                                        @if ($task_doing->count() > 0)
-                                            <div class="col-3">
-                                                <i class="fa-solid fa-square fa-2xl me-2 p-0"
-                                                    style="color: #0861fd;"></i>{{ ($task_doing->count() / $task_all->count()) * 100 }}%
-                                            </div>
-                                        @else
-                                            <div class="col-3">
-                                                <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: #0861fd;"></i>0%
-                                            </div>
-                                        @endif
-                                        @if ($task_checking->count() > 0)
-                                            <div class="col-3">
-                                                <i class="fa-solid fa-square fa-2xl me-2 p-0"
-                                                    style="color: #ffa500;"></i>{{ ($task_checking->count() / $task_all->count()) * 100 }}%
-                                            </div>
-                                        @else
-                                            <div class="col-3">
-                                                <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: orange;"></i>0%
-                                            </div>
-                                        @endif
-                                        @if ($task_done->count() > 0)
-                                            <div class="col-3">
-                                                <i class="fa-solid fa-square fa-2xl me-2 p-0"
-                                                    style="color: #69d36d;"></i>{{ ($task_done->count() / $task_all->count()) * 100 }}%
-                                            </div>
-                                        @else
-                                            <div class="col-3">
-                                                <i class="fa-solid fa-square fa-2xl me-2 p-0"
-                                                    style="color: rgb(105, 211, 109);"></i>0%
-                                            </div>
-                                        @endif
-                                        @if ($task_todo->count() > 0)
-                                            <div class="col-3">
-                                                <i class="fa-solid fa-square fa-2xl me-2 p-0"
-                                                    style="color: #808080;"></i>{{ ($task_todo->count() / $task_all->count()) * 100 }}%
-                                            </div>
-                                        @else
-                                            <div class="col-3">
-                                                <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: gray;"></i>0%
-                                            </div>
-                                        @endif
-                                    </div>
+                                    @if (auth()->user()->role->role == 'admin')
+                                        <div class="row mt-3">
+                                            @if ($task_doing->count() > 0)
+                                                <div class="col-3">
+                                                    <i class="fa-solid fa-square fa-2xl me-2 p-0"
+                                                        style="color: #0861fd;"></i>{{ ($task_doing->count() / $task_all->count()) * 100 }}%
+                                                </div>
+                                            @else
+                                                <div class="col-3">
+                                                    <i class="fa-solid fa-square fa-2xl me-2 p-0"
+                                                        style="color: #0861fd;"></i>0%
+                                                </div>
+                                            @endif
+                                            @if ($task_checking->count() > 0)
+                                                <div class="col-3">
+                                                    <i class="fa-solid fa-square fa-2xl me-2 p-0"
+                                                        style="color: #ffa500;"></i>{{ ($task_checking->count() / $task_all->count()) * 100 }}%
+                                                </div>
+                                            @else
+                                                <div class="col-3">
+                                                    <i class="fa-solid fa-square fa-2xl me-2 p-0"
+                                                        style="color: orange;"></i>0%
+                                                </div>
+                                            @endif
+                                            @if ($task_done->count() > 0)
+                                                <div class="col-3">
+                                                    <i class="fa-solid fa-square fa-2xl me-2 p-0"
+                                                        style="color: #69d36d;"></i>{{ ($task_done->count() / $task_all->count()) * 100 }}%
+                                                </div>
+                                            @else
+                                                <div class="col-3">
+                                                    <i class="fa-solid fa-square fa-2xl me-2 p-0"
+                                                        style="color: rgb(105, 211, 109);"></i>0%
+                                                </div>
+                                            @endif
+                                            @if ($task_todo->count() > 0)
+                                                <div class="col-3">
+                                                    <i class="fa-solid fa-square fa-2xl me-2 p-0"
+                                                        style="color: #808080;"></i>{{ ($task_todo->count() / $task_all->count()) * 100 }}%
+                                                </div>
+                                            @else
+                                                <div class="col-3">
+                                                    <i class="fa-solid fa-square fa-2xl me-2 p-0"
+                                                        style="color: gray;"></i>0%
+                                                </div>
+                                            @endif
+                                        </div>
+                                    @else
+                                        <div class="row mt-3">
+                                            @if ($doingCount_employee > 0)
+                                                <div class="col-3">
+                                                    <i class="fa-solid fa-square fa-2xl me-2 p-0"
+                                                        style="color: #0861fd;"></i>{{ ($doingCount_employee / $employee->count()) * 100 }}%
+                                                </div>
+                                            @else
+                                                <div class="col-3">
+                                                    <i class="fa-solid fa-square fa-2xl me-2 p-0"
+                                                        style="color: #0861fd;"></i>0%
+                                                </div>
+                                            @endif
+                                            @if ($checkingCount_employee > 0)
+                                                <div class="col-3">
+                                                    <i class="fa-solid fa-square fa-2xl me-2 p-0"
+                                                        style="color: #ffa500;"></i>{{ ($checkingCount_employee / $employee->count()) * 100 }}%
+                                                </div>
+                                            @else
+                                                <div class="col-3">
+                                                    <i class="fa-solid fa-square fa-2xl me-2 p-0"
+                                                        style="color: orange;"></i>0%
+                                                </div>
+                                            @endif
+                                            @if ($doneCount_employee > 0)
+                                                <div class="col-3">
+                                                    <i class="fa-solid fa-square fa-2xl me-2 p-0"
+                                                        style="color: #69d36d;"></i>{{ ($doneCount_employee / $employee->count()) * 100 }}%
+                                                </div>
+                                            @else
+                                                <div class="col-3">
+                                                    <i class="fa-solid fa-square fa-2xl me-2 p-0"
+                                                        style="color: rgb(105, 211, 109);"></i>0%
+                                                </div>
+                                            @endif
+                                            @if ($todoCount_employee > 0)
+                                                <div class="col-3">
+                                                    <i class="fa-solid fa-square fa-2xl me-2 p-0"
+                                                        style="color: #808080;"></i>{{ ($todoCount_employee / $employee->count()) * 100 }}%
+                                                </div>
+                                            @else
+                                                <div class="col-3">
+                                                    <i class="fa-solid fa-square fa-2xl me-2 p-0"
+                                                        style="color: gray;"></i>0%
+                                                </div>
+                                            @endif
+                                        </div>
+                                    @endif
                                     <div class="row text-muted" style="font-size: 13px">
                                         <div class="col-3">Doing</div>
                                         <div class="col-3">Checking</div>
@@ -254,19 +312,104 @@
 
     </section>
 
+
+    {{-- <script src="https://code.jquery.com/jquery-3.6.1.slim.js"
+        integrity="sha256-tXm+sa1uzsbFnbXt8GJqsgi2Tw+m4BLGDof6eUPjbtk=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous">
+    </script> --}}
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function() {
+        // import LarapexChart from 'ArielMejiaDev\LarapexCharts\LarapexChart';
+        // import LarapexChart from 'laravel-larapex-charts';
 
+        $(document).ready(function() {
+            var changepie = document.getElementById('admin-canvas');
+            var chart_all = new Chart(changepie, {
+                type: 'pie',
+                data: {
+                    labels: [
+                        'To do',
+                        'Doing',
+                        'Checking',
+                        'Done'
+                    ],
+                    datasets: [{
+                        data: [
+                            {!! $todoCount !!},
+                            {!! $doingCount !!},
+                            {!! $checkingCount !!},
+                            {!! $doneCount !!}
+                        ],
+                        backgroundcolor: [
+                            '#808080',
+                            '#0861fd',
+                            '#ffa500',
+                            '#69d36d'
+                        ]
+                    }]
+                }
+            });
             $('#member-select').on('change', function() {
                 var id = $('#member-select').val()
-                // console.log(id);
                 $.ajax({
                     url: '{{ route('api.dashboard.ria', '') }}/' + id,
                     type: 'GET',
-                    dataType: 'html',
+                    dataType: 'json',
                     success: function(data) {
-                        $('#admin-chart').html(data);
+
+                        var todo = data.todoCount;
+                        var doing = data.doingCount;
+                        var checking = data.checkingCount;
+                        var done = data.doneCount;
+                        var kosong = data.null;
+
+                        console.log(kosong);
+                        if (kosong == 1) {
+                            document.getElementById('data_kosong').style.display = "inline";
+                        } else {
+                            // $('#admin').html('data kosong');
+                            chart_all.destroy();
+                            chart_all = new Chart(changepie, {
+                                type: 'pie',
+                                data: {
+                                    labels: [
+                                        'To do',
+                                        'Doing',
+                                        'Checking',
+                                        'Done'
+                                    ],
+                                    datasets: [{
+                                        data: [
+                                            todo,
+                                            doing,
+                                            checking,
+                                            done
+                                        ],
+                                        backgroundcolor: [
+                                            '#808080',
+                                            '#0861fd',
+                                            '#ffa500',
+                                            '#69d36d'
+                                        ]
+                                    }]
+                                }
+                            });
+                        }
+                        // new LarapexChart().pieChart();
+                        // chart.setLabels(['To do', 'Doing', 'Checking', 'Done'])
+                        // chart.setColors(['#808080', '#0861fd', '#ffa500', '#69d36d'])
+                        // chart.setDataset([todo, doing, checking, done]);
+                        // // chart.setDataset(['1','2','3','4','5']);
+
+                        // chart.render('#admin-chart')
+
+
                     },
                     error: function(xhr) {
                         console.log(xhr.responseText);
