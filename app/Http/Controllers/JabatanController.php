@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jabatan;
+use App\Models\User;
+use App\Notifications\NewNotification;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Http\Request;
 
 class JabatanController extends Controller
@@ -31,6 +34,16 @@ class JabatanController extends Controller
         $jabatan = new Jabatan();
         $jabatan->nama_jabatan = $request->nama_jabatan;
         $jabatan->save();
+
+        // mengirim notifikasi ke admin
+        $user = User::whereHas('role', function ($query) {
+            $query->where('role', 'admin');
+        })->get();
+        $judul = "Jabatan";
+        $message = $judul." Baru Berhasil Ditambahkan !!";
+        $notification = new NewNotification($judul, $message);
+        $notification->setUrl(route('employee.index')); // Ganti dengan rute yang sesuai
+        Notification::send($user, $notification);
 
         sweetalert()
             ->icon('success')
@@ -65,6 +78,16 @@ class JabatanController extends Controller
         $jabatan->nama_jabatan = $request->edit_jabatan;
         $jabatan->save();
 
+        // mengirim notifikasi ke admin
+        $user = User::whereHas('role', function ($query) {
+            $query->where('role', 'admin');
+        })->get();
+        $judul = "Jabatan";
+        $message = $judul." Berhasil Diupdate !!";
+        $notification = new NewNotification($judul, $message);
+        $notification->setUrl(route('employee.index')); // Ganti dengan rute yang sesuai
+        Notification::send($user, $notification);
+
         sweetalert()
             ->icon('success')
             ->confirmButtonColor('#0d6efd')
@@ -85,6 +108,16 @@ class JabatanController extends Controller
     {
         $jabatan = Jabatan::find($id);
         $jabatan->delete();
+
+        // mengirim notifikasi ke admin
+        $user = User::whereHas('role', function ($query) {
+            $query->where('role', 'admin');
+        })->get();
+        $judul = "Jabatan";
+        $message = $judul." Berhasil Dihapus !!";
+        $notification = new NewNotification($judul, $message);
+        $notification->setUrl(route('employee.index')); // Ganti dengan rute yang sesuai
+        Notification::send($user, $notification);
 
         sweetalert()
             ->icon('success')
