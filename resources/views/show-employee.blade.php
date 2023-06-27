@@ -108,7 +108,7 @@
                             <tr class="text-center">
                                 <th>Goals Name</th>
                                 <th colspan="2">Tanggal Deadline - Jam</th>
-                                <th>Tanggal Dinilai</th>
+                                <th colspan="2">Tanggal Dinilai - Jam</th>
                                 <th>Goals Name</th>
                                 <th>Nilai</th>
                             </tr>
@@ -131,14 +131,18 @@
                                         @endforeach
                                         <td>{{ $t->created_at->format('d-m-Y') }} </td>
                                         <td>{{ $t->created_at->format('H:i') }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($t->tanggal_target)->format('d-m-Y') }}</td>
-                                        <td>{{ $t->updated_at->format('d-m-Y') }}</td>
+                                        <td>{{ $t->updated_at->format('d-m-Y') }} </td>
+                                        <td>{{ $t->updated_at->format('H:i') }}</td>
+                                        {{-- <td>{{ date('d-m-Y', strtotime($t->tanggal_target)) }}</td> --}}
+                                        {{-- <td>{{ date('H:i', strtotime($t->tanggal_target)) }}</td> --}}
+                                        <td>{{ $t->kpi->group_name }}</td>
+                                        {{-- <td>{{ $t->updated_at->format('d-m-Y') }}</td> --}}
                                         <td>{{ $t->grade }}</td>
                                     </tr>
                         <tbody class="collapse accordion-collapse" id="r1{{ $t->id }}"
                             data-bs-parent="#accordion{{ $t->id }}">
 
-                            <td colspan="6" class="text-center">
+                            <td colspan="7" class="text-center">
                                 <div class="table-resonsive">
                                     <table class="table table-borderless table-hover">
                                         <thead>
