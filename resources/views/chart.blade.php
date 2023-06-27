@@ -1,0 +1,2 @@
+
+    {!! $admin_chart->container() !!}

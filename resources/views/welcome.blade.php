@@ -17,9 +17,10 @@
                     Silahkan Lengkapi Profile Terlebih Dahulu. <a href="{{ route('employee.create') }}">Klik Ini.</a>
                 </div>
             @endif
-            @if(auth()->user()->role->role == 'admin' && $new->isNotEmpty())
+            @if (auth()->user()->role->role == 'admin' && $new->isNotEmpty())
                 <div class="alert alert-warning">
-                    Ada Employee Baru ! <br>Silahkan isi Jabatannya Untuk Memberinya Tugas ! <a href="/employee">Klik ini.</a>
+                    Ada Employee Baru ! <br>Silahkan isi Jabatannya Untuk Memberinya Tugas ! <a href="/employee">Klik
+                        ini.</a>
                 </div>
             @endif
             <p class="text-muted">See a summary of your employee's progress</p>
@@ -32,39 +33,38 @@
 
                     <!-- payroll summary -->
                     <div class="col-lg-8">
-                        <div class="card" style="height: 34.8rem">
+                        <div class="card">
                             {{-- <div class="card"> --}}
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col-10">
                                         <h4 class="card-title">KPI Task Summary</h4>
                                     </div>
-                                    <div class="col-lg-2 col-5">
-                                        <select name="" class="form-select" id="">
-                                            <option value="">Yearly</option>
-                                            <option value="">Monthly</option>
-                                            <option value="">Daily</option>
-                                        </select>
-                                    </div>
+                                    @if (auth()->user()->role->role == 'admin')
+                                        <div class="col-lg-2 col-5">
+                                            <select name="member-select" class="form-select" id="member-select">
+                                                <option value="">All</option>
+                                                @foreach ($member as $m)
+                                                    <option value="{{ $m->id }}">{{ $m->nama }} -
+                                                        {{ $m->divisi->nama_divisi }} - {{ $m->jabatan->nama_jabatan }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    @endif
                                 </div>
 
-                                <!-- card content -->
-                                <div class="row mt-3">
-                                    <div class="col">
-                                        <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: #0861fd;"></i>Doing
+                                <!-- Chart -->
+                                @if (auth()->user()->role->role == 'employee')
+                                    <div class="chart" id="employee-chart">
+                                        {!! $employee_chart->container() !!}
                                     </div>
-                                    <div class="col">
-                                        <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: orange;"></i>Checking
+                                @elseif (auth()->user()->role->role == 'admin')
+                                    <div class="chart" id="admin-chart">
+                                        {!! $admin_chart->container() !!}
                                     </div>
-                                    <div class="col">
-                                        <i class="fa-solid fa-square fa-2xl me-2 p-0"
-                                            style="color: rgb(105, 211, 109);"></i>Done
-                                    </div>
-                                </div>
-
-                                <!-- Line Chart -->
-                                <div id="reportsChart"></div>
-                                <!-- End Line Chart -->
+                                @endif
+                                <!-- End Chart -->
 
                             </div>
                         </div>
@@ -119,7 +119,8 @@
                                                             <div class="col">
                                                                 <div class="text-danger text-end" style="font-size: 13px;">
                                                                     {{ date('d F Y', strtotime($t->created_at)) }} -
-                                                                    {{ date('d F Y', strtotime($t->tanggal_target)) }}</div>
+                                                                    {{ date('d F Y', strtotime($t->tanggal_target)) }}
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <hr class="my-2 align-content-center text-muted">
@@ -175,83 +176,112 @@
                                             </a>
                                         </div>
                                     </div>
-                                        <div class="d-flex align-items-center">
-                                            <div class="h4 fw-bold">{{ $task_all->count() }}</div>
-                                            <div class="text-muted mx-2" style="font-size: 13px">Tugas</div>
-                                        </div>
-                                        <div class="bar">
-                                            <div class="biru"></div>
-                                            <div class="orange"></div>
-                                            <div class="ijo"></div>
-                                            <div class="abu"></div>
-                                        </div>
-                                        <div class="row mt-3">
-                                            @if($task_doing->count() > 0)
+                                    <div class="d-flex align-items-center">
+                                        <div class="h4 fw-bold">{{ $task_all->count() }}</div>
+                                        <div class="text-muted mx-2" style="font-size: 13px">Tugas</div>
+                                    </div>
+                                    <div class="bar">
+                                        <div class="biru"></div>
+                                        <div class="orange"></div>
+                                        <div class="ijo"></div>
+                                        <div class="abu"></div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        @if ($task_doing->count() > 0)
                                             <div class="col-3">
                                                 <i class="fa-solid fa-square fa-2xl me-2 p-0"
                                                     style="color: #0861fd;"></i>{{ ($task_doing->count() / $task_all->count()) * 100 }}%
                                             </div>
-                                            @else
+                                        @else
+                                            <div class="col-3">
+                                                <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: #0861fd;"></i>0%
+                                            </div>
+                                        @endif
+                                        @if ($task_checking->count() > 0)
                                             <div class="col-3">
                                                 <i class="fa-solid fa-square fa-2xl me-2 p-0"
-                                                    style="color: #0861fd;"></i>0%
+                                                    style="color: #ffa500;"></i>{{ ($task_checking->count() / $task_all->count()) * 100 }}%
                                             </div>
-                                            @endif
-                                            @if($task_checking->count() > 0)
+                                        @else
+                                            <div class="col-3">
+                                                <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: orange;"></i>0%
+                                            </div>
+                                        @endif
+                                        @if ($task_done->count() > 0)
                                             <div class="col-3">
                                                 <i class="fa-solid fa-square fa-2xl me-2 p-0"
-                                                    style="color: orange;"></i>{{ ($task_checking->count() / $task_all->count()) * 100 }}%
+                                                    style="color: #69d36d;"></i>{{ ($task_done->count() / $task_all->count()) * 100 }}%
                                             </div>
-                                            @else
-                                            <div class="col-3">
-                                                <i class="fa-solid fa-square fa-2xl me-2 p-0"
-                                                    style="color: orange;"></i>0%
-                                            </div>
-                                            @endif
-                                            @if($task_done->count() > 0)
-                                            <div class="col-3">
-                                                <i class="fa-solid fa-square fa-2xl me-2 p-0"
-                                                    style="color: rgb(105, 211, 109);"></i>{{ ($task_done->count() / $task_all->count()) * 100 }}%
-                                            </div>
-                                            @else
+                                        @else
                                             <div class="col-3">
                                                 <i class="fa-solid fa-square fa-2xl me-2 p-0"
                                                     style="color: rgb(105, 211, 109);"></i>0%
                                             </div>
-                                            @endif
-                                            @if($task_todo->count() > 0)
+                                        @endif
+                                        @if ($task_todo->count() > 0)
                                             <div class="col-3">
                                                 <i class="fa-solid fa-square fa-2xl me-2 p-0"
-                                                    style="color: gray;"></i>{{ ($task_todo->count() / $task_all->count()) * 100 }}%
+                                                    style="color: #808080;"></i>{{ ($task_todo->count() / $task_all->count()) * 100 }}%
                                             </div>
-                                            @else
+                                        @else
                                             <div class="col-3">
-                                                <i class="fa-solid fa-square fa-2xl me-2 p-0"
-                                                    style="color: gray;"></i>0%
+                                                <i class="fa-solid fa-square fa-2xl me-2 p-0" style="color: gray;"></i>0%
                                             </div>
-                                            @endif
-                                        </div>
-                                        <div class="row text-muted" style="font-size: 13px">
-                                            <div class="col-3">Doing</div>
-                                            <div class="col-3">Checking</div>
-                                            <div class="col-3">Done</div>
-                                            <div class="col-3">To-do</div>
-                                        </div>
+                                        @endif
+                                    </div>
+                                    <div class="row text-muted" style="font-size: 13px">
+                                        <div class="col-3">Doing</div>
+                                        <div class="col-3">Checking</div>
+                                        <div class="col-3">Done</div>
+                                        <div class="col-3">To-do</div>
+                                    </div>
                                 </div>
                             </div>
-        </div>
-        </div>
-        </div>
+                        </div>
+                    </div>
+                </div>
 
 
 
-        </div>
+            </div>
         @endif
 
 
     </section>
 
-    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+
+            $('#member-select').on('change', function() {
+                var id = $('#member-select').val()
+                // console.log(id);
+                $.ajax({
+                    url: '{{ route('api.dashboard.ria', '') }}/' + id,
+                    type: 'GET',
+                    dataType: 'html',
+                    success: function(data) {
+                        
+                        $('#admin-chart').html(data);
+                    },
+                    error: function(xhr) {
+                        console.log(xhr.responseText);
+                    }
+                })
+            })
+        });
+    </script>
+
+
+    <!-- Chart -->
+    @if (auth()->user()->role->role == 'employee')
+        <script src="{{ $employee_chart->cdn() }}"></script>
+        {{ $employee_chart->script() }}
+    @elseif (auth()->user()->role->role == 'admin')
+        <script src="{{ $admin_chart->cdn() }}"></script>
+        {{ $admin_chart->script() }}
+    @endif
+
     <style>
         * {
             box-sizing: border-box;
@@ -371,76 +401,76 @@
 
         @if (auth()->user()->hasProfile())
 
-            @if($task_doing->count() > 0)
-            .biru {
-                width: {{ ($task_doing->count() / $task_all->count()) * 100 }}%;
-                height: 100%;
-                background-color: rgb(12, 36, 252);
-                float: left;
-                border-top-left-radius: 10px;
-                border-bottom-left-radius: 10px;
-            }
+            @if ($task_doing->count() > 0)
+                .biru {
+                    width: {{ ($task_doing->count() / $task_all->count()) * 100 }}%;
+                    height: 100%;
+                    background-color: rgb(12, 36, 252);
+                    float: left;
+                    border-top-left-radius: 10px;
+                    border-bottom-left-radius: 10px;
+                }
             @else
-            .biru {
-                width: 0%;
-                height: 100%;
-                background-color: rgb(12, 36, 252);
-                float: left;
-                border-top-left-radius: 10px;
-                border-bottom-left-radius: 10px;
-            }
+                .biru {
+                    width: 0%;
+                    height: 100%;
+                    background-color: rgb(12, 36, 252);
+                    float: left;
+                    border-top-left-radius: 10px;
+                    border-bottom-left-radius: 10px;
+                }
             @endif
 
-            @if($task_checking->count() > 0)
-            .orange {
-                width: {{ ($task_checking->count() / $task_all->count()) * 100 }}%;
-                height: 100%;
-                background-color: orange;
-                float: left;
-            }
+            @if ($task_checking->count() > 0)
+                .orange {
+                    width: {{ ($task_checking->count() / $task_all->count()) * 100 }}%;
+                    height: 100%;
+                    background-color: orange;
+                    float: left;
+                }
             @else
-            .orange {
-                width: 0%;
-                height: 100%;
-                background-color: orange;
-                float: left;
-            }
+                .orange {
+                    width: 0%;
+                    height: 100%;
+                    background-color: orange;
+                    float: left;
+                }
             @endif
 
-            @if($task_done->count() > 0)
-            .ijo {
-                width: {{ ($task_done->count() / $task_all->count()) * 100 }}%;
-                height: 100%;
-                background-color: rgb(105, 211, 109);
-                float: left;
-            }
+            @if ($task_done->count() > 0)
+                .ijo {
+                    width: {{ ($task_done->count() / $task_all->count()) * 100 }}%;
+                    height: 100%;
+                    background-color: rgb(105, 211, 109);
+                    float: left;
+                }
             @else
-            .ijo {
-                width: 0%;
-                height: 100%;
-                background-color: rgb(105, 211, 109);
-                float: left;
-            }
+                .ijo {
+                    width: 0%;
+                    height: 100%;
+                    background-color: rgb(105, 211, 109);
+                    float: left;
+                }
             @endif
 
-            @if($task_todo->count() > 0)
-            .abu {
-                width: {{ ($task_todo->count() / $task_all->count()) * 100 }}%;
-                height: 100%;
-                background-color: gray;
-                float: left;
-                border-top-right-radius: 10px;
-                border-bottom-right-radius: 10px;
-            }
+            @if ($task_todo->count() > 0)
+                .abu {
+                    width: {{ ($task_todo->count() / $task_all->count()) * 100 }}%;
+                    height: 100%;
+                    background-color: gray;
+                    float: left;
+                    border-top-right-radius: 10px;
+                    border-bottom-right-radius: 10px;
+                }
             @else
-            .abu {
-                width: 0%;
-                height: 100%;
-                background-color: gray;
-                float: left;
-                border-top-right-radius: 10px;
-                border-bottom-right-radius: 10px;
-            }
+                .abu {
+                    width: 0%;
+                    height: 100%;
+                    background-color: gray;
+                    float: left;
+                    border-top-right-radius: 10px;
+                    border-bottom-right-radius: 10px;
+                }
             @endif
         @endif
         /* text truncate override */

@@ -9,6 +9,7 @@ use App\Http\Controllers\KPIController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\JabatanController;
+use ArielMejiaDev\LarapexCharts\LarapexChart;
 
 /*
 |--------------------------------------------------------------------------
