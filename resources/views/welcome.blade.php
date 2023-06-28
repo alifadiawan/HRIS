@@ -52,30 +52,39 @@
                                             </select>
                                         </div>
                                         <div class="col-lg-1 col-3 m-0 p-1 text-center">
-                                            <a href="" class="btn btn-outline-secondary" onclick="windows.location.reload()"><i class="fa-solid fa-arrows-rotate"></i></a>
+                                            <a href="" class="btn btn-outline-secondary"
+                                                onclick="windows.location.reload()"><i
+                                                    class="fa-solid fa-arrows-rotate"></i></a>
                                         </div>
                                     @endif
                                 </div>
 
                                 <!-- Chart -->
-                                <div class="row justify-content-center">
-                                    @if (auth()->user()->role->role == 'employee')
-                                        {{-- @if ($employee_chart == null)
-                                        <h1 class="fw-bold text-center text-uppercase text-danger"> belum ada tugas!! </h1>
-                                    @else --}}
-                                        <div class="chart-container" id="employee-chart">
+                                @if (auth()->user()->role->role == 'employee')
+                                    {{-- @if ($employee_chart == null)
+                                   <h1 class="fw-bold text-center text-uppercase text-danger"> belum ada tugas!! </h1>
+                               @else --}}
+                                    <div class="chart-container" id="employee-chart">
+                                        {{-- {!! $employee_chart->container() !!} --}}
+                                        @if (
+                                            $todoCount_employee == null &&
+                                                $doingCount_employee == null &&
+                                                $checkingCount_employee == null &&
+                                                $doneCount_employee == null)
+                                            <h1 style="display: " class="fw-bold text-center" id="data_kosong">BELUM ADA TUGAS</h1>
+                                        @else
                                             <canvas id="employee-canvas"></canvas>
-                                            <h1 style="display: " id="data_kosong">BELUM ADA DATA KONT*L</h1>
-                                        </div>
-                                        {{-- @endif --}}
-                                    @elseif (auth()->user()->role->role == 'admin')
-                                        <div class="chart-container" id="admin-chart">
-                                            <canvas id="admin-canvas"></canvas>
-                                            <h1 style="display: none" id="data_kosong">BELUM ADA DATA KONT*L</h1>
-                                            {{-- <h1 style="display: " id="role">{{ $role }}</h1> --}}
-                                        </div>
-                                    @endif
-                                </div>
+                                        @endif
+                                    </div>
+                                    {{-- @endif --}}
+                                @elseif (auth()->user()->role->role == 'admin')
+                                    <div class="chart-container" id="admin-chart">
+                                        {{-- {!! $admin_chart->container() !!} --}}
+                                        <canvas id="admin-canvas"></canvas>
+                                        <h1 style="display: none" class="fw-bold text-center" id="data_kosong">BELUM ADA TUGAS</h1>
+                                        {{-- <h1 style="display: " id="role">{{ $role }}</h1> --}}
+                                    </div>
+                                @endif
                                 <!-- End Chart -->
 
                             </div>
@@ -122,17 +131,20 @@
                                                 @else
                                                     @foreach ($task as $t)
                                                         <div class="row my-2 align-items-center">
-                                                            <div class="col">
-                                                                <div class="fw-bold" style="font-size: 14px;">
+                                                            <div class="col-5">
+                                                                <div class="fw-bold text-truncate" style="font-size: 14px;">
                                                                     {{ $t->kpi->group_name }}</div>
                                                                 <div class="status text-muted text-truncate text-capitalize"
                                                                     style="font-size: 13px; max-width:13rem">
-                                                                    {{ $t->status }}</div>
+                                                                    {{ $t->status }}
+                                                                </div>
                                                             </div>
-                                                            <div class="col">
+                                                            <div class="col-7">
                                                                 <div class="text-danger text-end" style="font-size: 13px;">
                                                                     {{ date('d F Y', strtotime($t->created_at)) }} -
                                                                     {{ date('d F Y', strtotime($t->tanggal_target)) }}
+                                                                    <br>
+                                                                    ({{ \Carbon\Carbon::parse($t->tanggal_target)->diffInDays() }} days left)
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -160,8 +172,15 @@
                                                                     {{ $t->member->nama }}</div>
                                                             </div>
                                                             <div class="col">
-                                                                <div class="text-danger text-end" style="font-size: 15px;">
-                                                                    {{ date('d F Y', strtotime($t->created_at)) }}</div>
+                                                                <div class="text-end me-2" style="font-size: 15px;">
+                                                                    <div style="font-weight: 700">
+                                                                        {{ date('d F Y', strtotime($t->created_at)) }}
+                                                                    </div>
+                                                                    
+                                                                    <div class="text-muted" style="font-size: 13px; max-width:13rem">
+                                                                        {{ $t->created_at->diffForHumans() }}
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <hr class="my-2 align-content-center text-muted">
