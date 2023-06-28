@@ -24,11 +24,13 @@
           @if($notifications->count() > 0)
           <span class="badge bg-primary badge-number">{{count($notifications)}}</span>
           @endif
-        </a><!-- End Notification Icon -->
+        </a>
+        <!-- End Notification Icon -->
         <div class="notif-container">
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
             <li class="dropdown-header">
               You have {{count($notifications)}} new notifications
+              <p style="font-size: 11px">Click to dismiss</p>
               <!-- <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a> -->
             </li>
             @if($notifications->count() > 0)
