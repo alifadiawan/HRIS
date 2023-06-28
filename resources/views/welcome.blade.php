@@ -61,8 +61,15 @@
                                     @else --}}
                                     <div class="chart" id="employee-chart">
                                         {{-- {!! $employee_chart->container() !!} --}}
-                                        <canvas id="employee-canvas"></canvas>
-                                        <h1 style="display: " id="data_kosong">BELUM ADA DATA KONT*L</h1>
+                                        @if (
+                                            $todoCount_employee == null &&
+                                                $doingCount_employee == null &&
+                                                $checkingCount_employee == null &&
+                                                $doneCount_employee == null)
+                                            <h1 style="display: " id="data_kosong">BELUM ADA DATA KONT*L</h1>
+                                        @else
+                                            <canvas id="employee-canvas"></canvas>
+                                        @endif
                                     </div>
                                     {{-- @endif --}}
                                 @elseif (auth()->user()->role->role == 'admin')
