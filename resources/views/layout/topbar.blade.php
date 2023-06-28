@@ -19,6 +19,7 @@
 
       <li class="nav-item dropdown">
 
+        <div id="notif-container">
         <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
           <i class="bi bi-bell"></i>
           @if($notifications->count() > 0)
@@ -26,7 +27,6 @@
           @endif
         </a>
         <!-- End Notification Icon -->
-        <div class="notif-container">
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
             <li class="dropdown-header">
               You have {{count($notifications)}} new notifications
@@ -163,29 +163,30 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     // Panggil fungsi startPolling saat halaman selesai dimuat
-    // $(document).ready(function() {
-    //     startPolling();
-    // });
+    $(document).ready(function() {
+        startPolling();
+    });
 
-    // function loadNewMessages() {
-    //     $.ajax({
-    //         url: "{{ route('notif.get') }}",
-    //         type: "GET",
-    //         dataType: "html",
-    //         success: function(response) {
-    //             // Ganti konten div atau elemen lain yang menampilkan pesan
-    //             $("#notif-container").html(response);
-    //             console.log("Pesan Diperbarui !");
-    //         }
-    //     });
-    // }
+    function loadNewMessages() {
+        $.ajax({
+            url: "{{ route('notif.get') }}",
+            type: "GET",
+            dataType: "html",
+            success: function(response) {
+                // Ganti konten div atau elemen lain yang menampilkan pesan
+                $("#notif-container").html(response);
+                // console.log("Pesan Diperbarui !");
+            }
+        });
+    }
 
-    // // Fungsi untuk memperbarui secara berkala setiap beberapa detik
-    // function startPolling() {
-    //     setInterval(function() {
-    //         loadNewMessages();
-    //     }, 5000); // Ubah angka ini menjadi waktu refresh dalam milidetik (misalnya, 5000 untuk refresh setiap 5 detik)
-    // }
+    // Fungsi untuk memperbarui secara berkala setiap beberapa detik
+    function startPolling() {
+        setInterval(function() {
+          // $('#notif-container').empty();
+            loadNewMessages();
+        }, 15000); // Ubah angka ini menjadi waktu refresh dalam milidetik (misalnya, 5000 untuk refresh setiap 5 detik)
+    }
 
     $(document).on('click', '.notification-item', function(e) {
         e.preventDefault();
