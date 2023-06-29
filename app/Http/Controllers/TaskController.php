@@ -177,6 +177,14 @@ class TaskController extends Controller
             $notification = new NewNotification($judul, $message);
             $notification->setUrl(route('goals.index')); // Ganti dengan rute yang sesuai
             Notification::send($user, $notification);
+
+            // nilai admin
+
+            // end nilai admin
+            sweetalert()
+                ->icon('success')
+                ->confirmButtonColor('#0d6efd')
+                ->addSuccess('Task Berhasil Dinilai');
         } else {
 
             // return $request->range;
@@ -232,15 +240,12 @@ class TaskController extends Controller
             $notification = new NewNotification($judul, $message);
             $notification->setUrl(route('goals.index')); // Ganti dengan rute yang sesuai
             Notification::send($user, $notification);
+
+            sweetalert()
+                ->icon('success')
+                ->confirmButtonColor('#0d6efd')
+                ->addSuccess('Progress Berhasil Ditambahkan');
         }
-
-        // nilai admin
-
-        // end nilai admin
-        sweetalert()
-            ->icon('success')
-            ->confirmButtonColor('#0d6efd')
-            ->addSuccess('Task berhasil dinilai');
 
         return redirect()->route('goals.index');
     }
