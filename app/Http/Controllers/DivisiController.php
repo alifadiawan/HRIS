@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Divisi;
+use App\Models\User;
+use App\Notifications\NewNotification;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Http\Request;
 
 class DivisiController extends Controller
@@ -32,9 +35,19 @@ class DivisiController extends Controller
         $div->nama_divisi = $request->nama_divisi;
         $div->save();
 
+        // mengirim notifikasi ke admin
+        $user = User::whereHas('role', function ($query) {
+            $query->where('role', 'admin');
+        })->get();
+        $judul = "Divisi";
+        $message = $judul." Baru Berhasil Ditambahkan !!";
+        $notification = new NewNotification($judul, $message);
+        $notification->setUrl(route('employee.index')); // Ganti dengan rute yang sesuai
+        Notification::send($user, $notification);
+
         sweetalert()
             ->timerProgressBar(false)
-            ->addSuccess('Divisi Berhasil Ditambahkan');
+            ->addSuccess('Divisi Baru Berhasil Ditambahkan');
 
         return redirect('/employee');
     }
@@ -65,9 +78,19 @@ class DivisiController extends Controller
         $divisi->nama_divisi = $request->edit_nama;
         $divisi->save();
 
+        // mengirim notifikasi ke admin
+        $user = User::whereHas('role', function ($query) {
+            $query->where('role', 'admin');
+        })->get();
+        $judul = "Divisi";
+        $message = $judul." Berhasil Diupdate !!";
+        $notification = new NewNotification($judul, $message);
+        $notification->setUrl(route('employee.index')); // Ganti dengan rute yang sesuai
+        Notification::send($user, $notification);
+
         sweetalert()
             ->timerProgressBar(false)
-            ->addSuccess('Divisi Berhasil Diubah');
+            ->addSuccess('Divisi Berhasil Diupdate');
         return redirect()->back();
     }
 
@@ -83,6 +106,16 @@ class DivisiController extends Controller
     {
         $div = Divisi::find($id);
         $div->delete();
+
+        // mengirim notifikasi ke admin
+        $user = User::whereHas('role', function ($query) {
+            $query->where('role', 'admin');
+        })->get();
+        $judul = "Divisi";
+        $message = $judul." Berhasil Dihapus !!";
+        $notification = new NewNotification($judul, $message);
+        $notification->setUrl(route('employee.index')); // Ganti dengan rute yang sesuai
+        Notification::send($user, $notification);
 
         sweetalert()
             ->timerProgressBar(false)

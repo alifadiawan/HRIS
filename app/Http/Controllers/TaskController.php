@@ -9,6 +9,8 @@ use App\Models\User;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use App\Models\Progress;
+use App\Notifications\NewNotification;
+use Illuminate\Support\Facades\Notification;
 
 class TaskController extends Controller
 {
@@ -103,6 +105,14 @@ class TaskController extends Controller
                 'status' => $mark
             ]);
 
+            // mengirim notifikasi ke user
+            $user = User::where('id', $task->member->user->id)->first();
+            $judul = "Tugas";
+            $message = $judul." Telah Diupdate !!\nStatus Diubah Jadi ".ucfirst($mark);
+            $notification = new NewNotification($judul, $message);
+            $notification->setUrl(route('goals.index')); // Ganti dengan rute yang sesuai
+            Notification::send($user, $notification);
+
             sweetalert()
             ->icon('success')
             ->confirmButtonColor('#0d6efd')
@@ -110,6 +120,14 @@ class TaskController extends Controller
         }
 
         if ($delete) {
+            // mengirim notifikasi ke user
+            $user = User::where('id', $task->member->user->id)->first();
+            $judul = "Tugas";
+            $message = $judul." ".$task->kpi->group_name." \nTelah Dihapus Oleh Admin ".auth()->user()->member->nama;
+            $notification = new NewNotification($judul, $message);
+            $notification->setUrl(route('goals.index')); // Ganti dengan rute yang sesuai
+            Notification::send($user, $notification);
+
             $task->delete();
 
             sweetalert()
@@ -126,7 +144,7 @@ class TaskController extends Controller
     public function view_prog(Request $Request)
     {
         $task = Task::find($Request->task_id);
-        $previous_progress = progress::where('tasks_id', $Request->task_id)->latest()->first();
+        $previous_progress = Progress::where('tasks_id', $Request->task_id)->latest()->first();
         $mid = $task->member_id;
         $member = Member::find($mid);
         $member = $task->member;
@@ -151,6 +169,14 @@ class TaskController extends Controller
             $task->update([
                 'grade' => $request->grade
             ]);
+
+            // mengirim notifikasi ke user
+            $user = User::where('id', $task->member->user->id)->first();
+            $judul = "Tugas";
+            $message = $judul." ".$task->kpi->group_name." \nTelah Dinilai Oleh Admin ".auth()->user()->member->nama."\n Nilai : ".$request->grade;
+            $notification = new NewNotification($judul, $message);
+            $notification->setUrl(route('goals.index')); // Ganti dengan rute yang sesuai
+            Notification::send($user, $notification);
         } else {
 
             // return $request->range;
@@ -182,12 +208,30 @@ class TaskController extends Controller
                 ]);
             }
             // end progress karyawan
-            $slider_val = $request->slider;
-            if ($slider_val) {
-                $task->update([
-                    'grade' => $slider_val
-                ]);
-            }
+            // $slider_val = $request->slider;
+            // if ($slider_val) {
+            //     $task->update([
+            //         'grade' => $slider_val
+            //     ]);
+            // }
+
+            // mengirim notifikasi ke user
+            $user = User::where('id', $task->member->user->id)->first();
+            $judul = "Tugas";
+            $message = "Progress Berhasil Ditambahkan";
+            $notification = new NewNotification($judul, $message);
+            $notification->setUrl(route('goals.index')); // Ganti dengan rute yang sesuai
+            Notification::send($user, $notification);
+
+            // mengirim notifikasi ke admin
+            $user = User::whereHas('member', function($query) use ($task){
+                $query->where('id', $task->owner_id);
+            })->first();
+            $judul = "Tugas";
+            $message = "Progress Baru Telah Ditambahkan\nOleh : ".ucwords($task->member->nama);
+            $notification = new NewNotification($judul, $message);
+            $notification->setUrl(route('goals.index')); // Ganti dengan rute yang sesuai
+            Notification::send($user, $notification);
         }
 
         // nilai admin
@@ -235,6 +279,13 @@ class TaskController extends Controller
         $task->status = $data['status'];
         $task->save();
 
+        // mengirim notifikasi ke user
+        $user = User::where('id', $task->member->user->id)->first();
+        $judul = "Tugas";
+        $message = "Ada ".$judul." Baru Untukmu\nNama : ".$task->kpi->group_name;
+        $notification = new NewNotification($judul, $message);
+        $notification->setUrl(route('goals.index')); // Ganti dengan rute yang sesuai
+        Notification::send($user, $notification);
 
         sweetalert()
             ->icon('success')

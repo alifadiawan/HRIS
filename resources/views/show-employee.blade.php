@@ -1,95 +1,85 @@
 @extends('layout.body')
 @section('title', 'Show Employee')
-@section('page-title', Str::html(__('<a class="btn btn-lg text-secondary" href="/employee"><i
-            class="fa-solid fa-arrow-left"></i></a> Show Employee')))
+@section('page-title',
+    Str::html(
+    __('<a class="btn btn-lg text-secondary" href="/employee"><i class="fa-solid fa-arrow-left"></i></a> Show Employee'),
+    ))
 @section('content')
 
     <section id="profile" class="container">
         <div class="card my-3">
             <div class="card-body">
-                <div class="row mt-3">
-                    <div class="col-sm-3">
-                        <p class="mb-0">Nama Lengkap</p>
+                <div style="padding: 0px 40px 0px 30px; color:#012970">
+                    <h4 class="fw-bold mt-3">Data Diri</h4>
+                </div>
+                <div class="row" style="padding: 0px 30px 0px 30px; margin-top:20px">
+                    <div class="col-md-6 mb-4">
+                        <div class="form-outline">
+                            <label for="formlabel" class="form-label fw-bold">Nama Lengkap</label>
+                            <input type="text" id="name" class="form-control" disabled
+                                placeholder="{{ $member->nama }}">
+                        </div>
                     </div>
-                    <div class="col-sm-9">
-                        <input disabled type="text" class="form-control" value="{{ $member->nama }}" name="name">
+                    <div class="col-md-6 mb-4">
+                        <div class="form-outline">
+                            <label class="form-label fw-bold" for="lastName">NIK</label>
+                            <input type="number" id="lastName" class="form-control" disabled
+                                placeholder="{{ $member->nik }}">
+                        </div>
                     </div>
                 </div>
-                <hr>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <p class="mb-0">Nomor Telp</p>
+                <div class="row" style="padding: 0px 30px 0px 30px">
+                    <div class="col-md-6 mb-4">
+                        <div class="form-outline">
+                            <label for="formlabel" class="form-label fw-bold">Alamat</label>
+                            <input type="text" id="alamat" class="form-control" disabled
+                                placeholder="{{ $member->alamat }}">
+                        </div>
                     </div>
-                    <div class="col-sm-9">
-                        <input disabled type="number" class="form-control" value="{{ $member->no_hp }}" name="no_hp"
-                            placeholder="087654">
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <p class="mb-0">NIK</p>
-                    </div>
-                    <div class="col-sm-9">
-                        <input disabled type="number" class="form-control" value="{{ $member->nik }}" name="nik"
-                            placeholder="3578231">
+                    <div class="col-md-6 mb-4">
+                        <div class="form-outline">
+                            <label class="form-label fw-bold" for="lastName">Jenis Kelamin</label>
+                            <input type="text" name="jk" class="form-control" disabled
+                                placeholder="{{ $member->jk }}">
+                        </div>
                     </div>
                 </div>
-                <hr>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <p class="mb-0">Alamat</p>
+                <div class="row" style="padding: 0px 30px 0px 30px">
+                    <div class="col-md-4 mb-4">
+                        <div class="form-outline">
+                            <label for="formlabel" class="form-label fw-bold">Tanggal Lahir</label>
+                            <input type="text" id="alamat" class="form-control" disabled
+                                placeholder="{{ $member->tgl_lahir }}">
+                        </div>
                     </div>
-                    <div class="col-sm-9">
-                        <input disabled type="text" class="form-control" value="{{ $member->alamat }}" name="alamat"
-                            placeholder="Indonesia">
+                    <div class="col-md-4 mb-4">
+                        <div class="form-outline">
+                            <label class="form-label fw-bold" for="lastName">Jabatan</label>
+                        </div>
+                        @if ($member->jabatan != null)
+                            <div>
+                                <input disabled type="text" class="form-control text-capitalize"
+                                    value="{{ $member->jabatan->nama_jabatan }}" name="alamat">
+                            </div>
+                        @else
+                            <div>
+                                <input disabled type="text" class="form-control text-capitalize"
+                                    value="Tidak Punya Jabatan" name="alamat">
+                            </div>
+                        @endif
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="form-outline">
+                            <label for="formlabel" class="form-label fw-bold">Divisi</label>
+                            <input type="text" id="alamat" class="form-control" disabled
+                                placeholder="{{ $member->divisi->nama_divisi }}">
+                        </div>
                     </div>
                 </div>
-                <hr>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <p class="mb-0">Jenis Kelamin</p>
-                    </div>
-                    <div class="col-sm-9">
-                        <input disabled type="text" class="form-control" value="{{ $member->jk }}" name="jk"
-                            placeholder="Indonesia">
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <p class="mb-0">Tanggal Lahir</p>
-                    </div>
-                    <div class="col-sm-9">
-                        <input disabled type="text" class="form-control" value="{{ $member->tgl_lahir }}"
-                            name="tgl_lahir">
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <p class="mb-0">Jabatan</p>
-                    </div>
-                    @if($member->jabatan != null)
-                    <div class="col-sm-9">
-                        <input disabled type="text" class="form-control text-capitalize" value="{{ $member->jabatan->nama_jabatan }}"
-                            name="alamat">
-                    </div>
-                    @else
-                    <div class="col-sm-9">
-                        <input disabled type="text" class="form-control text-capitalize" value="Tidak Punya Jabatan"
-                            name="alamat">
-                    </div>
-                    @endif
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <p class="mb-0">Divisi</p>
-                    </div>
-                    <div class="col-sm-9">
-                        <input disabled type="text" class="form-control text-capitalize"
-                            value="{{ $member->divisi->nama_divisi }}" name="alamat" placeholder="Indonesia">
+                <div class="row justify-content-center" style="padding: 0px 30px 0px 30px">
+                    <div class="col-lg-12">
+                        <a href="{{ route('employee.hapus', $member->id) }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                        <a href="{{ route('employee.edit', $member->id) }}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square" style="color: #f9fafb;"></i></a>
                     </div>
                 </div>
             </div>

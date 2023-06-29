@@ -17,80 +17,33 @@
       </li> --}}
       <!-- End Search Icon-->
 
-      {{-- <li class="nav-item dropdown">
+      <li class="nav-item dropdown">
 
         <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
           <i class="bi bi-bell"></i>
-          <span class="badge bg-primary badge-number">4</span>
-        </a><!-- End Notification Icon -->
+          @if($notifications->count() > 0)
+          <span class="badge bg-primary badge-number">{{count($notifications)}}</span>
+          @endif
+        </a>
+        <!-- End Notification Icon -->
+        <div class="notif-container">
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+            <li class="dropdown-header">
+              You have {{count($notifications)}} new notifications
+              <p style="font-size: 11px">Click to dismiss</p>
+              <!-- <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a> -->
+            </li>
+            @if($notifications->count() > 0)
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            @endif
+              @include('notification.notif')
+          </ul>
+        </div>
+        <!-- End Notification Dropdown Items -->
 
-        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-          <li class="dropdown-header">
-            You have 4 new notifications
-            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-          </li>
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-
-          <li class="notification-item">
-            <i class="bi bi-exclamation-circle text-warning"></i>
-            <div>
-              <h4>Lorem Ipsum</h4>
-              <p>Quae dolorem earum veritatis oditseno</p>
-              <p>30 min. ago</p>
-            </div>
-          </li>
-
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-
-          <li class="notification-item">
-            <i class="bi bi-x-circle text-danger"></i>
-            <div>
-              <h4>Atque rerum nesciunt</h4>
-              <p>Quae dolorem earum veritatis oditseno</p>
-              <p>1 hr. ago</p>
-            </div>
-          </li>
-
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-
-          <li class="notification-item">
-            <i class="bi bi-check-circle text-success"></i>
-            <div>
-              <h4>Sit rerum fuga</h4>
-              <p>Quae dolorem earum veritatis oditseno</p>
-              <p>2 hrs. ago</p>
-            </div>
-          </li>
-
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-
-          <li class="notification-item">
-            <i class="bi bi-info-circle text-primary"></i>
-            <div>
-              <h4>Dicta reprehenderit</h4>
-              <p>Quae dolorem earum veritatis oditseno</p>
-              <p>4 hrs. ago</p>
-            </div>
-          </li>
-
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-          <li class="dropdown-footer">
-            <a href="#">Show all notifications</a>
-          </li>
-
-        </ul><!-- End Notification Dropdown Items -->
-
-      </li> --}}
+      </li>
       <!-- End Notification Nav -->
 
       {{-- <li class="nav-item dropdown">
@@ -206,3 +159,54 @@
     </ul>
   </nav><!-- End Icons Navigation -->
 <x-notify::notify />
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Panggil fungsi startPolling saat halaman selesai dimuat
+    // $(document).ready(function() {
+    //     startPolling();
+    // });
+
+    // function loadNewMessages() {
+    //     $.ajax({
+    //         url: "{{ route('notif.get') }}",
+    //         type: "GET",
+    //         dataType: "html",
+    //         success: function(response) {
+    //             // Ganti konten div atau elemen lain yang menampilkan pesan
+    //             $("#notif-container").html(response);
+    //             console.log("Pesan Diperbarui !");
+    //         }
+    //     });
+    // }
+
+    // // Fungsi untuk memperbarui secara berkala setiap beberapa detik
+    // function startPolling() {
+    //     setInterval(function() {
+    //         loadNewMessages();
+    //     }, 5000); // Ubah angka ini menjadi waktu refresh dalam milidetik (misalnya, 5000 untuk refresh setiap 5 detik)
+    // }
+
+    $(document).on('click', '.notification-item', function(e) {
+        e.preventDefault();
+
+        var url = $(this).data('url');
+
+        // Kirim permintaan Ajax untuk mengubah status notifikasi menjadi "dibaca"
+        $.ajax({
+            url: '{{ route('read') }}',
+            type: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                notificationUrl: url
+            },
+            success: function(response) {
+                // Redirect pengguna ke URL yang disimpan pada notifikasi
+                window.location.href = url;
+            },
+            error: function(xhr, status, error) {
+                // Tindakan penanganan kesalahan jika diperlukan
+            }
+        });
+    });
+</script>

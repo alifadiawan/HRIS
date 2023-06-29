@@ -33,15 +33,15 @@
 
                     <!-- payroll summary -->
                     <div class="col-lg-8">
-                        <div class="card">
+                        <div class="card" style="height: 100%">
                             {{-- <div class="card"> --}}
                             <div class="card-body">
                                 <div class="row align-items-center">
-                                    <div class="col-10">
+                                    <div class="col-lg-8 col-12 text-center text-lg-start">
                                         <h4 class="card-title">KPI Task Summary</h4>
                                     </div>
                                     @if (auth()->user()->role->role == 'admin')
-                                        <div class="col-lg-2 col-5">
+                                        <div class="col-lg-3 col-9 m-0 p-1">
                                             <select name="member-select" class="form-select" id="member-select">
                                                 <option value="">All</option>
                                                 @foreach ($member as $m)
@@ -51,32 +51,37 @@
                                                 @endforeach
                                             </select>
                                         </div>
+                                        <div class="col-lg-1 col-3 m-0 p-1 text-center">
+                                            <a href="" class="btn btn-outline-secondary"
+                                                onclick="windows.location.reload()"><i
+                                                    class="fa-solid fa-arrows-rotate"></i></a>
+                                        </div>
                                     @endif
                                 </div>
 
                                 <!-- Chart -->
                                 @if (auth()->user()->role->role == 'employee')
                                     {{-- @if ($employee_chart == null)
-                                        <h1 class="fw-bold text-center text-uppercase text-danger"> belum ada tugas!! </h1>
-                                    @else --}}
-                                    <div class="chart" id="employee-chart">
+                                   <h1 class="fw-bold text-center text-uppercase text-danger"> belum ada tugas!! </h1>
+                               @else --}}
+                                    <div class="chart-container" id="employee-chart">
                                         {{-- {!! $employee_chart->container() !!} --}}
                                         @if (
                                             $todoCount_employee == null &&
                                                 $doingCount_employee == null &&
                                                 $checkingCount_employee == null &&
                                                 $doneCount_employee == null)
-                                            <h1 style="display: " id="data_kosong">BELUM ADA DATA KONT*L</h1>
+                                            <h1 style="display: " class="fw-bold text-center" id="data_kosong">BELUM ADA TUGAS</h1>
                                         @else
                                             <canvas id="employee-canvas"></canvas>
                                         @endif
                                     </div>
                                     {{-- @endif --}}
                                 @elseif (auth()->user()->role->role == 'admin')
-                                    <div class="chart" id="admin-chart">
+                                    <div class="chart-container" id="admin-chart">
                                         {{-- {!! $admin_chart->container() !!} --}}
                                         <canvas id="admin-canvas"></canvas>
-                                        <h1 style="display: none" id="data_kosong">BELUM ADA DATA KONT*L</h1>
+                                        <h1 style="display: none" class="fw-bold text-center" id="data_kosong">BELUM ADA TUGAS</h1>
                                         {{-- <h1 style="display: " id="role">{{ $role }}</h1> --}}
                                     </div>
                                 @endif
@@ -126,17 +131,20 @@
                                                 @else
                                                     @foreach ($task as $t)
                                                         <div class="row my-2 align-items-center">
-                                                            <div class="col">
-                                                                <div class="fw-bold" style="font-size: 14px;">
+                                                            <div class="col-5">
+                                                                <div class="fw-bold text-truncate" style="font-size: 14px;">
                                                                     {{ $t->kpi->group_name }}</div>
                                                                 <div class="status text-muted text-truncate text-capitalize"
                                                                     style="font-size: 13px; max-width:13rem">
-                                                                    {{ $t->status }}</div>
+                                                                    {{ $t->status }}
+                                                                </div>
                                                             </div>
-                                                            <div class="col">
+                                                            <div class="col-7">
                                                                 <div class="text-danger text-end" style="font-size: 13px;">
                                                                     {{ date('d F Y', strtotime($t->created_at)) }} -
                                                                     {{ date('d F Y', strtotime($t->tanggal_target)) }}
+                                                                    <br>
+                                                                    ({{ \Carbon\Carbon::parse($t->tanggal_target)->diffInDays() }} days left)
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -164,8 +172,15 @@
                                                                     {{ $t->member->nama }}</div>
                                                             </div>
                                                             <div class="col">
-                                                                <div class="text-danger text-end" style="font-size: 15px;">
-                                                                    {{ date('d F Y', strtotime($t->created_at)) }}</div>
+                                                                <div class="text-end me-2" style="font-size: 15px;">
+                                                                    <div style="font-weight: 700">
+                                                                        {{ date('d F Y', strtotime($t->created_at)) }}
+                                                                    </div>
+                                                                    
+                                                                    <div class="text-muted" style="font-size: 13px; max-width:13rem">
+                                                                        {{ $t->created_at->diffForHumans() }}
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <hr class="my-2 align-content-center text-muted">
@@ -292,7 +307,7 @@
                                             @if ($todoCount_employee > 0)
                                                 <div class="col-3">
                                                     <i class="fa-solid fa-square fa-2xl me-2 p-0"
-                                                        style="color: #808080;"></i>{{ ($todoCount_employee / $employee->count()) * 100 }}%
+                                                        style="color: rgb(128, 128, 128);"></i>{{ ($todoCount_employee / $employee->count()) * 100 }}%
                                                 </div>
                                             @else
                                                 <div class="col-3">
@@ -361,7 +376,7 @@
                                 {!! $checkingCount !!},
                                 {!! $doneCount !!}
                             ],
-                            backgroundcolor: [
+                            backgroundColor: [
                                 '#808080',
                                 '#0861fd',
                                 '#ffa500',
@@ -388,7 +403,7 @@
                                 {!! $checkingCount_employee !!},
                                 {!! $doneCount_employee !!}
                             ],
-                            backgroundcolor: [
+                            backgroundColor: [
                                 '#808080',
                                 '#0861fd',
                                 '#ffa500',
@@ -479,122 +494,6 @@
     @endif --}}
 
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        ul {
-            list-style-type: none;
-        }
-
-        body {
-            font-family: Verdana, sans-serif;
-        }
-
-        .month {
-            padding: 70px 25px;
-            width: 100%;
-            background: #1abc9c;
-            text-align: center;
-        }
-
-        .month ul {
-            margin: 0;
-            padding: 0;
-        }
-
-        .month ul li {
-            color: white;
-            font-size: 20px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
-
-        .month .prev {
-            float: left;
-            padding-top: 10px;
-        }
-
-        .month .next {
-            float: right;
-            padding-top: 10px;
-        }
-
-        .weekdays {
-            margin: 0;
-            padding: 10px 0;
-            background-color: #ddd;
-        }
-
-        .weekdays li {
-            display: inline-block;
-            width: 13.6%;
-            color: #666;
-            text-align: center;
-        }
-
-        .days {
-            padding: 10px 0;
-            background: #eee;
-            margin: 0;
-        }
-
-        .days li {
-            list-style-type: none;
-            display: inline-block;
-            width: 13.6%;
-            text-align: center;
-            margin-bottom: 5px;
-            font-size: 12px;
-            color: #777;
-        }
-
-        .days li .active {
-            padding: 5px;
-            background: #1abc9c;
-            color: white !important
-        }
-
-        /* Add media queries for smaller screens */
-        @media screen and (max-width:720px) {
-
-            .weekdays li,
-            .days li {
-                width: 13.1%;
-            }
-        }
-
-        @media screen and (max-width: 420px) {
-
-            .weekdays li,
-            .days li {
-                width: 12.5%;
-            }
-
-            .days li .active {
-                padding: 2px;
-            }
-        }
-
-        @media screen and (max-width: 290px) {
-
-            .weekdays li,
-            .days li {
-                width: 12.2%;
-            }
-        }
-
-
-        /* Progress bar */
-        .bar {
-            width: 100%;
-            height: 30px;
-            border-radius: 10px;
-            background-color: #c4c4c4;
-            color: white;
-            text-align: center;
-        }
-
         @if (auth()->user()->hasProfile())
 
             @if ($task_doing->count() > 0)
