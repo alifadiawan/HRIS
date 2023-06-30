@@ -41,7 +41,7 @@ class TaskController extends Controller
             $query->whereHas('role', function ($user) {
                 $user->where('role', '!=', 'admin');
             });
-        })->get();
+        })->where('jabatan_id', '!=', null)->get();
         // return $member;
         $tipe = TipeProgress::all();
         $kpi = KPI::where('isActive', true)->get();

@@ -20,6 +20,15 @@ class DivisiSeeder extends Seeder
             [
                 'nama_divisi' => 'marketing',
             ],
+            [
+                'nama_divisi' => 'finance',
+            ],
+            [
+                'nama_divisi' => 'hrd',
+            ],
+            [
+                'nama_divisi' => 'inventory',
+            ],
         ];
 
 
