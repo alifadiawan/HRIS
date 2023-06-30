@@ -344,9 +344,9 @@
                                 <div class="table-resonsive">
                                     <table class="table table-borderless table-hover">
                                         <thead>
-                                            <th>Tanggal Progress</th>
                                             <th>Progress</th>
                                             <th>Keterangan</th>
+                                            <th>Tanggal Progress</th>
                                         </thead>
                                         <tbody>
                                             @foreach ($prog as $p)
@@ -359,7 +359,7 @@
                                                             {{ $p->keterangan }}
                                                         </td>
                                                         <td>
-                                                            {{ $p->created_at }}
+                                                            {{ $p->created_at->format('d M Y') }} jam {{ $p->created_at->format('H:i') }} 
                                                         </td>
                                                     </tr>
                                                 @endif

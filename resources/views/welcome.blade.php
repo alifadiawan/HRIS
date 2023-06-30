@@ -33,7 +33,7 @@
 
                     <!-- payroll summary -->
                     <div class="col-lg-8">
-                        <div class="card" style="height: 100%">
+                        <div class="card">
                             {{-- <div class="card"> --}}
                             <div class="card-body">
                                 <div class="row align-items-center">
@@ -64,7 +64,7 @@
                                     {{-- @if ($employee_chart == null)
                                    <h1 class="fw-bold text-center text-uppercase text-danger"> belum ada tugas!! </h1>
                                @else --}}
-                                    <div class="chart-container" id="employee-chart">
+                               <div class="chart-container d-flex justify-content-center align-items-center" id="employee-chart">
                                         {{-- {!! $employee_chart->container() !!} --}}
                                         @if (
                                             $todoCount_employee == null &&
@@ -78,10 +78,11 @@
                                     </div>
                                     {{-- @endif --}}
                                 @elseif (auth()->user()->role->role == 'admin')
-                                    <div class="chart-container" id="admin-chart">
+                                    {{-- <div class="chart-container" id="admin-chart"> --}}
+                                        <div class="chart-container d-flex justify-content-center align-items-center" id="admin-chart">
                                         {{-- {!! $admin_chart->container() !!} --}}
                                         <canvas id="admin-canvas"></canvas>
-                                        <h1 style="display: none" class="fw-bold text-center" id="data_kosong">BELUM ADA TUGAS</h1>
+                                        <h1 style="display: none" class="fw-bold text-center my-5" id="data_kosong">BELUM ADA TUGAS</h1>
                                         {{-- <h1 style="display: " id="role">{{ $role }}</h1> --}}
                                     </div>
                                 @endif
@@ -202,11 +203,11 @@
                                         <div class="col">
                                             <h4 class="card-title">Task Status</h4>
                                         </div>
-                                        <div class="col text-end">
+                                        {{-- <div class="col text-end">
                                             <a href="#" class="btn btn-lg">
                                                 <i class="bi bi-three-dots"></i>
                                             </a>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div class="d-flex align-items-center">
                                         @if (auth()->user()->role->role == 'admin')
@@ -433,8 +434,10 @@
                         chart_all.destroy();
                         if (kosong == 1) {
                             document.getElementById('data_kosong').style.display = "inline";
+                            document.getElementById('admin-canvas').style.display = "none";
                         } else {
                             // $('#admin').html('data kosong');
+                            document.getElementById('admin-canvas').style.display = "inline";
                             document.getElementById('data_kosong').style.display = "none";
                             chart_all = new Chart(changepie, {
                                 type: 'pie',

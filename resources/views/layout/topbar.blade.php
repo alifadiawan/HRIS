@@ -143,10 +143,12 @@
               <i class="fa-solid fa-user"></i>
               <span>My Profile</span>
             </a>
+            @if (auth()->user()->role->role == 'employee')
             <a class="dropdown-item d-flex align-items-center" href="/profile">
               <i class="fa-solid fa-list-check"></i>
               <span>Riwayat Nilai & Tugas</span>
             </a>
+            @endif
           </li>
           <li>
             <hr class="dropdown-divider">
