@@ -99,7 +99,6 @@
                                 <th>Goals Name</th>
                                 <th colspan="2">Tanggal Deadline - Jam</th>
                                 <th colspan="2">Tanggal Dinilai - Jam</th>
-                                <th>Goals Name</th>
                                 <th>Nilai</th>
                             </tr>
                         </thead>
@@ -123,7 +122,6 @@
                                         <td>{{ $t->created_at->format('H:i') }}</td>
                                         <td>{{ $t->updated_at->format('d M Y') }} </td>
                                         <td>{{ $t->updated_at->format('H:i') }}</td>
-                                        <td>{{ $t->kpi->group_name }}</td>
                                         <td>{{ $t->grade }}</td>
                                     </tr>
                         <tbody class="collapse accordion-collapse" id="r1{{ $t->id }}"
