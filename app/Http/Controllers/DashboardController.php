@@ -87,7 +87,7 @@ class DashboardController extends Controller
                 $query->whereHas('role', function ($user) {
                     $user->where('role', '!=', 'admin');
                 });
-            })->get();
+            })->where('jabatan_id', '!=', null)->get();
 
             $employee_count = ['todoCount_employee', 'doingCount_employee', 'checkingCount_employee', 'doneCount_employee', 'employee'];
             $admin_count = ['todoCount', 'doingCount', 'checkingCount', 'doneCount'];

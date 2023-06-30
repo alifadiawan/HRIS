@@ -24,7 +24,7 @@ class JabatanSeeder extends Seeder
                 'nama_jabatan' => 'staff',
             ],
             [
-                'nama_jabatan' => 'hrd',
+                'nama_jabatan' => 'manager',
             ],
         ];
 
