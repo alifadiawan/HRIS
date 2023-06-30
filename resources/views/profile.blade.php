@@ -161,35 +161,39 @@
                                 </div>
                             </div>
                             <hr>
-                            @if(auth()->user()->member->jabatan == null)
-                            <div class="row">
-                                <div class="col-sm-5 col-6">
-                                    <p class="mb-0 fw-bold"><i class="fa-solid fa-bag-shopping fa-xl fa-fw"></i> Jabatan
-                                    </p>
+                            @if (auth()->user()->member->jabatan == null)
+                                <div class="row">
+                                    <div class="col-sm-5 col-6">
+                                        <p class="mb-0 fw-bold"><i class="fa-solid fa-bag-shopping fa-xl fa-fw"></i>
+                                            Jabatan
+                                        </p>
+                                    </div>
+                                    <div class="col-sm-7 col-6">
+                                        <p class="text-muted mb-0">Jabatan Ku</p>
+                                    </div>
                                 </div>
-                                <div class="col-sm-7 col-6">
-                                    <p class="text-muted mb-0">Jabatan Ku</p>
-                                </div>
-                            </div>
-                            <hr>
+                                <hr>
                             @else
-                            <div class="row">
-                                <div class="col-sm-5 col-6">
-                                    <p class="mb-0 fw-bold"><i class="fa-solid fa-bag-shopping fa-xl fa-fw"></i> Jabatan
-                                    </p>
+                                <div class="row">
+                                    <div class="col-sm-5 col-6">
+                                        <p class="mb-0 fw-bold"><i class="fa-solid fa-bag-shopping fa-xl fa-fw"></i>
+                                            Jabatan
+                                        </p>
+                                    </div>
+                                    <div class="col-sm-7 col-6">
+                                        <p class="text text-capitalize mb-0">
+                                            {{ auth()->user()->member->jabatan->nama_jabatan }}</p>
+                                    </div>
                                 </div>
-                                <div class="col-sm-7 col-6">
-                                    <p class="text text-capitalize mb-0">{{ auth()->user()->member->jabatan->nama_jabatan }}</p>
-                                </div>
-                            </div>
-                            <hr>
+                                <hr>
                             @endif
                             <div class="row">
                                 <div class="col-sm-5 col-6">
                                     <p class="mb-0 fw-bold"><i class="fa-solid fa-user-gear fa-xl fa-fw"></i> Divisi</p>
                                 </div>
                                 <div class="col-sm-7 col-6">
-                                    <p class="text text-capitalize mb-0">{{ auth()->user()->member->divisi->nama_divisi }}</p>
+                                    <p class="text text-capitalize mb-0">{{ auth()->user()->member->divisi->nama_divisi }}
+                                    </p>
                                 </div>
                             </div>
                             <div class="d-grid gap-3">
@@ -202,95 +206,95 @@
             </div>
             <!-- Kumpulan Card Riwayat Transaksi User -->
             <!-- <div class="col-lg-6">
-                                                                                                                <div class="row">
-                                                                                                                    <div class="col-lg-6 col-md-6 mb-4">
-                                                                                                                        <div class="card border-left-primary shadow h-100 ">
-                                                                                                                            <div class="card-body">
-                                                                                                                                <div class="row align-items-center">
-                                                                                                                                    <div class="col mr-2">
-                                                                                                                                        {{-- <div class="text-xs fw-bold text-primary text-uppercase mb-1">
+                                                                                                                        <div class="row">
+                                                                                                                            <div class="col-lg-6 col-md-6 mb-4">
+                                                                                                                                <div class="card border-left-primary shadow h-100 ">
+                                                                                                                                    <div class="card-body">
+                                                                                                                                        <div class="row align-items-center">
+                                                                                                                                            <div class="col mr-2">
+                                                                                                                                                {{-- <div class="text-xs fw-bold text-primary text-uppercase mb-1">
                                             Pesanan Anda</div> --}}
-                                                                                                                                        <div class="h5 mt-5 fw-bold text-gray-800">20 Tugas Anda<span
-                                                                                                                                                class="qty posisition-absolute badge bg-success position-absolute top-0 translate-middle badge">Tugas</span>
+                                                                                                                                                <div class="h5 mt-5 fw-bold text-gray-800">20 Tugas Anda<span
+                                                                                                                                                        class="qty posisition-absolute badge bg-success position-absolute top-0 translate-middle badge">Tugas</span>
+                                                                                                                                                </div>
+                                                                                                                                            </div>
+                                                                                                                                            <div class="col-auto mt-4">
+                                                                                                                                                <i class="fa-solid fa-bag-shopping fa-2xl"></i>
+                                                                                                                                            </div>
                                                                                                                                         </div>
-                                                                                                                                    </div>
-                                                                                                                                    <div class="col-auto mt-4">
-                                                                                                                                        <i class="fa-solid fa-bag-shopping fa-2xl"></i>
+                                                                                                                                        <a href="#" class="btn-sm btn-selengkapnya btn">Selengkapnya</a>
                                                                                                                                     </div>
                                                                                                                                 </div>
-                                                                                                                                <a href="#" class="btn-sm btn-selengkapnya btn">Selengkapnya</a>
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                                                                    </div> -->
+                                                                                                                            </div> -->
 
             <!-- Earnings (Monthly) Card Example -->
             <!-- <div class="col-lg-6 col-md-6 mb-4">
-                                                                                                                        <div class="card border-left-success shadow h-100">
-                                                                                                                            <div class="card-body">
-                                                                                                                                <div class="row align-items-center">
-                                                                                                                                    <div class="col mr-2">
-                                                                                                                                        {{-- <div class="text-xs fw-bold text-success text-uppercase mb-1">
+                                                                                                                                <div class="card border-left-success shadow h-100">
+                                                                                                                                    <div class="card-body">
+                                                                                                                                        <div class="row align-items-center">
+                                                                                                                                            <div class="col mr-2">
+                                                                                                                                                {{-- <div class="text-xs fw-bold text-success text-uppercase mb-1">
                                             Riwayat Transaksi</div> --}}
-                                                                                                                                        <div class="h5 mt-5 fw-bold text-gray-800">10 Progress<span
-                                                                                                                                                class="qty posisition-absolute badge bg-secondary position-absolute top-0 translate-middle badge">Progress
-                                                                                                                                                Tugas</span></div>
-                                                                                                                                    </div>
-                                                                                                                                    <div class="col-auto mt-4">
-                                                                                                                                        <i class="fa-solid fa-clock-rotate-left fa-2xl"></i>
+                                                                                                                                                <div class="h5 mt-5 fw-bold text-gray-800">10 Progress<span
+                                                                                                                                                        class="qty posisition-absolute badge bg-secondary position-absolute top-0 translate-middle badge">Progress
+                                                                                                                                                        Tugas</span></div>
+                                                                                                                                            </div>
+                                                                                                                                            <div class="col-auto mt-4">
+                                                                                                                                                <i class="fa-solid fa-clock-rotate-left fa-2xl"></i>
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+                                                                                                                                        <a href="#" class="btn-sm btn-selengkapnya btn">Selengkapnya</a>
+
                                                                                                                                     </div>
                                                                                                                                 </div>
-                                                                                                                                <a href="#" class="btn-sm btn-selengkapnya btn">Selengkapnya</a>
-
                                                                                                                             </div>
-                                                                                                                        </div>
-                                                                                                                    </div>
-                                                                                                                </div> -->
+                                                                                                                        </div> -->
 
             <!-- Earnings (Monthly) Card Example -->
             <!-- <div class="row">
-                                                                                                                    <div class="col-lg-6 col-md-6 mb-4">
-                                                                                                                        <div class="card border-left-success shadow h-100">
-                                                                                                                            <div class="card-body">
-                                                                                                                                <div class="row align-items-center">
-                                                                                                                                    <div class="col mt-3">
-                                                                                                                                        {{-- <div class="text-xs fw-bold text-success text-uppercase mb-1">
+                                                                                                                            <div class="col-lg-6 col-md-6 mb-4">
+                                                                                                                                <div class="card border-left-success shadow h-100">
+                                                                                                                                    <div class="card-body">
+                                                                                                                                        <div class="row align-items-center">
+                                                                                                                                            <div class="col mt-3">
+                                                                                                                                                {{-- <div class="text-xs fw-bold text-success text-uppercase mb-1">
                                             Riwayat Transaksi</div> --}}
-                                                                                                                                        <div class="h5 mt-4 fw-bold text-gray-800">3 Hari Cuti<span
-                                                                                                                                                class="qty posisition-absolute badge bg-warning position-absolute top-0 translate-middle badge">Jadwal
-                                                                                                                                                Cuti</span></div>
-                                                                                                                                    </div>
-                                                                                                                                    <div class="col-auto mt-4">
-                                                                                                                                        <i class="fa-solid fa-user-gear fa-2xl"></i>
+                                                                                                                                                <div class="h5 mt-4 fw-bold text-gray-800">3 Hari Cuti<span
+                                                                                                                                                        class="qty posisition-absolute badge bg-warning position-absolute top-0 translate-middle badge">Jadwal
+                                                                                                                                                        Cuti</span></div>
+                                                                                                                                            </div>
+                                                                                                                                            <div class="col-auto mt-4">
+                                                                                                                                                <i class="fa-solid fa-user-gear fa-2xl"></i>
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+                                                                                                                                        <a href="#" class="btn-sm btn-selengkapnya btn">Selengkapnya</a>
+
                                                                                                                                     </div>
                                                                                                                                 </div>
-                                                                                                                                <a href="#" class="btn-sm btn-selengkapnya btn">Selengkapnya</a>
-
-                                                                                                                            </div>
-                                                                                                                        </div>
-                                                                                                                    </div> -->
+                                                                                                                            </div> -->
 
             <!-- Pending Requests Card Example -->
             <!-- <div class="col-lg-6 col-md-6 mb-4">
-                                                                                                                        <div class="card border-left-success shadow h-100">
-                                                                                                                            <div class="card-body">
-                                                                                                                                <div class="row align-items-center">
-                                                                                                                                    <div class="col mt-3">
-                                                                                                                                        {{-- <div class="text-xs fw-bold text-success text-uppercase mb-1">
+                                                                                                                                <div class="card border-left-success shadow h-100">
+                                                                                                                                    <div class="card-body">
+                                                                                                                                        <div class="row align-items-center">
+                                                                                                                                            <div class="col mt-3">
+                                                                                                                                                {{-- <div class="text-xs fw-bold text-success text-uppercase mb-1">
                                             Riwayat Transaksi</div> --}}
-                                                                                                                                        <div class="h5 mt-4 fw-bold text-gray-800">2 Meeting<span
-                                                                                                                                                class="qty posisition-absolute badge bg-info position-absolute top-0 translate-middle badge">Meeting</span>
+                                                                                                                                                <div class="h5 mt-4 fw-bold text-gray-800">2 Meeting<span
+                                                                                                                                                        class="qty posisition-absolute badge bg-info position-absolute top-0 translate-middle badge">Meeting</span>
+                                                                                                                                                </div>
+                                                                                                                                            </div>
+                                                                                                                                            <div class="col-auto mt-3">
+                                                                                                                                                <i class="fa-solid fa-cart-shopping fa-2xl"></i>
+                                                                                                                                            </div>
                                                                                                                                         </div>
-                                                                                                                                    </div>
-                                                                                                                                    <div class="col-auto mt-3">
-                                                                                                                                        <i class="fa-solid fa-cart-shopping fa-2xl"></i>
+                                                                                                                                        <a href="#" class="btn-sm btn-selengkapnya btn">Selengkapnya</a>
                                                                                                                                     </div>
                                                                                                                                 </div>
-                                                                                                                                <a href="#" class="btn-sm btn-selengkapnya btn">Selengkapnya</a>
                                                                                                                             </div>
                                                                                                                         </div>
-                                                                                                                    </div>
-                                                                                                                </div>
-                                                                                                            </div> -->
+                                                                                                                    </div> -->
         </div>
     </section>
 
@@ -304,40 +308,76 @@
                 <div class="table-responsive mt-3">
                     <table class="table table-bordered">
                         <thead>
-                            <tr>
-                                <th>Action</th>
-                                <th>Tanggal Dibuat</th>
-                                <th>Tanggal Deadline</th>
-                                <th>Tanggal Dinilai</th>
+                            <tr class="text-center">
                                 <th>Goals Name</th>
+                                <th colspan="2">Tanggal Deadline - Jam</th>
+                                <th colspan="2">Tanggal Dinilai - Jam</th>
                                 <th>Nilai</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (auth()->user()->member->task as $t)
                                 @if ($t->status == 'done')
-                                    <tr>
-                                        <td>
-                                            <div class="accordion" id="accordionExample">
-                                                <div class="accordion-item">
-                                                    <h2 class="accordion-header" id="headingOne">
-                                                        <button class="accordion-button" type="button"
-                                                            data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                                                            aria-expanded="true" aria-controls="collapseOne">
-                                                            v
-                                                        </button>
-                                                    </h2>
-                                                    <div id="collapseOne" class="accordion-collapse collapse"
-                                                        aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                                        <div class="accordion-body">
-                                                            <table class="table table-bordered">
-                                                                <thead>
-                                                                    <th>progress</th>
-                                                                    <th>keterangan</th>
-                                                                    <th>tanggal</th>
-                                                                </thead>
-                                                                <tbody>
-                                                                    @foreach ($prog as $p)
+                                    <tr class="text-center">
+                                        @foreach ($kpi as $k)
+                                            @if ($t->kpi_id == $k->id)
+                                                <td class="text-start">
+                                                    <button class="btn text-primary" data-bs-toggle="collapse"
+                                                        data-bs-target="#r1{{ $t->id }}"
+                                                        id="accordion{{ $t->id }}"><i
+                                                            class="fa-solid fa-chevron-down"></i></button>{{ $k->group_name }}
+                                                </td>
+                                            @endif
+                                        @endforeach
+
+                                        <td>{{ $t->created_at->format('d M Y') }} </td>
+                                        <td>{{ $t->created_at->format('H:i') }}</td>
+                                        <td>{{ $t->updated_at->format('d M Y') }} </td>
+                                        <td>{{ $t->updated_at->format('H:i') }}</td>
+                                        <td>{{ $t->grade }}</td>
+                                    </tr>
+                                @endif
+                        <tbody class="collapse accordion-collapse" id="r1{{ $t->id }}"
+                            data-bs-parent="#accordion{{ $t->id }}">
+
+                            <td colspan="7" class="text-center">
+                                <div class="table-resonsive">
+                                    <table class="table table-borderless table-hover">
+                                        <thead>
+                                            <th>Tanggal Progress</th>
+                                            <th>Progress</th>
+                                            <th>Keterangan</th>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($prog as $p)
+                                                @if ($p->tasks_id == $t->id)
+                                                    <tr>
+                                                        <td>
+                                                            {{ $p->progress }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $p->keterangan }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $p->created_at }}
+                                                        </td>
+                                                    </tr>
+                                                @endif
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                        </tbody>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    {{-- 
+    @foreach ($prog as $p)
                                                                         @if ($p->tasks_id == $t->id)
                                                                             <tr>
                                                                                 <td>
@@ -351,32 +391,7 @@
                                                                                 </td>
                                                                             </tr>
                                                                         @endif
-                                                                    @endforeach
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>{{ $t->created_at }}</td>
-                                        <td>{{ $t->tanggal_target }}</td>
-                                        <td>{{ $t->updated_at }}</td>
-                                        @foreach ($kpi as $k)
-                                            @if ($t->kpi_id == $k->id)
-                                                <td>{{ $k->group_name }}</td>
-                                            @endif
-                                        @endforeach
-                                        <td>{{ $t->grade }}</td>
-                                    </tr>
-                                @endif
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </section>
+                                                                    @endforeach --}}
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
