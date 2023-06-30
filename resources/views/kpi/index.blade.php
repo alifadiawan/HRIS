@@ -94,30 +94,33 @@
                     <div class="card-body">
                         <button class="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target="#addDivisi">Tambah
                             Divisi</button>
-                        <table class="table mt-4" style="outline: 2px;">
-                            <thead class="table-secondary">
-                                <th>NO.</th>
-                                <th>Nama Divisi</th>
-                                <th>Action</th>
-                            </thead>
-                            <tbody>
-                                @foreach ($divisi as $d)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $d->nama_divisi }}</td>
-                                        <td>
-                                            <div class="d-flex flex-column gap-1 flex-lg-row">
-                                                <a href="{{ route('divisi.hapus', $d->id) }}"
-                                                    class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
-                                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                                    data-bs-target="#editDivisi_{{ $d->id }}"><i
-                                                        class="fas fa-pencil"></i></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table mt-4" style="outline: 2px;">
+                                <thead class="table-secondary">
+                                    <th>NO.</th>
+                                    <th>Nama Divisi</th>
+                                    <th>Action</th>
+                                </thead>
+                                <tbody>
+                                    @foreach ($divisi as $d)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $d->nama_divisi }}</td>
+                                            <td>
+                                                <div class="d-flex flex-column gap-1 flex-lg-row">
+                                                    <a href="{{ route('divisi.hapus', $d->id) }}" class="btn btn-danger"><i
+                                                            class="fas fa-trash"></i></a>
+                                                    <button class="btn btn-warning" data-bs-toggle="modal"
+                                                        data-bs-target="#editDivisi_{{ $d->id }}"><i
+                                                            class="fas fa-pencil"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -131,30 +134,32 @@
                     <div class="card-body">
                         <button class="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target="#addJabatan">Tambah
                             Jabatan</button>
-                        <table class="table mt-4" style="outline: 2px;">
-                            <thead class="table-secondary">
-                                <th>NO.</th>
-                                <th>Nama Jabatan</th>
-                                <th>Action</th>
-                            </thead>
-                            <tbody>
-                                @foreach ($jabatan as $j)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $j->nama_jabatan }}</td>
-                                        <td>
-                                            <div class="d-flex flex-column gap-1 flex-lg-row">
-                                                <a href="{{ route('jabatan.hapus', $j->id) }}" class="btn btn-danger"><i
-                                                        class="fas fa-trash"></i></a>
-                                                <button class="btn btn-warning" data-bs-toggle="modal"
-                                                    data-bs-target="#editJabatan_{{ $j->id }}"><i
-                                                        class="fas fa-pencil"></i></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table mt-4" style="outline: 2px;">
+                                <thead class="table-secondary">
+                                    <th>NO.</th>
+                                    <th>Nama Jabatan</th>
+                                    <th>Action</th>
+                                </thead>
+                                <tbody>
+                                    @foreach ($jabatan as $j)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $j->nama_jabatan }}</td>
+                                            <td>
+                                                <div class="d-flex flex-column gap-1 flex-lg-row">
+                                                    <a href="{{ route('jabatan.hapus', $j->id) }}"
+                                                        class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                    <button class="btn btn-warning" data-bs-toggle="modal"
+                                                        data-bs-target="#editJabatan_{{ $j->id }}"><i
+                                                            class="fas fa-pencil"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -218,26 +223,26 @@
         @endforeach
 
         <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-            function show(event) {
-                event.preventDefault();
-                var url = $(event.target).attr('href');
-                $.ajax({
-                    url: url,
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function(data) {
-                        var div = data.divisiF;
-                        // console.log(div);
-                        //divisi
-                        // $('.edit-form').attr('action', `https://127.0.0.1:8000/employee/`+div.id);
-                        $('#edit-nama_' + div.id).val(div.nama_divisi);
-                        $('#editDivisi_' + div.id).modal('show');
-                    },
-                    error: function(xhr) {
-                        console.log(xhr.responseText);
+                <script>
+                    function show(event) {
+                        event.preventDefault();
+                        var url = $(event.target).attr('href');
+                        $.ajax({
+                            url: url,
+                            type: 'GET',
+                            dataType: 'json',
+                            success: function(data) {
+                                var div = data.divisiF;
+                                // console.log(div);
+                                //divisi
+                                // $('.edit-form').attr('action', `https://127.0.0.1:8000/employee/`+div.id);
+                                $('#edit-nama_' + div.id).val(div.nama_divisi);
+                                $('#editDivisi_' + div.id).modal('show');
+                            },
+                            error: function(xhr) {
+                                console.log(xhr.responseText);
+                            }
+                        });
                     }
-                });
-            }
-        </script> -->
+                </script> -->
     @endsection

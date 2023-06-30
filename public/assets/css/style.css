@@ -291,15 +291,28 @@ body {
 
 
 /* Chart */
-.chart-container {
+/* .chart-container {
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
   height: 49vh;
-  /* width: 85vw; */
+  width: 85vw;
+} */
+
+.chart-container {
+  max-height: 30rem;
 }
 
+/* #admin-chart {
+  position: relative;
+  left: 25%;
+  transform: translateX(-5%);;
+  height: 30rem;
+}
+
+#employee-chart {}
+ */
 
 
 
@@ -340,8 +353,10 @@ body {
   animation-fill-mode: both;
   border: 0;
   box-shadow: 0 5px 30px 0 rgba(82, 63, 105, 0.2);
-  max-height: 19rem;  /* Set the fixed height */
-  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 19rem;
+  /* Set the fixed height */
+  overflow-y: auto;
+  /* Enable vertical scrolling */
 }
 
 
